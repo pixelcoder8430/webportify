@@ -1,0 +1,1437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Webportify - My Account</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
+
+body{
+    min-height:100vh;
+    background:
+        linear-gradient(rgba(2,7,13,.96),rgba(2,7,13,.98)),
+        url("wallpaper.jpg");
+    background-size:cover;
+    background-position:center;
+    background-attachment:fixed;
+    color:white;
+}
+
+.sidebar{
+    position:fixed;
+    left:0;
+    top:0;
+    width:250px;
+    height:100vh;
+    padding:30px 18px;
+    background:rgba(5,8,13,.98);
+    border-right:1px solid #ff1744;
+    box-shadow:5px 0 25px rgba(255,23,68,.15);
+}
+
+.logo{
+    text-align:center;
+    color:#ff1744;
+    font-size:27px;
+    font-weight:bold;
+    margin-bottom:45px;
+    text-shadow:0 0 15px #ff1744;
+}
+
+.sidebar ul{
+    list-style:none;
+}
+
+.sidebar li{
+    margin-bottom:9px;
+}
+
+.sidebar a{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    padding:14px 15px;
+    color:#bfc3ca;
+    text-decoration:none;
+    border-radius:10px;
+    transition:.3s;
+}
+
+.sidebar a:hover,
+.sidebar a.active{
+    color:white;
+    background:rgba(255,23,68,.12);
+}
+
+.sidebar a.active{
+    border-left:3px solid #ff1744;
+}
+
+.icon{
+    width:25px;
+    text-align:center;
+    font-size:18px;
+}
+
+.main{
+    margin-left:250px;
+    padding:40px 50px;
+}
+
+.top{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:30px;
+}
+
+.top h1{
+    font-size:34px;
+}
+
+.top h1 span{
+    color:#ff1744;
+    text-shadow:0 0 12px #ff1744;
+}
+
+.dashboard-btn{
+    padding:12px 20px;
+    color:white;
+    text-decoration:none;
+    background:#11161e;
+    border:1px solid #333943;
+    border-radius:9px;
+    transition:.3s;
+}
+
+.dashboard-btn:hover{
+    border-color:#ff1744;
+}
+
+.profile-card{
+    background:rgba(9,13,20,.96);
+    border:1px solid rgba(255,23,68,.35);
+    border-radius:18px;
+    padding:30px;
+}
+
+.profile-header{
+    display:flex;
+    align-items:center;
+    gap:20px;
+    padding-bottom:25px;
+    border-bottom:1px solid #252a32;
+    margin-bottom:25px;
+}
+
+.profile-icon{
+    width:75px;
+    height:75px;
+    border-radius:50%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:35px;
+    background:#080c12;
+    border:2px solid #ff1744;
+    box-shadow:0 0 20px rgba(255,23,68,.25);
+}
+
+.profile-header h2{
+    font-size:25px;
+    margin-bottom:6px;
+}
+
+.profile-header p{
+    color:#888;
+}
+
+.details{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:18px;
+}
+
+.detail{
+    background:#080c12;
+    border:1px solid #252b34;
+    border-radius:12px;
+    padding:17px;
+}
+
+.detail.full{
+    grid-column:1/-1;
+}
+
+.detail label{
+    display:block;
+    color:#ff1744;
+    font-size:11px;
+    font-weight:bold;
+    letter-spacing:1px;
+    margin-bottom:8px;
+}
+
+.detail p{
+    color:#ddd;
+    line-height:1.5;
+    word-break:break-word;
+}
+
+.empty{
+    color:#777!important;
+    font-style:italic;
+}
+
+.actions{
+    display:flex;
+    gap:15px;
+    margin-top:25px;
+    flex-wrap:wrap;
+}
+
+.btn{
+    padding:13px 22px;
+    border-radius:9px;
+    border:none;
+    cursor:pointer;
+    text-decoration:none;
+    font-weight:bold;
+    transition:.3s;
+}
+
+.red-btn{
+    background:#ff1744;
+    color:white;
+}
+
+.red-btn:hover{
+    box-shadow:0 0 20px rgba(255,23,68,.5);
+}
+
+.dark-btn{
+    background:#11161e;
+    color:white;
+    border:1px solid #333943;
+}
+
+.dark-btn:hover{
+    border-color:#ff1744;
+}
+
+.edit-form{
+    display:none;
+}
+
+.edit-form.show{
+    display:block;
+}
+
+.form-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:18px;
+}
+
+.form-group{
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+}
+
+.form-group.full{
+    grid-column:1/-1;
+}
+
+.form-group label{
+    color:#ff1744;
+    font-size:11px;
+    font-weight:bold;
+    letter-spacing:1px;
+}
+
+input,
+select,
+textarea{
+    width:100%;
+    padding:13px;
+    background:#05080d;
+    color:white;
+    border:1px solid #303640;
+    border-radius:9px;
+    outline:none;
+    resize:vertical;
+}
+
+input:focus,
+select:focus,
+textarea:focus{
+    border-color:#ff1744;
+    box-shadow:0 0 10px rgba(255,23,68,.15);
+}
+
+textarea{
+    min-height:90px;
+}
+
+.form-actions{
+    display:flex;
+    gap:12px;
+    margin-top:25px;
+}
+
+.status{
+    margin-bottom:20px;
+    padding:13px 16px;
+    border-radius:9px;
+    display:none;
+    font-weight:bold;
+}
+
+.status.show{
+    display:block;
+}
+
+.status.success{
+    background:rgba(0,200,83,.12);
+    border:1px solid rgba(0,200,83,.4);
+    color:#66ff99;
+}
+
+.status.error{
+    background:rgba(255,23,68,.12);
+    border:1px solid rgba(255,23,68,.5);
+    color:#ff6b88;
+}
+
+.loading{
+    color:#aaa;
+    text-align:center;
+    padding:30px;
+}
+
+@media(max-width:700px){
+
+    .sidebar{
+        position:relative;
+        width:100%;
+        height:auto;
+        border-right:none;
+        border-bottom:1px solid #ff1744;
+    }
+
+    .main{
+        margin-left:0;
+        padding:25px 18px;
+    }
+
+    .top{
+        flex-direction:column;
+        align-items:flex-start;
+        gap:15px;
+    }
+
+    .details,
+    .form-grid{
+        grid-template-columns:1fr;
+    }
+
+    .detail.full,
+    .form-group.full{
+        grid-column:auto;
+    }
+
+    .profile-header{
+        flex-direction:column;
+        align-items:flex-start;
+    }
+
+    .actions,
+    .form-actions{
+        flex-direction:column;
+    }
+
+    .btn{
+        text-align:center;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<aside class="sidebar">
+
+    <div class="logo">WEBPORTIFY</div>
+
+    <ul>
+
+        <li>
+            <a href="customer_dashboard.html">
+                <span class="icon">🏠</span>
+                Dashboard
+            </a>
+        </li>
+
+        <li>
+            <a href="customer_cart.html">
+                <span class="icon">🛒</span>
+                My Cart
+            </a>
+        </li>
+
+        <li>
+            <a href="customer_orders.html">
+                <span class="icon">📦</span>
+                My Orders
+            </a>
+        </li>
+
+        <li>
+            <a href="customer_messages.html">
+                <span class="icon">💬</span>
+                Messages
+            </a>
+        </li>
+
+        <li>
+            <a href="customer_account.html" class="active">
+                <span class="icon">👤</span>
+                My Account
+            </a>
+        </li>
+
+    </ul>
+
+</aside>
+
+
+<main class="main">
+
+    <div class="top">
+
+        <h1>
+            My <span>Account</span>
+        </h1>
+
+        <a href="customer_dashboard.html" class="dashboard-btn">
+            ← Dashboard
+        </a>
+
+    </div>
+
+
+    <div id="status" class="status"></div>
+
+
+    <div class="profile-card">
+
+        <!-- VIEW PROFILE -->
+
+        <div id="viewProfile">
+
+            <div class="profile-header">
+
+                <div class="profile-icon">👤</div>
+
+                <div>
+
+                    <h2 id="customerName">
+                        Customer
+                    </h2>
+
+                    <p>
+                        Webportify Customer Account
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div id="loading" class="loading">
+                Loading account information...
+            </div>
+
+
+            <div id="profileDetails"
+                 class="details"
+                 style="display:none;">
+
+                <div class="detail">
+                    <label>FULL NAME</label>
+                    <p id="name">-</p>
+                </div>
+
+                <div class="detail">
+                    <label>EMAIL</label>
+                    <p id="email">-</p>
+                </div>
+
+                <div class="detail">
+                    <label>PHONE</label>
+                    <p id="phone">-</p>
+                </div>
+
+                <div class="detail">
+                    <label>WEBSITE TYPE</label>
+                    <p id="websiteType">-</p>
+                </div>
+
+                <div class="detail full">
+                    <label>WEBSITE PURPOSE</label>
+                    <p id="purpose">-</p>
+                </div>
+
+                <div class="detail full">
+                    <label>REQUIRED FEATURES</label>
+                    <p id="features">-</p>
+                </div>
+
+                <div class="detail full">
+                    <label>REFERENCE WEBSITE</label>
+                    <p id="reference">-</p>
+                </div>
+
+                <div class="detail full">
+                    <label>WEBSITE REQUIREMENTS</label>
+                    <p id="requirements">-</p>
+                </div>
+
+            </div>
+
+
+            <div class="actions">
+
+                <button
+                    class="btn red-btn"
+                    onclick="editAccount()"
+                >
+                    ✏️ Edit Account
+                </button>
+
+                <a
+                    href="customer_dashboard.html"
+                    class="btn dark-btn"
+                >
+                    Browse Websites
+                </a>
+
+                <button
+                    class="btn dark-btn"
+                    onclick="logout()"
+                >
+                    Logout
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- EDIT PROFILE -->
+
+        <div id="editForm" class="edit-form">
+
+            <div class="profile-header">
+
+                <div class="profile-icon">✏️</div>
+
+                <div>
+
+                    <h2>Edit Account</h2>
+
+                    <p>
+                        Update your Webportify information
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <form onsubmit="saveAccount(event)">
+
+                <div class="form-grid">
+
+                    <div class="form-group">
+
+                        <label>FULL NAME</label>
+
+                        <input
+                            type="text"
+                            id="editName"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>EMAIL</label>
+
+                        <input
+                            type="email"
+                            id="editEmail"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>PHONE</label>
+
+                        <input
+                            type="text"
+                            id="editPhone"
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>WEBSITE TYPE</label>
+
+                        <select id="editWebsiteType">
+
+                            <option value="">
+                                Select website type
+                            </option>
+
+                            <option value="Business">
+                                Business
+                            </option>
+
+                            <option value="E-Commerce">
+                                E-Commerce
+                            </option>
+
+                            <option value="Portfolio">
+                                Portfolio
+                            </option>
+
+                            <option value="Blog">
+                                Blog
+                            </option>
+
+                            <option value="Other">
+                                Other
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="form-group full">
+
+                        <label>WEBSITE PURPOSE</label>
+
+                        <textarea id="editPurpose"></textarea>
+
+                    </div>
+
+
+                    <div class="form-group full">
+
+                        <label>REQUIRED FEATURES</label>
+
+                        <textarea id="editFeatures"></textarea>
+
+                    </div>
+
+
+                    <div class="form-group full">
+
+                        <label>REFERENCE WEBSITE</label>
+
+                        <input
+                            type="text"
+                            id="editReference"
+                            placeholder="https://example.com"
+                        >
+
+                    </div>
+
+
+                    <div class="form-group full">
+
+                        <label>WEBSITE REQUIREMENTS</label>
+
+                        <textarea id="editRequirements"></textarea>
+
+                    </div>
+
+                </div>
+
+
+                <div class="form-actions">
+
+                    <button
+                        type="submit"
+                        class="btn red-btn"
+                        id="saveButton"
+                    >
+                        💾 Save Changes
+                    </button>
+
+                    <button
+                        type="button"
+                        class="btn dark-btn"
+                        onclick="cancelEdit()"
+                    >
+                        Cancel
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</main>
+
+
+<script>
+
+/* =========================
+   BACKEND
+========================= */
+
+const API_URL =
+    "http://localhost:5000";
+
+
+/* =========================
+   AUTHENTICATION
+========================= */
+
+const token =
+    localStorage.getItem("token");
+
+const customerLoggedIn =
+    localStorage.getItem("customerLoggedIn");
+
+
+if(!token || customerLoggedIn !== "true"){
+
+    window.location.replace(
+        "customer_signin.html"
+    );
+
+}
+
+
+/* =========================
+   CURRENT CUSTOMER
+========================= */
+
+let currentCustomer = null;
+
+
+/* =========================
+   API HELPER
+========================= */
+
+async function apiRequest(
+    endpoint,
+    options = {}
+){
+
+    const headers = {
+        ...(options.headers || {})
+    };
+
+    if(!headers["Content-Type"]){
+
+        headers["Content-Type"] =
+            "application/json";
+
+    }
+
+    headers["Authorization"] =
+        `Bearer ${token}`;
+
+
+    const response =
+        await fetch(
+            API_URL + endpoint,
+            {
+                ...options,
+                headers
+            }
+        );
+
+
+    let data = {};
+
+    try{
+
+        data =
+            await response.json();
+
+    }catch(error){
+
+        data = {};
+
+    }
+
+
+    if(
+        response.status === 401 ||
+        response.status === 403
+    ){
+
+        localStorage.removeItem("token");
+        localStorage.removeItem("customerLoggedIn");
+        localStorage.removeItem("customerEmail");
+        localStorage.removeItem("customerUser");
+
+        window.location.replace(
+            "customer_signin.html"
+        );
+
+        throw new Error(
+            "Your session has expired."
+        );
+
+    }
+
+
+    if(!response.ok){
+
+        throw new Error(
+            data.message ||
+            "Something went wrong."
+        );
+
+    }
+
+
+    return data;
+
+}
+
+
+/* =========================
+   SHOW STATUS
+========================= */
+
+function showStatus(
+    message,
+    type
+){
+
+    const status =
+        document.getElementById("status");
+
+    status.textContent =
+        message;
+
+    status.className =
+        `status show ${type}`;
+
+}
+
+
+/* =========================
+   HIDE STATUS
+========================= */
+
+function hideStatus(){
+
+    const status =
+        document.getElementById("status");
+
+    status.className =
+        "status";
+
+    status.textContent =
+        "";
+
+}
+
+
+/* =========================
+   SHOW VALUE
+========================= */
+
+function showValue(
+    id,
+    value
+){
+
+    const element =
+        document.getElementById(id);
+
+    if(!element){
+        return;
+    }
+
+
+    element.classList.remove(
+        "empty"
+    );
+
+
+    if(
+        value === undefined ||
+        value === null ||
+        String(value).trim() === ""
+    ){
+
+        element.textContent =
+            "Not provided";
+
+        element.classList.add(
+            "empty"
+        );
+
+        return;
+
+    }
+
+
+    element.textContent =
+        String(value);
+
+}
+
+
+/* =========================
+   LOAD CUSTOMER
+========================= */
+
+async function loadAccount(){
+
+    try{
+
+        hideStatus();
+
+
+        const response =
+            await apiRequest(
+                "/api/me"
+            );
+
+
+        currentCustomer =
+            response.user ||
+            response.data ||
+            response;
+
+
+        if(
+            !currentCustomer ||
+            !currentCustomer.id
+        ){
+
+            throw new Error(
+                "Customer information could not be loaded."
+            );
+
+        }
+
+
+        document.getElementById(
+            "customerName"
+        ).textContent =
+            currentCustomer.name ||
+            "Customer";
+
+
+        showValue(
+            "name",
+            currentCustomer.name
+        );
+
+        showValue(
+            "email",
+            currentCustomer.email
+        );
+
+        showValue(
+            "phone",
+            currentCustomer.phone
+        );
+
+        showValue(
+            "websiteType",
+            currentCustomer.website_type ||
+            currentCustomer.websiteType
+        );
+
+        showValue(
+            "purpose",
+            currentCustomer.purpose
+        );
+
+        showValue(
+            "features",
+            currentCustomer.features
+        );
+
+        showValue(
+            "reference",
+            currentCustomer.reference
+        );
+
+        showValue(
+            "requirements",
+            currentCustomer.requirements
+        );
+
+
+        document.getElementById(
+            "loading"
+        ).style.display =
+            "none";
+
+
+        document.getElementById(
+            "profileDetails"
+        ).style.display =
+            "grid";
+
+
+        /* Keep basic frontend session data in sync */
+
+        localStorage.setItem(
+            "customerEmail",
+            currentCustomer.email || ""
+        );
+
+        localStorage.setItem(
+            "customerUser",
+            JSON.stringify(
+                currentCustomer
+            )
+        );
+
+    }catch(error){
+
+        console.error(
+            "Account loading error:",
+            error
+        );
+
+
+        document.getElementById(
+            "loading"
+        ).textContent =
+            "Unable to load account information.";
+
+
+        showStatus(
+            error.message ||
+            "Unable to load account information.",
+            "error"
+        );
+
+    }
+
+}
+
+
+/* =========================
+   EDIT ACCOUNT
+========================= */
+
+function editAccount(){
+
+    if(!currentCustomer){
+
+        showStatus(
+            "Customer information is still loading.",
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    document.getElementById(
+        "editName"
+    ).value =
+        currentCustomer.name || "";
+
+
+    document.getElementById(
+        "editEmail"
+    ).value =
+        currentCustomer.email || "";
+
+
+    document.getElementById(
+        "editPhone"
+    ).value =
+        currentCustomer.phone || "";
+
+
+    document.getElementById(
+        "editWebsiteType"
+    ).value =
+        currentCustomer.website_type ||
+        currentCustomer.websiteType ||
+        "";
+
+
+    document.getElementById(
+        "editPurpose"
+    ).value =
+        currentCustomer.purpose || "";
+
+
+    document.getElementById(
+        "editFeatures"
+    ).value =
+        currentCustomer.features || "";
+
+
+    document.getElementById(
+        "editReference"
+    ).value =
+        currentCustomer.reference || "";
+
+
+    document.getElementById(
+        "editRequirements"
+    ).value =
+        currentCustomer.requirements || "";
+
+
+    hideStatus();
+
+
+    document.getElementById(
+        "viewProfile"
+    ).style.display =
+        "none";
+
+
+    document.getElementById(
+        "editForm"
+    ).classList.add(
+        "show"
+    );
+
+}
+
+
+/* =========================
+   SAVE ACCOUNT
+========================= */
+
+async function saveAccount(event){
+
+    event.preventDefault();
+
+
+    if(!currentCustomer){
+
+        showStatus(
+            "Customer information is not available.",
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    const newName =
+        document.getElementById(
+            "editName"
+        ).value.trim();
+
+
+    const newEmail =
+        document.getElementById(
+            "editEmail"
+        ).value.trim();
+
+
+    const newPhone =
+        document.getElementById(
+            "editPhone"
+        ).value.trim();
+
+
+    const newWebsiteType =
+        document.getElementById(
+            "editWebsiteType"
+        ).value;
+
+
+    const newPurpose =
+        document.getElementById(
+            "editPurpose"
+        ).value.trim();
+
+
+    const newFeatures =
+        document.getElementById(
+            "editFeatures"
+        ).value.trim();
+
+
+    const newReference =
+        document.getElementById(
+            "editReference"
+        ).value.trim();
+
+
+    const newRequirements =
+        document.getElementById(
+            "editRequirements"
+        ).value.trim();
+
+
+    if(!newName){
+
+        showStatus(
+            "Please enter your name.",
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    if(!newEmail){
+
+        showStatus(
+            "Please enter your email.",
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    const saveButton =
+        document.getElementById(
+            "saveButton"
+        );
+
+
+    saveButton.disabled =
+        true;
+
+    saveButton.textContent =
+        "Saving...";
+
+
+    try{
+
+        const response =
+            await apiRequest(
+                "/api/customers/me",
+                {
+                    method:"PATCH",
+
+                    body:JSON.stringify({
+
+                        name:newName,
+
+                        email:newEmail,
+
+                        phone:newPhone,
+
+                        websiteType:
+                            newWebsiteType,
+
+                        purpose:
+                            newPurpose,
+
+                        features:
+                            newFeatures,
+
+                        reference:
+                            newReference,
+
+                        requirements:
+                            newRequirements
+
+                    })
+                }
+            );
+
+
+        currentCustomer =
+            response.user ||
+            response.data ||
+            currentCustomer;
+
+
+        /*
+           Update frontend session information.
+           The database remains the main source of truth.
+        */
+
+        localStorage.setItem(
+            "customerEmail",
+            currentCustomer.email ||
+            newEmail
+        );
+
+
+        localStorage.setItem(
+            "customerUser",
+            JSON.stringify(
+                currentCustomer
+            )
+        );
+
+
+        localStorage.setItem(
+            "customerData",
+            JSON.stringify(
+                currentCustomer
+            )
+        );
+
+
+        showStatus(
+            "Account updated successfully!",
+            "success"
+        );
+
+
+        document.getElementById(
+            "editForm"
+        ).classList.remove(
+            "show"
+        );
+
+
+        document.getElementById(
+            "viewProfile"
+        ).style.display =
+            "block";
+
+
+        await loadAccount();
+
+
+        /*
+           Keep success message visible after reload.
+        */
+
+        showStatus(
+            "Account updated successfully!",
+            "success"
+        );
+
+
+    }catch(error){
+
+        console.error(
+            "Account update error:",
+            error
+        );
+
+
+        showStatus(
+            error.message ||
+            "Unable to update your account.",
+            "error"
+        );
+
+    }finally{
+
+        saveButton.disabled =
+            false;
+
+        saveButton.textContent =
+            "💾 Save Changes";
+
+    }
+
+}
+
+
+/* =========================
+   CANCEL EDIT
+========================= */
+
+function cancelEdit(){
+
+    document.getElementById(
+        "editForm"
+    ).classList.remove(
+        "show"
+    );
+
+
+    document.getElementById(
+        "viewProfile"
+    ).style.display =
+        "block";
+
+
+    hideStatus();
+
+}
+
+
+/* =========================
+   LOGOUT
+========================= */
+
+function logout(){
+
+    localStorage.removeItem(
+        "token"
+    );
+
+    localStorage.removeItem(
+        "customerLoggedIn"
+    );
+
+    localStorage.removeItem(
+        "customerEmail"
+    );
+
+    localStorage.removeItem(
+        "customerUser"
+    );
+
+    localStorage.removeItem(
+        "selectedCustomer"
+    );
+
+
+    window.location.replace(
+        "customer_signin.html"
+    );
+
+}
+
+
+/* =========================
+   START
+========================= */
+
+loadAccount();
+
+</script>
+
+</body>
+</html>

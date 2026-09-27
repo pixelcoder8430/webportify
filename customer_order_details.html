@@ -1,0 +1,1714 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Webportify - Order Details</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
+
+body{
+    min-height:100vh;
+    background:
+        linear-gradient(
+            rgba(2,7,13,.96),
+            rgba(2,7,13,.98)
+        ),
+        url("wallpaper.jpg");
+    background-size:cover;
+    background-position:center;
+    background-attachment:fixed;
+    color:white;
+}
+
+.sidebar{
+    position:fixed;
+    left:0;
+    top:0;
+    width:250px;
+    height:100vh;
+    padding:30px 18px;
+    background:rgba(5,8,13,.98);
+    border-right:1px solid #ff1744;
+    box-shadow:5px 0 25px rgba(255,23,68,.15);
+}
+
+.logo{
+    text-align:center;
+    color:#ff1744;
+    font-size:27px;
+    font-weight:bold;
+    margin-bottom:45px;
+    text-shadow:0 0 15px #ff1744;
+}
+
+.sidebar ul{
+    list-style:none;
+}
+
+.sidebar li{
+    margin-bottom:9px;
+}
+
+.sidebar a{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    padding:14px 15px;
+    color:#bfc3ca;
+    text-decoration:none;
+    border-radius:10px;
+    transition:.3s;
+}
+
+.sidebar a:hover,
+.sidebar a.active{
+    color:white;
+    background:rgba(255,23,68,.12);
+}
+
+.sidebar a.active{
+    border-left:3px solid #ff1744;
+}
+
+.icon{
+    width:25px;
+    text-align:center;
+    font-size:18px;
+}
+
+.main{
+    margin-left:250px;
+    padding:40px 50px;
+    min-height:100vh;
+}
+
+.top{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:30px;
+}
+
+.top h1{
+    font-size:34px;
+}
+
+.top h1 span{
+    color:#ff1744;
+    text-shadow:0 0 12px #ff1744;
+}
+
+.back-btn{
+    padding:12px 20px;
+    color:white;
+    text-decoration:none;
+    background:#11161e;
+    border:1px solid #333943;
+    border-radius:9px;
+    transition:.3s;
+}
+
+.back-btn:hover{
+    border-color:#ff1744;
+}
+
+.card{
+    background:rgba(9,13,20,.96);
+    border:1px solid rgba(255,23,68,.35);
+    border-radius:18px;
+    padding:28px;
+    margin-bottom:22px;
+}
+
+.order-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:20px;
+    padding-bottom:22px;
+    border-bottom:1px solid #252a32;
+}
+
+.order-id{
+    color:#ff1744;
+    font-size:25px;
+    font-weight:bold;
+    text-shadow:0 0 10px rgba(255,23,68,.35);
+}
+
+.date{
+    color:#777;
+    margin-top:7px;
+    font-size:13px;
+}
+
+.status{
+    padding:8px 14px;
+    border-radius:20px;
+    font-size:12px;
+    font-weight:bold;
+    background:rgba(255,23,68,.12);
+    color:#ff1744;
+    border:1px solid rgba(255,23,68,.3);
+}
+
+.section-title{
+    font-size:20px;
+    margin-bottom:20px;
+}
+
+.section-title span{
+    color:#ff1744;
+}
+
+.progress-container{
+    margin-top:10px;
+}
+
+.progress-bar{
+    width:100%;
+    height:12px;
+    background:#181d25;
+    border-radius:20px;
+    overflow:hidden;
+}
+
+.progress-fill{
+    height:100%;
+    background:#ff1744;
+    border-radius:20px;
+    box-shadow:0 0 15px rgba(255,23,68,.6);
+    transition:width .5s;
+}
+
+.progress-text{
+    display:flex;
+    justify-content:space-between;
+    margin-top:10px;
+    color:#aaa;
+    font-size:13px;
+}
+
+.stage-list{
+    display:flex;
+    justify-content:space-between;
+    margin-top:25px;
+    gap:10px;
+}
+
+.stage{
+    text-align:center;
+    flex:1;
+    color:#555;
+    font-size:12px;
+}
+
+.stage.active{
+    color:#ff1744;
+}
+
+.stage-icon{
+    width:38px;
+    height:38px;
+    margin:0 auto 8px;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:#11161e;
+    border:1px solid #303640;
+}
+
+.stage.active .stage-icon{
+    border-color:#ff1744;
+    color:#ff1744;
+    box-shadow:0 0 12px rgba(255,23,68,.25);
+}
+
+.items{
+    display:grid;
+    gap:12px;
+}
+
+.item{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:15px;
+    padding:17px;
+    background:#080c12;
+    border:1px solid #252b34;
+    border-radius:12px;
+}
+
+.item h3{
+    font-size:15px;
+    margin-bottom:5px;
+}
+
+.item p{
+    color:#777;
+    font-size:12px;
+}
+
+.price{
+    color:#ff1744;
+    font-weight:bold;
+    white-space:nowrap;
+}
+
+.info-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:15px;
+}
+
+.info{
+    padding:17px;
+    background:#080c12;
+    border:1px solid #252b34;
+    border-radius:12px;
+}
+
+.info.full{
+    grid-column:1/-1;
+}
+
+.info label{
+    display:block;
+    color:#ff1744;
+    font-size:10px;
+    font-weight:bold;
+    letter-spacing:1px;
+    margin-bottom:8px;
+}
+
+.info p{
+    color:#ddd;
+    line-height:1.5;
+    word-break:break-word;
+}
+
+.actions{
+    display:flex;
+    gap:12px;
+    flex-wrap:wrap;
+}
+
+.btn{
+    padding:13px 20px;
+    border-radius:9px;
+    text-decoration:none;
+    font-weight:bold;
+    border:none;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.red-btn{
+    background:#ff1744;
+    color:white;
+}
+
+.red-btn:hover{
+    box-shadow:0 0 20px rgba(255,23,68,.5);
+}
+
+.dark-btn{
+    background:#11161e;
+    color:white;
+    border:1px solid #333943;
+}
+
+.dark-btn:hover{
+    border-color:#ff1744;
+}
+
+.empty{
+    text-align:center;
+    padding:70px 20px;
+}
+
+.empty-icon{
+    font-size:55px;
+    margin-bottom:15px;
+}
+
+.empty h2{
+    margin-bottom:10px;
+}
+
+.empty p{
+    color:#777;
+    margin-bottom:25px;
+}
+
+.loading{
+    text-align:center;
+    padding:70px 20px;
+    color:#aaa;
+    font-size:17px;
+}
+
+.error-box{
+    text-align:center;
+    padding:70px 20px;
+}
+
+.error-box h2{
+    color:#ff1744;
+    margin-bottom:12px;
+}
+
+.error-box p{
+    color:#777;
+    margin-bottom:25px;
+}
+
+@media(max-width:700px){
+
+    .sidebar{
+        position:relative;
+        width:100%;
+        height:auto;
+        border-right:none;
+        border-bottom:1px solid #ff1744;
+    }
+
+    .main{
+        margin-left:0;
+        padding:25px 18px;
+    }
+
+    .top{
+        flex-direction:column;
+        align-items:flex-start;
+        gap:15px;
+    }
+
+    .order-header{
+        flex-direction:column;
+        align-items:flex-start;
+    }
+
+    .stage-list{
+        flex-wrap:wrap;
+    }
+
+    .stage{
+        min-width:28%;
+    }
+
+    .info-grid{
+        grid-template-columns:1fr;
+    }
+
+    .info.full{
+        grid-column:auto;
+    }
+
+    .item{
+        align-items:flex-start;
+        flex-direction:column;
+    }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<aside class="sidebar">
+
+    <div class="logo">
+        WEBPORTIFY
+    </div>
+
+    <ul>
+
+        <li>
+            <a href="customer_dashboard.html">
+                <span class="icon">🏠</span>
+                Dashboard
+            </a>
+        </li>
+
+        <li>
+            <a href="customer_cart.html">
+                <span class="icon">🛒</span>
+                My Cart
+            </a>
+        </li>
+
+        <li>
+            <a href="customer_orders.html" class="active">
+                <span class="icon">📦</span>
+                My Orders
+            </a>
+        </li>
+
+        <li>
+            <a href="customer_messages.html">
+                <span class="icon">💬</span>
+                Messages
+            </a>
+        </li>
+
+        <li>
+            <a href="customer_account.html">
+                <span class="icon">👤</span>
+                My Account
+            </a>
+        </li>
+
+    </ul>
+
+</aside>
+
+
+<main class="main">
+
+    <div class="top">
+
+        <h1>
+            Order <span>Details</span>
+        </h1>
+
+        <a
+            href="customer_orders.html"
+            class="back-btn"
+        >
+            ← My Orders
+        </a>
+
+    </div>
+
+    <div id="orderContent">
+
+        <div class="card loading">
+            Loading order details...
+        </div>
+
+    </div>
+
+</main>
+
+
+<script>
+
+const API_URL =
+    "http://localhost:5000";
+
+
+/* =========================
+   LOGIN PROTECTION
+========================= */
+
+const token =
+    localStorage.getItem("token");
+
+const customerLoggedIn =
+    localStorage.getItem(
+        "customerLoggedIn"
+    );
+
+if(
+    !token ||
+    customerLoggedIn !== "true"
+){
+
+    localStorage.removeItem(
+        "customerLoggedIn"
+    );
+
+    window.location.replace(
+        "customer_signin.html"
+    );
+
+}
+
+
+/* =========================
+   SELECTED ORDER
+========================= */
+
+const selectedOrderId =
+    localStorage.getItem(
+        "selectedOrderId"
+    );
+
+
+/* =========================
+   HTML SECURITY
+========================= */
+
+function escapeHTML(value){
+
+    return String(value ?? "")
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+
+}
+
+
+/* =========================
+   ORDER ID
+========================= */
+
+function displayOrderId(id){
+
+    if(
+        id === undefined ||
+        id === null
+    ){
+
+        return "ORDER";
+
+    }
+
+    return "WP" + id;
+
+}
+
+
+/* =========================
+   STATUS
+========================= */
+
+function formatStatus(status){
+
+    if(!status){
+        return "Pending";
+    }
+
+    return String(status)
+        .toLowerCase()
+        .replace(/_/g," ")
+        .replace(/\b\w/g,function(letter){
+
+            return letter.toUpperCase();
+
+        });
+
+}
+
+
+/* =========================
+   DATE
+========================= */
+
+function formatDate(value){
+
+    if(!value){
+        return "Unknown date";
+    }
+
+    const date =
+        new Date(value);
+
+    if(
+        Number.isNaN(
+            date.getTime()
+        )
+    ){
+
+        return "Unknown date";
+
+    }
+
+    return date.toLocaleDateString(
+        "en-IN",
+        {
+            day:"2-digit",
+            month:"short",
+            year:"numeric"
+        }
+    );
+
+}
+
+
+/* =========================
+   PROGRESS
+========================= */
+
+function getProgress(order){
+
+    if(!order){
+        return 0;
+    }
+
+    const status =
+        String(
+            order.status || ""
+        ).toLowerCase();
+
+    if(
+        status === "rejected" ||
+        status === "cancelled"
+    ){
+
+        return 0;
+
+    }
+
+    const progress =
+        Number(order.progress);
+
+    if(
+        Number.isFinite(progress)
+    ){
+
+        return Math.max(
+            0,
+            Math.min(
+                100,
+                progress
+            )
+        );
+
+    }
+
+    return 0;
+
+}
+
+
+/* =========================
+   STAGE
+========================= */
+
+function getStage(
+    progress,
+    status
+){
+
+    const normalized =
+        String(
+            status || ""
+        ).toLowerCase();
+
+    if(normalized === "rejected"){
+        return "Rejected";
+    }
+
+    if(normalized === "cancelled"){
+        return "Cancelled";
+    }
+
+    if(progress >= 100){
+        return "Completed";
+    }
+
+    if(progress >= 75){
+        return "Testing";
+    }
+
+    if(progress >= 50){
+        return "Development";
+    }
+
+    if(progress >= 25){
+        return "Designing";
+    }
+
+    if(normalized === "pending"){
+        return "Waiting for Developer";
+    }
+
+    return "Active";
+
+}
+
+
+/* =========================
+   LOAD ORDER
+========================= */
+
+async function getOrder(){
+
+    if(!selectedOrderId){
+
+        throw new Error(
+            "No order was selected."
+        );
+
+    }
+
+    const numericId =
+        Number(selectedOrderId);
+
+    if(
+        !Number.isInteger(numericId) ||
+        numericId <= 0
+    ){
+
+        throw new Error(
+            "Invalid order ID."
+        );
+
+    }
+
+    const response =
+        await fetch(
+            `${API_URL}/api/orders/${numericId}`,
+            {
+                method:"GET",
+
+                headers:{
+                    "Authorization":
+                        `Bearer ${token}`
+                }
+            }
+        );
+
+
+    if(response.status === 401){
+
+        localStorage.removeItem("token");
+        localStorage.removeItem("customerLoggedIn");
+        localStorage.removeItem("customerUser");
+        localStorage.removeItem("customerEmail");
+
+        window.location.replace(
+            "customer_signin.html"
+        );
+
+        return null;
+
+    }
+
+
+    if(response.status === 403){
+
+        throw new Error(
+            "You cannot view this order."
+        );
+
+    }
+
+
+    if(response.status === 404){
+
+        throw new Error(
+            "Order not found."
+        );
+
+    }
+
+
+    let data;
+
+    try{
+
+        data =
+            await response.json();
+
+    }catch(error){
+
+        throw new Error(
+            "Invalid response from the server."
+        );
+
+    }
+
+
+    if(
+        !response.ok ||
+        !data.success ||
+        !data.order
+    ){
+
+        throw new Error(
+            data.message ||
+            "Could not load order."
+        );
+
+    }
+
+
+    return data.order;
+
+}
+
+
+/* =========================
+   FIND REQUEST FOR ORDER
+========================= */
+
+async function findRequestForOrder(
+    order
+){
+
+    const response =
+        await fetch(
+            `${API_URL}/api/requests/mine`,
+            {
+                method:"GET",
+
+                headers:{
+                    "Authorization":
+                        `Bearer ${token}`
+                }
+            }
+        );
+
+
+    if(response.status === 401){
+
+        localStorage.removeItem("token");
+        localStorage.removeItem("customerLoggedIn");
+
+        window.location.replace(
+            "customer_signin.html"
+        );
+
+        return null;
+
+    }
+
+
+    if(!response.ok){
+
+        return null;
+
+    }
+
+
+    const data =
+        await response.json();
+
+
+    const requests =
+        Array.isArray(
+            data.requests
+        )
+        ? data.requests
+        : [];
+
+
+    return requests.find(
+        request =>
+            String(
+                request.order_id || ""
+            ) ===
+            String(
+                order.id
+            )
+    ) || null;
+
+}
+
+
+/* =========================
+   MESSAGE DEVELOPER
+========================= */
+
+async function messageDeveloper(
+    order
+){
+
+    if(!order){
+
+        alert(
+            "Order not found."
+        );
+
+        return;
+
+    }
+
+
+    const developerId =
+        Number(
+            order.developer_id
+        );
+
+
+    if(
+        !Number.isInteger(developerId) ||
+        developerId <= 0
+    ){
+
+        alert(
+            "A developer has not been assigned to this order yet."
+        );
+
+        return;
+
+    }
+
+
+    const button =
+        document.getElementById(
+            "messageDeveloperBtn"
+        );
+
+
+    if(button){
+
+        button.disabled = true;
+        button.textContent =
+            "Loading Conversation...";
+
+    }
+
+
+    try{
+
+        /*
+         * The order API does not return
+         * request_id.
+         *
+         * Messages need the request ID,
+         * so find the request connected
+         * to this order.
+         */
+
+        const request =
+            await findRequestForOrder(
+                order
+            );
+
+
+        if(!request){
+
+            throw new Error(
+                "The request connected to this order could not be found."
+            );
+
+        }
+
+
+        if(!request.id){
+
+            throw new Error(
+                "Request information is incomplete."
+            );
+
+        }
+
+
+        localStorage.setItem(
+            "selectedOrderId",
+            String(order.id)
+        );
+
+
+        localStorage.setItem(
+            "selectedRequestId",
+            String(request.id)
+        );
+
+
+        localStorage.setItem(
+            "selectedCustomer",
+            JSON.stringify({
+
+                id:
+                    order.customer_id,
+
+                name:
+                    order.customer_name ||
+                    "Customer",
+
+                email:
+                    order.customer_email ||
+                    ""
+
+            })
+        );
+
+
+        localStorage.setItem(
+            "selectedDeveloper",
+            JSON.stringify({
+
+                id:
+                    developerId,
+
+                name:
+                    order.developer_name ||
+                    "Developer",
+
+                email:
+                    order.developer_email ||
+                    ""
+
+            })
+        );
+
+
+        window.location.href =
+            "customer_messages.html";
+
+    }
+    catch(error){
+
+        console.error(
+            "Message developer error:",
+            error
+        );
+
+        alert(
+            error.message ||
+            "Could not open the conversation."
+        );
+
+
+        if(button){
+
+            button.disabled = false;
+
+            button.textContent =
+                "💬 Message Developer";
+
+        }
+
+    }
+
+}
+
+
+/* =========================
+   DISPLAY ORDER
+========================= */
+
+function displayOrder(order){
+
+    const container =
+        document.getElementById(
+            "orderContent"
+        );
+
+
+    const progress =
+        getProgress(order);
+
+
+    const stage =
+        getStage(
+            progress,
+            order.status
+        );
+
+
+    const status =
+        formatStatus(
+            order.status
+        );
+
+
+    const websites =
+        Array.isArray(order.items)
+            ? order.items
+            : [];
+
+
+    const itemsHTML =
+        websites.length > 0
+
+        ? websites.map(function(item){
+
+            const itemPrice =
+                Number(
+                    item.price
+                ) || 0;
+
+            return `
+
+                <div class="item">
+
+                    <div>
+
+                        <h3>
+                            ${escapeHTML(
+                                item.name ||
+                                "Website"
+                            )}
+                        </h3>
+
+                        <p>
+                            ${escapeHTML(
+                                item.type ||
+                                "Website"
+                            )}
+                        </p>
+
+                    </div>
+
+                    <div class="price">
+
+                        ₹${itemPrice.toLocaleString(
+                            "en-IN"
+                        )}
+
+                    </div>
+
+                </div>
+
+            `;
+
+        }).join("")
+
+        : `
+
+            <div class="item">
+
+                <div>
+
+                    <h3>
+                        ${escapeHTML(
+                            order.website_type ||
+                            "Website"
+                        )}
+                    </h3>
+
+                    <p>
+                        Website
+                    </p>
+
+                </div>
+
+                <div class="price">
+
+                    ₹${Number(
+                        order.total || 0
+                    ).toLocaleString(
+                        "en-IN"
+                    )}
+
+                </div>
+
+            </div>
+
+        `;
+
+
+    const stageNames = [
+        "Active",
+        "Designing",
+        "Development",
+        "Testing",
+        "Completed"
+    ];
+
+
+    const stageIcons = [
+        "⚡",
+        "🎨",
+        "💻",
+        "🧪",
+        "✅"
+    ];
+
+
+    const normalizedStatus =
+        String(
+            order.status || ""
+        ).toLowerCase();
+
+
+    const isRejected =
+        normalizedStatus === "rejected";
+
+
+    const isCancelled =
+        normalizedStatus === "cancelled";
+
+
+    const stagesHTML =
+        stageNames.map(
+            function(name,index){
+
+                const stageProgress =
+                    index * 25;
+
+                const active =
+                    progress >= stageProgress &&
+                    !isRejected &&
+                    !isCancelled;
+
+                return `
+
+                    <div
+                        class="stage ${
+                            active
+                                ? "active"
+                                : ""
+                        }"
+                    >
+
+                        <div class="stage-icon">
+                            ${stageIcons[index]}
+                        </div>
+
+                        ${name}
+
+                    </div>
+
+                `;
+
+            }
+        ).join("");
+
+
+    container.innerHTML = `
+
+        <div class="card">
+
+            <div class="order-header">
+
+                <div>
+
+                    <div class="order-id">
+
+                        ${escapeHTML(
+                            displayOrderId(
+                                order.id
+                            )
+                        )}
+
+                    </div>
+
+                    <div class="date">
+
+                        Ordered on
+                        ${escapeHTML(
+                            formatDate(
+                                order.created_at
+                            )
+                        )}
+
+                    </div>
+
+                </div>
+
+                <div class="status">
+
+                    ${escapeHTML(
+                        status
+                    )}
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="card">
+
+            <h2 class="section-title">
+                Project <span>Progress</span>
+            </h2>
+
+            ${
+                isRejected
+
+                ? `
+
+                    <div class="info">
+
+                        <label>
+                            STATUS
+                        </label>
+
+                        <p>
+                            This order was rejected by the developer.
+                        </p>
+
+                    </div>
+
+                `
+
+                : isCancelled
+
+                ? `
+
+                    <div class="info">
+
+                        <label>
+                            STATUS
+                        </label>
+
+                        <p>
+                            This order has been cancelled.
+                        </p>
+
+                    </div>
+
+                `
+
+                : `
+
+                    <div class="progress-container">
+
+                        <div class="progress-bar">
+
+                            <div
+                                class="progress-fill"
+                                style="width:${progress}%"
+                            ></div>
+
+                        </div>
+
+                        <div class="progress-text">
+
+                            <span>
+                                ${escapeHTML(stage)}
+                            </span>
+
+                            <span>
+                                ${progress}%
+                            </span>
+
+                        </div>
+
+                        <div class="stage-list">
+
+                            ${stagesHTML}
+
+                        </div>
+
+                    </div>
+
+                `
+            }
+
+        </div>
+
+
+        <div class="card">
+
+            <h2 class="section-title">
+                Websites <span>Ordered</span>
+            </h2>
+
+            <div class="items">
+
+                ${itemsHTML}
+
+            </div>
+
+        </div>
+
+
+        <div class="card">
+
+            <h2 class="section-title">
+                Order <span>Information</span>
+            </h2>
+
+            <div class="info-grid">
+
+                <div class="info">
+
+                    <label>CUSTOMER</label>
+
+                    <p>
+                        ${escapeHTML(
+                            order.customer_name ||
+                            "Customer"
+                        )}
+                    </p>
+
+                </div>
+
+
+                <div class="info">
+
+                    <label>EMAIL</label>
+
+                    <p>
+                        ${escapeHTML(
+                            order.customer_email ||
+                            "Not provided"
+                        )}
+                    </p>
+
+                </div>
+
+
+                <div class="info">
+
+                    <label>DEVELOPER</label>
+
+                    <p>
+                        ${escapeHTML(
+                            order.developer_name ||
+                            "Not assigned"
+                        )}
+                    </p>
+
+                </div>
+
+
+                <div class="info">
+
+                    <label>DEVELOPER EMAIL</label>
+
+                    <p>
+                        ${escapeHTML(
+                            order.developer_email ||
+                            "Not assigned"
+                        )}
+                    </p>
+
+                </div>
+
+
+                <div class="info">
+
+                    <label>WEBSITE TYPE</label>
+
+                    <p>
+                        ${escapeHTML(
+                            order.website_type ||
+                            "Website"
+                        )}
+                    </p>
+
+                </div>
+
+
+                <div class="info">
+
+                    <label>PURPOSE</label>
+
+                    <p>
+                        ${escapeHTML(
+                            order.purpose ||
+                            "Not specified"
+                        )}
+                    </p>
+
+                </div>
+
+
+                <div class="info full">
+
+                    <label>FEATURES</label>
+
+                    <p>
+                        ${escapeHTML(
+                            order.features ||
+                            "Not specified"
+                        )}
+                    </p>
+
+                </div>
+
+
+                <div class="info full">
+
+                    <label>WEBSITE REQUIREMENTS</label>
+
+                    <p>
+                        ${escapeHTML(
+                            order.requirements ||
+                            "No additional requirements."
+                        )}
+                    </p>
+
+                </div>
+
+
+                <div class="info full">
+
+                    <label>TOTAL</label>
+
+                    <p>
+                        ₹${Number(
+                            order.total || 0
+                        ).toLocaleString(
+                            "en-IN"
+                        )}
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="actions">
+
+                <button
+                    type="button"
+                    class="btn red-btn"
+                    id="messageDeveloperBtn"
+                >
+                    💬 Message Developer
+                </button>
+
+
+                <a
+                    href="customer_orders.html"
+                    class="btn dark-btn"
+                >
+                    📦 All Orders
+                </a>
+
+
+                <a
+                    href="customer_dashboard.html"
+                    class="btn dark-btn"
+                >
+                    🏠 Dashboard
+                </a>
+
+            </div>
+
+        </div>
+
+    `;
+
+
+    const messageButton =
+        document.getElementById(
+            "messageDeveloperBtn"
+        );
+
+
+    if(messageButton){
+
+        messageButton.addEventListener(
+            "click",
+            function(){
+
+                messageDeveloper(
+                    order
+                );
+
+            }
+        );
+
+    }
+
+
+    if(!order.developer_id){
+
+        messageButton.disabled = true;
+
+        messageButton.style.opacity = "0.5";
+
+        messageButton.style.cursor =
+            "not-allowed";
+
+        messageButton.title =
+            "A developer has not been assigned yet.";
+
+    }
+
+}
+
+
+/* =========================
+   LOAD PAGE
+========================= */
+
+async function loadOrder(){
+
+    const container =
+        document.getElementById(
+            "orderContent"
+        );
+
+
+    try{
+
+        const order =
+            await getOrder();
+
+
+        if(order === null){
+            return;
+        }
+
+
+        displayOrder(order);
+
+    }
+    catch(error){
+
+        console.error(
+            "Order details error:",
+            error
+        );
+
+
+        container.innerHTML = `
+
+            <div class="card error-box">
+
+                <div class="empty-icon">
+                    📦
+                </div>
+
+                <h2>
+                    Unable to Load Order
+                </h2>
+
+                <p>
+                    ${escapeHTML(
+                        error.message ||
+                        "Something went wrong."
+                    )}
+                </p>
+
+                <a
+                    href="customer_orders.html"
+                    class="btn red-btn"
+                >
+                    ← Back to My Orders
+                </a>
+
+            </div>
+
+        `;
+
+    }
+
+}
+
+
+/* =========================
+   START
+========================= */
+
+loadOrder();
+
+
+/* =========================
+   LIVE UPDATES
+========================= */
+
+setInterval(
+    loadOrder,
+    10000
+);
+
+</script>
+
+</body>
+</html>

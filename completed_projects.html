@@ -1,0 +1,1169 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Completed Projects | Webportify</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
+
+body{
+    min-height:100vh;
+    background:
+        linear-gradient(rgba(0,0,0,.88),rgba(0,0,0,.96)),
+        url("wallpaper.jpg") center/cover fixed;
+    color:white;
+}
+
+/* =========================
+   HEADER
+========================= */
+
+header{
+    height:75px;
+    padding:0 40px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    background:rgba(0,0,0,.8);
+    border-bottom:1px solid #ff1744;
+}
+
+.logo{
+    color:#ff1744;
+    font-size:27px;
+    font-weight:bold;
+    text-shadow:0 0 15px #ff1744;
+}
+
+.back{
+    text-decoration:none;
+    color:white;
+    border:1px solid #ff1744;
+    padding:10px 18px;
+    border-radius:8px;
+    transition:.3s;
+}
+
+.back:hover{
+    background:#ff1744;
+    box-shadow:0 0 20px #ff1744;
+}
+
+/* =========================
+   MAIN
+========================= */
+
+.container{
+    width:90%;
+    max-width:1100px;
+    margin:45px auto;
+}
+
+h1{
+    color:#ff1744;
+    font-size:38px;
+    text-shadow:0 0 15px #ff1744;
+}
+
+.subtitle{
+    color:#aaa;
+    margin:8px 0 35px;
+}
+
+/* =========================
+   PROJECT
+========================= */
+
+.project{
+    background:rgba(10,10,15,.92);
+    border:1px solid #333;
+    border-left:4px solid #ff1744;
+    border-radius:15px;
+    padding:25px;
+    margin-bottom:22px;
+    box-shadow:0 0 20px rgba(255,23,68,.12);
+    transition:.3s;
+}
+
+.project:hover{
+    border-color:#ff1744;
+    box-shadow:0 0 25px rgba(255,23,68,.2);
+}
+
+.project-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:15px;
+}
+
+.customer{
+    font-size:22px;
+    font-weight:bold;
+}
+
+.type{
+    color:#ff1744;
+}
+
+.status{
+    display:inline-block;
+    margin-top:10px;
+    padding:5px 12px;
+    border-radius:20px;
+    background:rgba(255,23,68,.12);
+    color:#ff1744;
+    font-size:13px;
+}
+
+/* =========================
+   DETAILS
+========================= */
+
+.details{
+    margin-top:20px;
+    color:#aaa;
+    line-height:1.8;
+}
+
+.details strong{
+    color:white;
+}
+
+/* =========================
+   COMPLETED BAR
+========================= */
+
+.completed-box{
+    margin-top:22px;
+}
+
+.completed-bar{
+    width:100%;
+    height:10px;
+    background:#222;
+    border-radius:10px;
+    overflow:hidden;
+}
+
+.completed-progress{
+    height:100%;
+    background:#ff1744;
+    box-shadow:0 0 12px #ff1744;
+}
+
+/* =========================
+   BUTTONS
+========================= */
+
+.buttons{
+    margin-top:22px;
+    display:flex;
+    gap:12px;
+    flex-wrap:wrap;
+}
+
+button{
+    padding:10px 18px;
+    border-radius:8px;
+    cursor:pointer;
+    font-weight:bold;
+    transition:.3s;
+}
+
+.view{
+    background:#ff1744;
+    color:white;
+    border:1px solid #ff1744;
+}
+
+.view:hover{
+    box-shadow:0 0 18px #ff1744;
+}
+
+.message{
+    background:transparent;
+    color:#ff1744;
+    border:1px solid #ff1744;
+}
+
+.message:hover{
+    background:#ff1744;
+    color:white;
+}
+
+/* =========================
+   LOADING
+========================= */
+
+.loading{
+    text-align:center;
+    padding:70px 20px;
+    color:#777;
+}
+
+.loading-icon{
+    font-size:50px;
+    margin-bottom:15px;
+}
+
+.loading h2{
+    color:#aaa;
+    margin-bottom:8px;
+}
+
+/* =========================
+   EMPTY
+========================= */
+
+.empty{
+    text-align:center;
+    padding:70px 20px;
+    color:#777;
+}
+
+.empty h2{
+    color:#aaa;
+    margin-bottom:10px;
+}
+
+/* =========================
+   ERROR
+========================= */
+
+.error-box{
+    text-align:center;
+    padding:60px 20px;
+    background:rgba(10,10,15,.92);
+    border:1px solid #ff1744;
+    border-radius:15px;
+}
+
+.error-box h2{
+    color:#ff1744;
+    margin-bottom:10px;
+}
+
+.error-box p{
+    color:#aaa;
+    margin-bottom:20px;
+}
+
+.retry{
+    padding:10px 18px;
+    background:#ff1744;
+    color:white;
+    border:1px solid #ff1744;
+}
+
+.retry:hover{
+    box-shadow:0 0 18px #ff1744;
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:700px){
+
+    header{
+        padding:0 20px;
+    }
+
+    .project-top{
+        flex-direction:column;
+        align-items:flex-start;
+        gap:8px;
+    }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<!-- =========================
+     HEADER
+========================= -->
+
+<header>
+
+    <div class="logo">
+        &lt;/&gt; Webportify
+    </div>
+
+    <a
+        href="developer_dashboard.html"
+        class="back">
+
+        ← Dashboard
+
+    </a>
+
+</header>
+
+
+<!-- =========================
+     MAIN
+========================= -->
+
+<div class="container">
+
+    <h1>
+        ✅ Completed Projects
+    </h1>
+
+    <p class="subtitle">
+        Websites you have successfully completed.
+    </p>
+
+    <div id="projects">
+
+        <div class="loading">
+
+            <div class="loading-icon">
+                ✅
+            </div>
+
+            <h2>
+                Loading Completed Projects...
+            </h2>
+
+            <p>
+                Getting your completed projects.
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+/* ==========================================
+   BACKEND
+========================================== */
+
+const API_URL =
+    "http://localhost:5000";
+
+
+/* ==========================================
+   AUTHENTICATION
+========================================== */
+
+const token =
+    localStorage.getItem("token");
+
+
+if(
+    !token ||
+    sessionStorage.getItem(
+        "developerLoggedIn"
+    ) !== "true"
+){
+
+    window.location.replace(
+        "developer_signin.html"
+    );
+
+}
+
+
+/* ==========================================
+   ELEMENT
+========================================== */
+
+const projectContainer =
+    document.getElementById("projects");
+
+
+/* ==========================================
+   DATA
+========================================== */
+
+let completedProjects = [];
+
+let requests = [];
+
+
+/* ==========================================
+   API REQUEST
+========================================== */
+
+async function apiRequest(
+    endpoint,
+    options = {}
+){
+
+    const response =
+        await fetch(
+            API_URL + endpoint,
+            {
+                ...options,
+
+                headers:{
+                    ...(options.body
+                        ? {
+                            "Content-Type":
+                                "application/json"
+                        }
+                        : {}),
+
+                    "Authorization":
+                        "Bearer " + token
+                }
+            }
+        );
+
+
+    let data = {};
+
+    try{
+
+        data =
+            await response.json();
+
+    }
+    catch(error){
+
+        data = {};
+
+    }
+
+
+    if(!response.ok){
+
+        if(
+            response.status === 401 ||
+            response.status === 403
+        ){
+
+            localStorage.removeItem(
+                "token"
+            );
+
+            sessionStorage.removeItem(
+                "developerLoggedIn"
+            );
+
+            sessionStorage.removeItem(
+                "developerEmail"
+            );
+
+            window.location.replace(
+                "developer_signin.html"
+            );
+
+            throw new Error(
+                "Your session has expired."
+            );
+
+        }
+
+
+        throw new Error(
+            data.message ||
+            "Something went wrong."
+        );
+
+    }
+
+
+    return data;
+
+}
+
+
+/* ==========================================
+   LOAD COMPLETED PROJECTS
+========================================== */
+
+async function loadCompletedProjects(){
+
+    projectContainer.innerHTML = `
+
+        <div class="loading">
+
+            <div class="loading-icon">
+                ✅
+            </div>
+
+            <h2>
+                Loading Completed Projects...
+            </h2>
+
+            <p>
+                Getting your completed projects.
+            </p>
+
+        </div>
+
+    `;
+
+
+    try{
+
+        const projectData =
+            await apiRequest(
+                "/api/projects?status=completed"
+            );
+
+
+        completedProjects =
+            Array.isArray(
+                projectData.projects
+            )
+            ?
+            projectData.projects
+            :
+            [];
+
+
+        /*
+         * Load requests as well.
+         *
+         * We need these to connect a
+         * completed project to its
+         * customer conversation.
+         */
+
+        try{
+
+            const requestData =
+                await apiRequest(
+                    "/api/requests"
+                );
+
+
+            requests =
+                Array.isArray(
+                    requestData.requests
+                )
+                ?
+                requestData.requests
+                :
+                [];
+
+        }
+        catch(error){
+
+            console.error(
+                "Could not load requests:",
+                error
+            );
+
+            requests = [];
+
+        }
+
+
+        displayProjects();
+
+    }
+    catch(error){
+
+        console.error(
+            "Completed projects error:",
+            error
+        );
+
+
+        projectContainer.innerHTML = `
+
+            <div class="error-box">
+
+                <h2>
+                    Unable to Load Projects
+                </h2>
+
+                <p>
+                    ${escapeHTML(
+                        error.message ||
+                        "Could not load completed projects."
+                    )}
+                </p>
+
+                <button
+                    class="retry"
+                    onclick="loadCompletedProjects()">
+
+                    Try Again
+
+                </button>
+
+            </div>
+
+        `;
+
+    }
+
+}
+
+
+/* ==========================================
+   FIND REQUEST
+========================================== */
+
+function getRequestForProject(project){
+
+    if(!project){
+        return null;
+    }
+
+
+    return requests.find(
+        request =>
+
+            String(
+                request.order_id || ""
+            ) ===
+            String(
+                project.order_id || ""
+            )
+
+    ) || null;
+
+}
+
+
+/* ==========================================
+   DISPLAY PROJECTS
+========================================== */
+
+function displayProjects(){
+
+    projectContainer.innerHTML = "";
+
+
+    if(completedProjects.length === 0){
+
+        projectContainer.innerHTML = `
+
+            <div class="empty">
+
+                <h2>
+                    No Completed Projects
+                </h2>
+
+                <p>
+                    Completed websites will appear here.
+                </p>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    completedProjects.forEach(
+        (project,index) => {
+
+            const customer =
+                project.customer_name ||
+                "Customer";
+
+
+            const websiteType =
+                project.website_type ||
+                "Website";
+
+
+            const customerEmail =
+                project.customer_email ||
+                "Not provided";
+
+
+            const projectId =
+                project.id ||
+                "N/A";
+
+
+            const orderId =
+                project.order_id ||
+                "N/A";
+
+
+            const progress =
+                Math.max(
+                    0,
+                    Math.min(
+                        100,
+                        Number(
+                            project.progress
+                        ) || 100
+                    )
+                );
+
+
+            const card =
+                document.createElement(
+                    "div"
+                );
+
+
+            card.className =
+                "project";
+
+
+            card.innerHTML = `
+
+                <div class="project-top">
+
+                    <div class="customer">
+
+                        👤
+                        ${escapeHTML(
+                            customer
+                        )}
+
+                    </div>
+
+
+                    <div class="type">
+
+                        ${escapeHTML(
+                            websiteType
+                        )}
+
+                    </div>
+
+                </div>
+
+
+                <div class="status">
+
+                    ✅ Completed
+
+                </div>
+
+
+                <div class="details">
+
+                    <div>
+
+                        <strong>
+                            Customer:
+                        </strong>
+
+                        ${escapeHTML(
+                            customer
+                        )}
+
+                    </div>
+
+
+                    <div>
+
+                        <strong>
+                            Email:
+                        </strong>
+
+                        ${escapeHTML(
+                            customerEmail
+                        )}
+
+                    </div>
+
+
+                    <div>
+
+                        <strong>
+                            Project ID:
+                        </strong>
+
+                        #${escapeHTML(
+                            projectId
+                        )}
+
+                    </div>
+
+
+                    <div>
+
+                        <strong>
+                            Order ID:
+                        </strong>
+
+                        #${escapeHTML(
+                            orderId
+                        )}
+
+                    </div>
+
+
+                    <div>
+
+                        <strong>
+                            Progress:
+                        </strong>
+
+                        ${progress}%
+
+                    </div>
+
+
+                    <div>
+
+                        <strong>
+                            Completed:
+                        </strong>
+
+                        ${escapeHTML(
+                            formatDate(
+                                project.updated_at
+                            )
+                        )}
+
+                    </div>
+
+                </div>
+
+
+                <div class="completed-box">
+
+                    <div class="completed-bar">
+
+                        <div
+                            class="completed-progress"
+                            style="
+                                width:${progress}%;
+                            ">
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="buttons">
+
+                    <button
+                        class="view"
+                        data-index="${index}"
+                        onclick="
+                            viewProject(
+                                this.dataset.index
+                            )
+                        ">
+
+                        👁 View Project
+
+                    </button>
+
+
+                    <button
+                        class="message"
+                        data-index="${index}"
+                        onclick="
+                            messageCustomer(
+                                this.dataset.index
+                            )
+                        ">
+
+                        💬 Message Customer
+
+                    </button>
+
+                </div>
+
+            `;
+
+
+            projectContainer.appendChild(
+                card
+            );
+
+        }
+    );
+
+}
+
+
+/* ==========================================
+   VIEW PROJECT
+========================================== */
+
+function viewProject(index){
+
+    const project =
+        completedProjects[
+            Number(index)
+        ];
+
+
+    if(!project){
+        return;
+    }
+
+
+    alert(
+
+        "✅ COMPLETED PROJECT\n\n" +
+
+        "Customer: " +
+        (
+            project.customer_name ||
+            "Customer"
+        ) +
+
+        "\n\nWebsite Type: " +
+        (
+            project.website_type ||
+            "Website"
+        ) +
+
+        "\n\nProject ID: #" +
+        (
+            project.id ||
+            "N/A"
+        ) +
+
+        "\n\nOrder ID: #" +
+        (
+            project.order_id ||
+            "N/A"
+        ) +
+
+        "\n\nProgress: " +
+        (
+            project.progress ??
+            100
+        ) +
+        "%"
+
+    );
+
+}
+
+
+/* ==========================================
+   MESSAGE CUSTOMER
+========================================== */
+
+function messageCustomer(index){
+
+    index =
+        Number(index);
+
+
+    if(
+        !Number.isInteger(index) ||
+        !completedProjects[index]
+    ){
+
+        return;
+
+    }
+
+
+    const project =
+        completedProjects[index];
+
+
+    const request =
+        getRequestForProject(
+            project
+        );
+
+
+    /*
+     * Messages require a request ID.
+     */
+
+    if(!request){
+
+        alert(
+
+            "The customer request connected " +
+            "to this project could not be found."
+
+        );
+
+        return;
+
+    }
+
+
+    if(!request.customer_id){
+
+        alert(
+            "Customer information is missing."
+        );
+
+        return;
+
+    }
+
+
+    /*
+     * Save only navigation information.
+     *
+     * developer_messages.html will use
+     * the backend for the actual messages.
+     */
+
+    localStorage.setItem(
+        "selectedRequestId",
+        String(request.id)
+    );
+
+
+    localStorage.setItem(
+        "selectedCustomer",
+        JSON.stringify({
+
+            id:
+                request.customer_id,
+
+            name:
+                request.customer_name ||
+                project.customer_name ||
+                "Customer",
+
+            email:
+                request.customer_email ||
+                project.customer_email ||
+                ""
+
+        })
+    );
+
+
+    if(project.developer_id){
+
+        localStorage.setItem(
+            "selectedDeveloper",
+            JSON.stringify({
+
+                id:
+                    project.developer_id
+
+            })
+        );
+
+    }
+
+
+    window.location.href =
+        "developer_messages.html";
+
+}
+
+
+/* ==========================================
+   FORMAT DATE
+========================================== */
+
+function formatDate(value){
+
+    if(!value){
+        return "Not available";
+    }
+
+
+    const date =
+        new Date(value);
+
+
+    if(
+        Number.isNaN(
+            date.getTime()
+        )
+    ){
+
+        return String(value);
+
+    }
+
+
+    return date.toLocaleString(
+        "en-IN",
+        {
+            day:"2-digit",
+            month:"short",
+            year:"numeric",
+            hour:"2-digit",
+            minute:"2-digit"
+        }
+    );
+
+}
+
+
+/* ==========================================
+   ESCAPE HTML
+========================================== */
+
+function escapeHTML(value){
+
+    return String(value)
+
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+
+        .replace(
+            /</g,
+            "&lt;"
+        )
+
+        .replace(
+            />/g,
+            "&gt;"
+        )
+
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+
+        .replace(
+            /'/g,
+            "&#039;"
+        );
+
+}
+
+
+/* ==========================================
+   START
+========================================== */
+
+loadCompletedProjects();
+
+
+/* ==========================================
+   AUTO REFRESH
+========================================== */
+
+setInterval(
+    loadCompletedProjects,
+    10000
+);
+
+</script>
+
+</body>
+
+</html>

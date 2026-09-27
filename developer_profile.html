@@ -1,0 +1,1379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Webportify - Developer Profile</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background:
+                linear-gradient(rgba(2, 7, 13, 0.95), rgba(2, 7, 13, 0.97)),
+                url("wallpaper.jpg");
+            background-size: cover;
+            background-position: center;
+            color: white;
+        }
+
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 250px;
+            height: 100vh;
+            background: rgba(5, 8, 13, 0.97);
+            border-right: 1px solid #ff1744;
+            padding: 30px 18px;
+            box-shadow: 5px 0 25px rgba(255, 23, 68, 0.15);
+        }
+
+        .logo {
+            text-align: center;
+            color: #ff1744;
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 45px;
+            text-shadow: 0 0 15px #ff1744;
+        }
+
+        .sidebar ul {
+            list-style: none;
+        }
+
+        .sidebar li {
+            margin-bottom: 10px;
+        }
+
+        .sidebar a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: #bfc3ca;
+            padding: 14px 15px;
+            border-radius: 10px;
+            transition: 0.3s;
+            font-size: 15px;
+        }
+
+        .sidebar a:hover,
+        .sidebar a.active {
+            color: white;
+            background: rgba(255, 23, 68, 0.12);
+            box-shadow: 0 0 15px rgba(255, 23, 68, 0.15);
+        }
+
+        .sidebar a.active {
+            border-left: 3px solid #ff1744;
+        }
+
+        .icon {
+            width: 25px;
+            text-align: center;
+            font-size: 18px;
+        }
+
+        .badge {
+            margin-left: auto;
+            background: #ff1744;
+            color: white;
+            font-size: 11px;
+            min-width: 20px;
+            padding: 3px 7px;
+            border-radius: 20px;
+            text-align: center;
+        }
+
+        .main {
+            margin-left: 250px;
+            padding: 35px 45px;
+        }
+
+        .top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 35px;
+        }
+
+        .top h1 {
+            font-size: 32px;
+        }
+
+        .top h1 span {
+            color: #ff1744;
+            text-shadow: 0 0 12px #ff1744;
+        }
+
+        .dashboard-btn {
+            text-decoration: none;
+            color: white;
+            border: 1px solid #ff1744;
+            padding: 11px 20px;
+            border-radius: 9px;
+            transition: 0.3s;
+        }
+
+        .dashboard-btn:hover {
+            background: #ff1744;
+            box-shadow: 0 0 20px rgba(255, 23, 68, 0.5);
+        }
+
+        .profile-container {
+            max-width: 950px;
+            margin: auto;
+        }
+
+        .profile-header {
+            background: rgba(9, 13, 20, 0.95);
+            border: 1px solid rgba(255, 23, 68, 0.45);
+            border-radius: 18px;
+            padding: 35px;
+            display: flex;
+            align-items: center;
+            gap: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 0 30px rgba(255, 23, 68, 0.08);
+        }
+
+        .profile-icon {
+            width: 95px;
+            height: 95px;
+            border-radius: 50%;
+            background: #090d14;
+            border: 2px solid #ff1744;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 45px;
+            box-shadow: 0 0 25px rgba(255, 23, 68, 0.3);
+        }
+
+        .profile-header h2 {
+            font-size: 27px;
+            margin-bottom: 8px;
+        }
+
+        .profile-header p {
+            color: #a9adb5;
+        }
+
+        .developer-label {
+            display: inline-block;
+            margin-top: 10px;
+            color: #ff1744;
+            font-size: 13px;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        .details-card {
+            background: rgba(9, 13, 20, 0.95);
+            border: 1px solid rgba(255, 23, 68, 0.35);
+            border-radius: 18px;
+            padding: 30px;
+            box-shadow: 0 0 30px rgba(255, 23, 68, 0.06);
+        }
+
+        .details-card h3 {
+            color: #ff1744;
+            margin-bottom: 25px;
+            font-size: 20px;
+        }
+
+        .details-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .detail-box {
+            background: #05080d;
+            border: 1px solid #20252d;
+            border-radius: 12px;
+            padding: 18px;
+            transition: 0.3s;
+        }
+
+        .detail-box:hover {
+            border-color: rgba(255, 23, 68, 0.6);
+            box-shadow: 0 0 15px rgba(255, 23, 68, 0.08);
+        }
+
+        .detail-box.full {
+            grid-column: span 2;
+        }
+
+        .detail-label {
+            color: #ff1744;
+            font-size: 12px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+        }
+
+        .detail-value {
+            color: #e8e8e8;
+            font-size: 15px;
+            line-height: 1.5;
+            word-break: break-word;
+        }
+
+        .actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+            margin-top: 25px;
+        }
+
+        .btn {
+            border: none;
+            padding: 12px 22px;
+            border-radius: 9px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 14px;
+            transition: 0.3s;
+        }
+
+        .red-btn {
+            background: #ff1744;
+            color: white;
+            box-shadow: 0 0 15px rgba(255, 23, 68, 0.25);
+        }
+
+        .red-btn:hover {
+            box-shadow: 0 0 25px rgba(255, 23, 68, 0.6);
+            transform: translateY(-2px);
+        }
+
+        .dark-btn {
+            background: #11161e;
+            color: white;
+            border: 1px solid #333943;
+        }
+
+        .dark-btn:hover {
+            border-color: #ff1744;
+        }
+
+        /* EDIT FORM */
+
+        .edit-form {
+            display: none;
+        }
+
+        .edit-form.show {
+            display: block;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .input-group label {
+            display: block;
+            color: #ff1744;
+            font-size: 12px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+        }
+
+        .input-group input,
+        .input-group textarea {
+            width: 100%;
+            background: #05080d;
+            color: white;
+            border: 1px solid #303640;
+            border-radius: 10px;
+            padding: 13px 14px;
+            font-size: 15px;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        .input-group input:focus,
+        .input-group textarea:focus {
+            border-color: #ff1744;
+            box-shadow: 0 0 12px rgba(255, 23, 68, 0.15);
+        }
+
+        .input-group textarea {
+            min-height: 110px;
+            resize: vertical;
+        }
+
+        .message {
+            display: none;
+            margin-bottom: 20px;
+            padding: 12px 15px;
+            border-radius: 9px;
+            font-size: 14px;
+        }
+
+        .message.success {
+            display: block;
+            background: rgba(0, 200, 100, 0.1);
+            border: 1px solid rgba(0, 200, 100, 0.5);
+            color: #65e6a1;
+        }
+
+        .message.error {
+            display: block;
+            background: rgba(255, 23, 68, 0.1);
+            border: 1px solid #ff1744;
+            color: #ff7088;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 70px 20px;
+            color: #aaa;
+            font-size: 16px;
+        }
+
+        .empty {
+            text-align: center;
+            padding: 70px 20px;
+            background: rgba(9, 13, 20, 0.95);
+            border: 1px solid rgba(255, 23, 68, 0.35);
+            border-radius: 18px;
+        }
+
+        .empty-icon {
+            font-size: 55px;
+            margin-bottom: 20px;
+        }
+
+        .empty h2 {
+            margin-bottom: 10px;
+        }
+
+        .empty p {
+            color: #999;
+            margin-bottom: 25px;
+        }
+
+        @media (max-width: 850px) {
+
+            .sidebar {
+                width: 210px;
+            }
+
+            .main {
+                margin-left: 210px;
+                padding: 25px;
+            }
+
+            .details-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .detail-box.full {
+                grid-column: span 1;
+            }
+        }
+
+        @media (max-width: 650px) {
+
+            .sidebar {
+                position: relative;
+                width: 100%;
+                height: auto;
+                border-right: none;
+                border-bottom: 1px solid #ff1744;
+            }
+
+            .main {
+                margin-left: 0;
+            }
+
+            .profile-header {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .top {
+                flex-direction: column;
+                gap: 20px;
+                align-items: flex-start;
+            }
+
+            .actions {
+                flex-direction: column;
+            }
+
+            .actions .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<aside class="sidebar">
+
+    <div class="logo">
+        WEBPORTIFY
+    </div>
+
+    <ul>
+
+        <li>
+            <a href="developer_dashboard.html">
+                <span class="icon">🏠</span>
+                Dashboard
+            </a>
+        </li>
+
+        <li>
+            <a href="developer_requests.html">
+                <span class="icon">📋</span>
+                Customer Requests
+                <span class="badge" id="requestBadge">0</span>
+            </a>
+        </li>
+
+        <li>
+            <a href="active_projects.html">
+                <span class="icon">⚡</span>
+                Active Projects
+                <span class="badge" id="activeBadge">0</span>
+            </a>
+        </li>
+
+        <li>
+            <a href="completed_projects.html">
+                <span class="icon">✅</span>
+                Completed
+            </a>
+        </li>
+
+        <li>
+            <a href="developer_messages.html">
+                <span class="icon">💬</span>
+                Messages
+                <span class="badge" id="messageBadge">0</span>
+            </a>
+        </li>
+
+        <li>
+            <a href="developer_profile.html" class="active">
+                <span class="icon">👤</span>
+                My Profile
+            </a>
+        </li>
+
+    </ul>
+
+</aside>
+
+
+<main class="main">
+
+    <div class="top">
+
+        <h1>
+            My <span>Profile</span>
+        </h1>
+
+        <a href="developer_dashboard.html" class="dashboard-btn">
+            ← Dashboard
+        </a>
+
+    </div>
+
+
+    <div class="profile-container" id="profileContainer">
+
+        <div class="loading">
+            Loading developer profile...
+        </div>
+
+    </div>
+
+</main>
+
+
+<script>
+
+const API_URL = "http://localhost:5000";
+
+
+/* =====================================================
+   AUTHENTICATION
+===================================================== */
+
+function getToken() {
+
+    return localStorage.getItem("token");
+
+}
+
+
+function requireLogin() {
+
+    const token = getToken();
+
+    const developerLoggedIn =
+        sessionStorage.getItem("developerLoggedIn");
+
+    if (!token || developerLoggedIn !== "true") {
+
+        window.location.replace(
+            "developer_signin.html"
+        );
+
+        return false;
+
+    }
+
+    return true;
+
+}
+
+
+/* =====================================================
+   ESCAPE HTML
+===================================================== */
+
+function escapeHTML(value) {
+
+    return String(value ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+
+}
+
+
+/* =====================================================
+   API REQUEST
+===================================================== */
+
+async function apiRequest(url, options = {}) {
+
+    const token = getToken();
+
+    const headers = {
+
+        "Content-Type": "application/json",
+
+        ...(options.headers || {})
+
+    };
+
+
+    if (token) {
+
+        headers.Authorization =
+            `Bearer ${token}`;
+
+    }
+
+
+    const response = await fetch(
+
+        API_URL + url,
+
+        {
+            ...options,
+            headers
+        }
+
+    );
+
+
+    let data = {};
+
+    try {
+
+        data = await response.json();
+
+    } catch {
+
+        data = {};
+
+    }
+
+
+    if (response.status === 401) {
+
+        localStorage.removeItem("token");
+
+        sessionStorage.removeItem(
+            "developerLoggedIn"
+        );
+
+        window.location.replace(
+            "developer_signin.html"
+        );
+
+        throw new Error(
+            "Your session has expired."
+        );
+
+    }
+
+
+    if (!response.ok) {
+
+        throw new Error(
+
+            data.message ||
+            "Something went wrong."
+
+        );
+
+    }
+
+
+    return data;
+
+}
+
+
+/* =====================================================
+   LOAD PROFILE
+===================================================== */
+
+async function loadProfile() {
+
+    const container =
+        document.getElementById(
+            "profileContainer"
+        );
+
+
+    if (!requireLogin()) {
+
+        return;
+
+    }
+
+
+    try {
+
+        const response =
+            await apiRequest(
+                "/api/me"
+            );
+
+
+        const developer =
+            response.user;
+
+
+        if (
+            !developer ||
+            !developer.name
+        ) {
+
+            throw new Error(
+                "Developer profile not found."
+            );
+
+        }
+
+
+        renderProfile(developer);
+
+    } catch (error) {
+
+        console.error(error);
+
+
+        container.innerHTML = `
+
+            <div class="empty">
+
+                <div class="empty-icon">
+                    ⚠️
+                </div>
+
+                <h2>
+                    Unable to Load Profile
+                </h2>
+
+                <p>
+                    ${escapeHTML(
+                        error.message
+                    )}
+                </p>
+
+                <button
+                    class="btn red-btn"
+                    onclick="loadProfile()"
+                >
+                    Try Again
+                </button>
+
+            </div>
+
+        `;
+
+    }
+
+}
+
+
+/* =====================================================
+   RENDER PROFILE
+===================================================== */
+
+function renderProfile(developer) {
+
+    const container =
+        document.getElementById(
+            "profileContainer"
+        );
+
+
+    const name =
+        developer.name ||
+        "Developer";
+
+
+    const email =
+        developer.email ||
+        "Not provided";
+
+
+    const phone =
+        developer.phone ||
+        "Not provided";
+
+
+    const skills =
+        developer.skills ||
+        "Not provided";
+
+
+    const portfolio =
+        developer.portfolio ||
+        "Not provided";
+
+
+    container.innerHTML = `
+
+        <div class="profile-header">
+
+            <div class="profile-icon">
+                👨‍💻
+            </div>
+
+            <div>
+
+                <h2>
+                    ${escapeHTML(name)}
+                </h2>
+
+                <p>
+                    ${escapeHTML(email)}
+                </p>
+
+                <span class="developer-label">
+                    WEB DEVELOPER
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <div class="details-card">
+
+            <h3>
+                Developer Information
+            </h3>
+
+
+            <div id="profileMessage"
+                 class="message">
+            </div>
+
+
+            <div
+                id="viewMode"
+                class="details-grid"
+            >
+
+                <div class="detail-box">
+
+                    <div class="detail-label">
+                        Full Name
+                    </div>
+
+                    <div class="detail-value">
+                        ${escapeHTML(name)}
+                    </div>
+
+                </div>
+
+
+                <div class="detail-box">
+
+                    <div class="detail-label">
+                        Email
+                    </div>
+
+                    <div class="detail-value">
+                        ${escapeHTML(email)}
+                    </div>
+
+                </div>
+
+
+                <div class="detail-box">
+
+                    <div class="detail-label">
+                        Phone
+                    </div>
+
+                    <div class="detail-value">
+                        ${escapeHTML(phone)}
+                    </div>
+
+                </div>
+
+
+                <div class="detail-box">
+
+                    <div class="detail-label">
+                        Skills
+                    </div>
+
+                    <div class="detail-value">
+                        ${escapeHTML(skills)}
+                    </div>
+
+                </div>
+
+
+                <div class="detail-box full">
+
+                    <div class="detail-label">
+                        Portfolio
+                    </div>
+
+                    <div class="detail-value">
+                        ${escapeHTML(portfolio)}
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div
+                id="editMode"
+                class="edit-form"
+            >
+
+                <div class="input-group">
+
+                    <label>
+                        Full Name
+                    </label>
+
+                    <input
+                        type="text"
+                        id="editName"
+                        value="${escapeHTML(name)}"
+                    >
+
+                </div>
+
+
+                <div class="input-group">
+
+                    <label>
+                        Email
+                    </label>
+
+                    <input
+                        type="email"
+                        value="${escapeHTML(email)}"
+                        disabled
+                    >
+
+                </div>
+
+
+                <div class="input-group">
+
+                    <label>
+                        Phone
+                    </label>
+
+                    <input
+                        type="text"
+                        id="editPhone"
+                        value="${escapeHTML(phone === "Not provided" ? "" : phone)}"
+                    >
+
+                </div>
+
+
+                <div class="input-group">
+
+                    <label>
+                        Skills
+                    </label>
+
+                    <textarea
+                        id="editSkills"
+                        placeholder="Example: HTML, CSS, JavaScript, React"
+                    >${escapeHTML(skills === "Not provided" ? "" : skills)}</textarea>
+
+                </div>
+
+
+                <div class="input-group">
+
+                    <label>
+                        Portfolio
+                    </label>
+
+                    <input
+                        type="text"
+                        id="editPortfolio"
+                        value="${escapeHTML(portfolio === "Not provided" ? "" : portfolio)}"
+                        placeholder="https://yourportfolio.com"
+                    >
+
+                </div>
+
+
+                <div class="actions">
+
+                    <button
+                        class="btn dark-btn"
+                        onclick="cancelEdit()"
+                    >
+                        Cancel
+                    </button>
+
+                    <button
+                        class="btn red-btn"
+                        id="saveButton"
+                        onclick="saveProfile()"
+                    >
+                        Save Changes
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <div
+                id="viewActions"
+                class="actions"
+            >
+
+                <button
+                    class="btn dark-btn"
+                    onclick="goDashboard()"
+                >
+                    ← Dashboard
+                </button>
+
+                <button
+                    class="btn dark-btn"
+                    onclick="editProfile()"
+                >
+                    ✏️ Edit Profile
+                </button>
+
+                <button
+                    class="btn red-btn"
+                    onclick="logout()"
+                >
+                    Logout
+                </button>
+
+            </div>
+
+        </div>
+
+    `;
+
+}
+
+
+/* =====================================================
+   EDIT PROFILE
+===================================================== */
+
+function editProfile() {
+
+    document
+        .getElementById("viewMode")
+        .style.display = "none";
+
+
+    document
+        .getElementById("viewActions")
+        .style.display = "none";
+
+
+    document
+        .getElementById("editMode")
+        .classList.add("show");
+
+}
+
+
+/* =====================================================
+   CANCEL EDIT
+===================================================== */
+
+function cancelEdit() {
+
+    document
+        .getElementById("editMode")
+        .classList.remove("show");
+
+
+    document
+        .getElementById("viewMode")
+        .style.display = "grid";
+
+
+    document
+        .getElementById("viewActions")
+        .style.display = "flex";
+
+}
+
+
+/* =====================================================
+   SAVE PROFILE
+===================================================== */
+
+async function saveProfile() {
+
+    const name =
+        document
+            .getElementById("editName")
+            .value
+            .trim();
+
+
+    const phone =
+        document
+            .getElementById("editPhone")
+            .value
+            .trim();
+
+
+    const skills =
+        document
+            .getElementById("editSkills")
+            .value
+            .trim();
+
+
+    const portfolio =
+        document
+            .getElementById("editPortfolio")
+            .value
+            .trim();
+
+
+    if (!name) {
+
+        showMessage(
+            "Full name is required.",
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    const saveButton =
+        document.getElementById(
+            "saveButton"
+        );
+
+
+    saveButton.disabled = true;
+
+    saveButton.textContent =
+        "Saving...";
+
+
+    try {
+
+        const response =
+            await apiRequest(
+                "/api/developers/me",
+                {
+                    method: "PATCH",
+
+                    body: JSON.stringify({
+
+                        name,
+                        phone,
+                        skills,
+                        portfolio
+
+                    })
+
+                }
+            );
+
+
+        showMessage(
+            response.message ||
+            "Profile updated successfully.",
+            "success"
+        );
+
+
+        setTimeout(() => {
+
+            loadProfile();
+
+        }, 700);
+
+
+    } catch (error) {
+
+        console.error(error);
+
+
+        saveButton.disabled = false;
+
+        saveButton.textContent =
+            "Save Changes";
+
+
+        showMessage(
+            error.message,
+            "error"
+        );
+
+    }
+
+}
+
+
+/* =====================================================
+   MESSAGE
+===================================================== */
+
+function showMessage(text, type) {
+
+    const message =
+        document.getElementById(
+            "profileMessage"
+        );
+
+
+    if (!message) {
+
+        return;
+
+    }
+
+
+    message.className =
+        "message " + type;
+
+
+    message.textContent =
+        text;
+
+}
+
+
+/* =====================================================
+   DASHBOARD
+===================================================== */
+
+function goDashboard() {
+
+    window.location.href =
+        "developer_dashboard.html";
+
+}
+
+
+/* =====================================================
+   LOGOUT
+===================================================== */
+
+function logout() {
+
+    if (
+        !confirm(
+            "Are you sure you want to logout?"
+        )
+    ) {
+
+        return;
+
+    }
+
+
+    localStorage.removeItem(
+        "token"
+    );
+
+    localStorage.removeItem(
+        "developerUser"
+    );
+
+    localStorage.removeItem(
+        "developerEmail"
+    );
+
+
+    sessionStorage.removeItem(
+        "developerLoggedIn"
+    );
+
+    sessionStorage.removeItem(
+        "developerEmail"
+    );
+
+
+    window.location.replace(
+        "developer_signin.html"
+    );
+
+}
+
+
+/* =====================================================
+   SIDEBAR BADGES
+===================================================== */
+
+async function updateBadges() {
+
+    if (!getToken()) {
+
+        return;
+
+    }
+
+
+    try {
+
+        const response =
+            await apiRequest(
+                "/api/requests"
+            );
+
+
+        const requests =
+            response.requests || [];
+
+
+        const myRequests =
+            requests.filter(
+                request =>
+                    Number(
+                        request.developer_id
+                    ) === Number(
+                        getCurrentDeveloperId()
+                    )
+            );
+
+
+        const pendingRequests =
+            myRequests.filter(
+                request =>
+                    request.status === "pending"
+            ).length;
+
+
+        const requestBadge =
+            document.getElementById(
+                "requestBadge"
+            );
+
+
+        if (requestBadge) {
+
+            requestBadge.textContent =
+                pendingRequests;
+
+            requestBadge.style.display =
+                pendingRequests > 0
+                    ? "inline-block"
+                    : "none";
+
+        }
+
+
+    } catch (error) {
+
+        console.error(
+            "Badge error:",
+            error
+        );
+
+    }
+
+}
+
+
+/* =====================================================
+   CURRENT DEVELOPER ID
+===================================================== */
+
+function getCurrentDeveloperId() {
+
+    try {
+
+        const user =
+            JSON.parse(
+                localStorage.getItem(
+                    "developerUser"
+                )
+            );
+
+
+        return user
+            ? user.id
+            : null;
+
+    } catch {
+
+        return null;
+
+    }
+
+}
+
+
+/* =====================================================
+   START
+===================================================== */
+
+loadProfile();
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,469 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Webportify</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: #02070d;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* RED BACKGROUND LINES */
+
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+
+            background:
+                linear-gradient(
+                    120deg,
+                    transparent 45%,
+                    rgba(255, 23, 68, 0.12) 46%,
+                    transparent 47%
+                ),
+                linear-gradient(
+                    60deg,
+                    transparent 45%,
+                    rgba(255, 23, 68, 0.10) 46%,
+                    transparent 47%
+                );
+
+            background-size: 250px 250px;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        /* MAIN PAGE */
+
+        #mainPage {
+            width: 100%;
+            text-align: center;
+            padding: 30px 20px;
+        }
+
+        h1 {
+            font-size: 62px;
+            color: #ffffff;
+            font-weight: 700;
+            margin-bottom: 45px;
+        }
+
+        /* ROLE BUTTONS */
+
+        .button-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 35px;
+        }
+
+        .role-button {
+            width: 300px;
+            height: 205px;
+
+            text-decoration: none;
+
+            border: 1px solid #ff1744;
+            border-radius: 22px;
+
+            background: rgba(2, 7, 13, 0.90);
+
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+
+            box-shadow:
+                0 0 12px rgba(255, 23, 68, 0.45),
+                inset 0 0 15px rgba(255, 23, 68, 0.08);
+
+            transition: 0.25s ease;
+        }
+
+        .role-button:hover {
+            transform: translateY(-8px);
+
+            box-shadow:
+                0 0 20px #ff1744,
+                0 0 45px rgba(255, 23, 68, 0.35);
+        }
+
+        /* CUSTOMER ICON */
+
+        .customer-icon {
+            font-size: 55px;
+            margin-bottom: 18px;
+
+            filter:
+                drop-shadow(0 0 5px #ff1744)
+                drop-shadow(0 0 12px #ff1744);
+        }
+
+        /* DEVELOPER ICON */
+
+        .developer-icon {
+            font-size: 48px;
+            font-weight: bold;
+            color: #ff1744;
+
+            margin-bottom: 22px;
+
+            text-shadow:
+                0 0 5px #ff1744,
+                0 0 15px #ff1744,
+                0 0 30px rgba(255, 23, 68, 0.7);
+        }
+
+        /* TEXT */
+
+        .customer-text,
+        .developer-text {
+            color: #ff1744;
+            font-size: 23px;
+            font-weight: bold;
+
+            text-shadow:
+                0 0 5px #ff1744,
+                0 0 12px rgba(255, 23, 68, 0.8);
+        }
+
+        /* SIGN IN */
+
+        .signin-section {
+            margin-top: 35px;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            gap: 6px;
+
+            color: #ffffff;
+            font-size: 16px;
+        }
+
+        .signin-link {
+            border: none;
+            background: transparent;
+
+            color: #ff1744;
+
+            font-size: 16px;
+            font-weight: bold;
+
+            cursor: pointer;
+            text-decoration: underline;
+
+            transition: 0.25s ease;
+        }
+
+        .signin-link:hover {
+            color: #ffffff;
+            text-shadow: 0 0 10px #ff1744;
+        }
+
+        /* SIGN IN PAGE */
+
+        #signinPage {
+            display: none;
+
+            width: 100%;
+            min-height: 100vh;
+
+            justify-content: center;
+            align-items: center;
+
+            padding: 20px;
+        }
+
+        .signin-box {
+            width: 380px;
+            max-width: 100%;
+
+            padding: 40px;
+
+            text-align: center;
+
+            background: rgba(2, 7, 13, 0.95);
+
+            border: 1px solid #ff1744;
+            border-radius: 20px;
+
+            box-shadow:
+                0 0 15px #ff1744,
+                0 0 40px rgba(255, 23, 68, 0.25);
+        }
+
+        .signin-box h2 {
+            color: #ffffff;
+            font-size: 34px;
+            margin-bottom: 10px;
+        }
+
+        .signin-box p {
+            color: #bbbbbb;
+            margin-bottom: 30px;
+        }
+
+        /* SIGN IN BUTTONS */
+
+        .signin-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+
+            margin-bottom: 25px;
+        }
+
+        .signin-buttons button {
+            flex: 1;
+
+            padding: 14px 20px;
+
+            border: 1px solid #ff1744;
+            border-radius: 10px;
+
+            background: #ff1744;
+            color: #ffffff;
+
+            font-size: 16px;
+            font-weight: bold;
+
+            cursor: pointer;
+
+            transition: 0.25s ease;
+        }
+
+        .signin-buttons button:hover {
+            background: transparent;
+            color: #ff1744;
+
+            box-shadow: 0 0 15px #ff1744;
+        }
+
+        /* BACK BUTTON */
+
+        .back-button {
+            padding: 10px 25px;
+
+            border: 1px solid #ff1744;
+            border-radius: 10px;
+
+            background: transparent;
+            color: #ff1744;
+
+            font-size: 15px;
+            font-weight: bold;
+
+            cursor: pointer;
+
+            transition: 0.25s ease;
+        }
+
+        .back-button:hover {
+            background: #ff1744;
+            color: #ffffff;
+
+            box-shadow: 0 0 15px #ff1744;
+        }
+
+        /* MOBILE */
+
+        @media (max-width: 700px) {
+
+            h1 {
+                font-size: 45px;
+                margin-bottom: 35px;
+            }
+
+            .button-container {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .role-button {
+                width: 280px;
+                height: 190px;
+            }
+
+            .signin-buttons {
+                flex-direction: column;
+            }
+
+            .signin-box {
+                padding: 30px 20px;
+            }
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <!-- MAIN PAGE -->
+
+    <div id="mainPage">
+
+        <h1>hi user;</h1>
+
+        <div class="button-container">
+
+            <!-- CUSTOMER -->
+
+            <a href="customer.html" class="role-button">
+
+                <div class="customer-icon">
+                    🛒
+                </div>
+
+                <div class="customer-text">
+                    Customer
+                </div>
+
+            </a>
+
+
+            <!-- DEVELOPER -->
+
+            <a href="developer.html" class="role-button">
+
+                <div class="developer-icon">
+                    &lt;/&gt;
+                </div>
+
+                <div class="developer-text">
+                    Developer
+                </div>
+
+            </a>
+
+        </div>
+
+
+        <!-- SIGN IN LINK -->
+
+        <div class="signin-section">
+
+            <span>Already have an account?</span>
+
+            <button
+                class="signin-link"
+                type="button"
+                onclick="showSignIn()"
+            >
+                Sign In
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- SIGN IN PAGE -->
+
+    <div id="signinPage">
+
+        <div class="signin-box">
+
+            <h2>Sign In</h2>
+
+            <p>Select your account type</p>
+
+            <div class="signin-buttons">
+
+                <button
+                    type="button"
+                    onclick="customerSignIn()"
+                >
+                    Customer
+                </button>
+
+                <button
+                    type="button"
+                    onclick="developerSignIn()"
+                >
+                    Developer
+                </button>
+
+            </div>
+
+            <button
+                class="back-button"
+                type="button"
+                onclick="showMainPage()"
+            >
+                ← Back
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- JAVASCRIPT -->
+
+    <script>
+
+        /* SHOW SIGN IN */
+
+        function showSignIn() {
+
+            document.getElementById("mainPage").style.display = "none";
+
+            document.getElementById("signinPage").style.display = "flex";
+
+        }
+
+
+        /* BACK TO MAIN PAGE */
+
+        function showMainPage() {
+
+            document.getElementById("signinPage").style.display = "none";
+
+            document.getElementById("mainPage").style.display = "block";
+
+        }
+
+
+        /* CUSTOMER SIGN IN */
+
+        function customerSignIn() {
+
+            window.location.href = "customer_signin.html";
+
+        }
+
+
+        /* DEVELOPER SIGN IN */
+
+        function developerSignIn() {
+
+            window.location.href = "developer_signin.html";
+
+        }
+
+    </script>
+
+</body>
+</html>

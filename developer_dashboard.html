@@ -1,0 +1,1500 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Webportify | Developer Dashboard</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
+
+body{
+    min-height:100vh;
+    background:#02070d;
+    color:white;
+    overflow-x:hidden;
+}
+
+body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    z-index:-1;
+    opacity:.35;
+
+    background:
+        linear-gradient(
+            125deg,
+            transparent 49%,
+            #ff1744 50%,
+            transparent 51%
+        ) 700px 0/180px 150px,
+
+        linear-gradient(
+            55deg,
+            transparent 49%,
+            #ff1744 50%,
+            transparent 51%
+        ) 850px 40px/200px 170px,
+
+        linear-gradient(
+            145deg,
+            transparent 49%,
+            #ff1744 50%,
+            transparent 51%
+        ) 1000px 100px/180px 160px;
+
+    filter:drop-shadow(0 0 5px #ff1744);
+}
+
+.dashboard{
+    display:flex;
+    min-height:100vh;
+}
+
+.sidebar{
+    width:235px;
+    min-height:100vh;
+    background:#080c12;
+    border-right:1px solid #292e37;
+    padding:25px 15px;
+    flex-shrink:0;
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding-left:8px;
+    margin-bottom:35px;
+}
+
+.logo-icon{
+    width:38px;
+    height:38px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:#ff1744;
+    color:white;
+    border-radius:8px;
+    font-size:17px;
+    font-weight:bold;
+    box-shadow:0 0 16px rgba(255,23,68,.55);
+}
+
+.logo span{
+    font-size:17px;
+    font-weight:bold;
+    letter-spacing:1px;
+}
+
+.menu-title{
+    color:#717985;
+    font-size:10px;
+    text-transform:uppercase;
+    margin:0 0 12px 10px;
+}
+
+.menu{
+    list-style:none;
+}
+
+.menu li{
+    margin:5px 0;
+}
+
+.menu a{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    padding:11px 12px;
+    color:#969da8;
+    text-decoration:none;
+    border-radius:6px;
+    font-size:13px;
+    transition:.25s;
+}
+
+.menu a:hover{
+    color:white;
+    background:rgba(255,23,68,.08);
+}
+
+.menu a.active{
+    color:white;
+    background:rgba(255,23,68,.14);
+    border-left:3px solid #ff1744;
+    box-shadow:inset 0 0 15px rgba(255,23,68,.08);
+}
+
+.icon{
+    width:20px;
+    text-align:center;
+}
+
+.badge{
+    margin-left:auto;
+    min-width:20px;
+    height:20px;
+    padding:2px 6px;
+    display:none;
+    align-items:center;
+    justify-content:center;
+    border-radius:20px;
+    background:#ff1744;
+    color:white;
+    font-size:10px;
+    font-weight:bold;
+    box-shadow:0 0 10px rgba(255,23,68,.5);
+}
+
+.main{
+    flex:1;
+    padding:28px 32px;
+}
+
+.topbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:28px;
+}
+
+.welcome h1{
+    font-size:25px;
+    margin-bottom:6px;
+}
+
+.red{
+    color:#ff1744;
+    text-shadow:
+        0 0 8px #ff1744,
+        0 0 18px rgba(255,23,68,.5);
+}
+
+.welcome p{
+    color:#858d98;
+    font-size:12px;
+}
+
+.profile{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.profile-info{
+    text-align:right;
+}
+
+.profile-info strong{
+    font-size:13px;
+}
+
+.profile-info small{
+    display:block;
+    color:#777f8b;
+    margin-top:4px;
+}
+
+.avatar{
+    width:40px;
+    height:40px;
+    border-radius:50%;
+    background:#151a22;
+    border:1px solid #ff1744;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:#ff1744;
+    font-weight:bold;
+    box-shadow:0 0 12px rgba(255,23,68,.25);
+}
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:15px;
+    margin-bottom:25px;
+}
+
+.stat-card{
+    background:#090d14;
+    border:1px solid #292e37;
+    border-radius:8px;
+    padding:18px;
+    transition:.25s;
+}
+
+.stat-card:hover{
+    border-color:#ff1744;
+    box-shadow:0 0 16px rgba(255,23,68,.12);
+}
+
+.stat-icon{
+    color:#ff1744;
+    font-size:20px;
+    margin-bottom:12px;
+}
+
+.stat-card h3{
+    font-size:22px;
+    margin-bottom:5px;
+}
+
+.stat-card p{
+    color:#7f8792;
+    font-size:11px;
+}
+
+.section{
+    background:#090d14;
+    border:1px solid #292e37;
+    border-radius:8px;
+    margin-bottom:20px;
+    overflow:hidden;
+}
+
+.section-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:17px 18px;
+    border-bottom:1px solid #252a32;
+}
+
+.section-header h2{
+    font-size:14px;
+}
+
+.view-all{
+    color:#ff1744;
+    text-decoration:none;
+    font-size:11px;
+}
+
+.view-all:hover{
+    text-decoration:underline;
+}
+
+.request{
+    display:grid;
+    grid-template-columns:1.5fr 1fr 120px 100px;
+    align-items:center;
+    padding:16px 18px;
+    border-bottom:1px solid #20252d;
+    gap:15px;
+}
+
+.request:last-child{
+    border-bottom:none;
+}
+
+.customer{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.customer-avatar{
+    width:35px;
+    height:35px;
+    border-radius:50%;
+    background:#161b22;
+    border:1px solid #353a43;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:#ff1744;
+    font-size:12px;
+    font-weight:bold;
+}
+
+.customer-name{
+    font-size:12px;
+    font-weight:bold;
+}
+
+.customer-email{
+    color:#707884;
+    font-size:9px;
+    margin-top:4px;
+}
+
+.website{
+    font-size:11px;
+    color:#b9c0ca;
+}
+
+.date{
+    color:#777f8b;
+    font-size:10px;
+}
+
+.status{
+    display:inline-block;
+    padding:5px 8px;
+    border-radius:4px;
+    font-size:9px;
+    text-align:center;
+}
+
+.pending{
+    color:#ffb52e;
+    background:rgba(255,181,46,.1);
+    border:1px solid rgba(255,181,46,.25);
+}
+
+.progress{
+    color:#ff4d6d;
+    background:rgba(255,23,68,.1);
+    border:1px solid rgba(255,23,68,.3);
+}
+
+.completed{
+    color:#62d69c;
+    background:rgba(70,190,130,.1);
+    border:1px solid rgba(70,190,130,.25);
+}
+
+.rejected{
+    color:#ff6b6b;
+    background:rgba(255,80,80,.1);
+    border:1px solid rgba(255,80,80,.25);
+}
+
+.lower{
+    display:grid;
+    grid-template-columns:1.4fr 1fr;
+    gap:20px;
+}
+
+.order{
+    padding:15px 18px;
+    border-bottom:1px solid #20252d;
+}
+
+.order:last-child{
+    border-bottom:none;
+}
+
+.order-top{
+    display:flex;
+    justify-content:space-between;
+    gap:10px;
+    margin-bottom:9px;
+}
+
+.order-title{
+    font-size:12px;
+    font-weight:bold;
+}
+
+.order-id{
+    color:#666e79;
+    font-size:9px;
+}
+
+.progress-bar{
+    width:100%;
+    height:5px;
+    background:#1b2028;
+    border-radius:10px;
+    overflow:hidden;
+    margin-top:8px;
+}
+
+.progress-fill{
+    height:100%;
+    background:#ff1744;
+    box-shadow:0 0 8px #ff1744;
+}
+
+.order-bottom{
+    display:flex;
+    justify-content:space-between;
+    margin-top:7px;
+}
+
+.order-bottom span{
+    color:#707884;
+    font-size:9px;
+}
+
+.message{
+    display:flex;
+    gap:11px;
+    padding:15px 18px;
+    border-bottom:1px solid #20252d;
+}
+
+.message:last-child{
+    border-bottom:none;
+}
+
+.message-icon{
+    width:34px;
+    height:34px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border-radius:50%;
+    background:rgba(255,23,68,.1);
+    color:#ff1744;
+}
+
+.message-content{
+    flex:1;
+    min-width:0;
+}
+
+.message-content strong{
+    font-size:11px;
+}
+
+.message-content p{
+    color:#858d98;
+    font-size:10px;
+    margin-top:4px;
+    line-height:1.5;
+    word-break:break-word;
+}
+
+.profile-box{
+    display:flex;
+    gap:15px;
+    align-items:center;
+    padding:18px;
+}
+
+.big-avatar{
+    width:60px;
+    height:60px;
+    border-radius:50%;
+    background:#11161e;
+    border:2px solid #ff1744;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    color:#ff1744;
+    font-size:22px;
+    font-weight:bold;
+    box-shadow:0 0 15px rgba(255,23,68,.25);
+}
+
+.profile-details h3{
+    font-size:14px;
+}
+
+.profile-details p{
+    color:#7e8691;
+    font-size:10px;
+    margin-top:5px;
+}
+
+.empty{
+    padding:25px;
+    text-align:center;
+    color:#6f7782;
+    font-size:11px;
+}
+
+.logout{
+    width:100%;
+    margin-top:15px;
+    padding:10px;
+    border:1px solid #343941;
+    border-radius:6px;
+    background:#0c1016;
+    color:#aeb5bf;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+.logout:hover{
+    border-color:#ff1744;
+    color:#ff1744;
+}
+
+@media(max-width:1000px){
+
+    .stats{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .lower{
+        grid-template-columns:1fr;
+    }
+
+    .request{
+        grid-template-columns:1.5fr 1fr;
+    }
+}
+
+@media(max-width:700px){
+
+    .dashboard{
+        flex-direction:column;
+    }
+
+    .sidebar{
+        width:100%;
+        min-height:auto;
+        border-right:none;
+        border-bottom:1px solid #292e37;
+    }
+
+    .menu{
+        display:flex;
+        flex-wrap:wrap;
+        gap:5px;
+    }
+
+    .menu li{
+        margin:0;
+    }
+
+    .menu-title{
+        display:none;
+    }
+
+    .main{
+        padding:20px;
+    }
+
+    .topbar{
+        align-items:flex-start;
+        gap:15px;
+        flex-direction:column;
+    }
+
+    .stats{
+        grid-template-columns:1fr;
+    }
+
+    .request{
+        grid-template-columns:1fr;
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="dashboard">
+
+<aside class="sidebar">
+
+    <div class="logo">
+
+        <div class="logo-icon">
+            &lt;/&gt;
+        </div>
+
+        <span>WEBPORTIFY</span>
+
+    </div>
+
+    <div class="menu-title">
+        Developer Panel
+    </div>
+
+    <ul class="menu">
+
+        <li>
+            <a href="developer_dashboard.html" class="active">
+                <span class="icon">▦</span>
+                Dashboard
+            </a>
+        </li>
+
+        <li>
+            <a href="developer_requests.html">
+                <span class="icon">📋</span>
+                Customer Requests
+                <span id="requestBadge" class="badge">0</span>
+            </a>
+        </li>
+
+        <li>
+            <a href="active_projects.html">
+                <span class="icon">⚡</span>
+                Active Projects
+                <span id="activeBadge" class="badge">0</span>
+            </a>
+        </li>
+
+        <li>
+            <a href="completed_projects.html">
+                <span class="icon">✅</span>
+                Completed
+            </a>
+        </li>
+
+        <li>
+            <a href="developer_messages.html">
+                <span class="icon">💬</span>
+                Messages
+                <span id="messageBadge" class="badge">0</span>
+            </a>
+        </li>
+
+        <li>
+            <a href="developer_profile.html">
+                <span class="icon">👤</span>
+                My Profile
+            </a>
+        </li>
+
+    </ul>
+
+</aside>
+
+<main class="main">
+
+<div class="topbar">
+
+    <div class="welcome">
+
+        <h1>
+            Developer
+            <span class="red">Dashboard</span>
+        </h1>
+
+        <p>
+            Manage your websites and customer projects.
+        </p>
+
+    </div>
+
+    <div class="profile">
+
+        <div class="profile-info">
+
+            <strong id="developerName">
+                Developer
+            </strong>
+
+            <small>
+                Developer
+            </small>
+
+        </div>
+
+        <div class="avatar">
+            &lt;/&gt;
+        </div>
+
+    </div>
+
+</div>
+
+<div class="stats">
+
+    <div class="stat-card">
+
+        <div class="stat-icon">📋</div>
+
+        <h3 id="requestCount">0</h3>
+
+        <p>Pending Customer Requests</p>
+
+    </div>
+
+    <div class="stat-card">
+
+        <div class="stat-icon">🛠</div>
+
+        <h3 id="activeCount">0</h3>
+
+        <p>Active Projects</p>
+
+    </div>
+
+    <div class="stat-card">
+
+        <div class="stat-icon">✓</div>
+
+        <h3 id="completedCount">0</h3>
+
+        <p>Completed Websites</p>
+
+    </div>
+
+    <div class="stat-card">
+
+        <div class="stat-icon">💬</div>
+
+        <h3 id="messageCount">0</h3>
+
+        <p>Unread Messages</p>
+
+    </div>
+
+</div>
+
+<div class="section">
+
+    <div class="section-header">
+
+        <h2>Recent Customer Requests</h2>
+
+        <a href="developer_requests.html" class="view-all">
+            View All →
+        </a>
+
+    </div>
+
+    <div id="requestsContainer">
+
+        <div class="empty">
+            Loading customer requests...
+        </div>
+
+    </div>
+
+</div>
+
+<div class="lower">
+
+    <div class="section">
+
+        <div class="section-header">
+
+            <h2>Active Projects</h2>
+
+            <a href="active_projects.html" class="view-all">
+                View All →
+            </a>
+
+        </div>
+
+        <div id="projectsContainer">
+
+            <div class="empty">
+                Loading active projects...
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="section">
+
+        <div class="section-header">
+
+            <h2>Recent Messages</h2>
+
+            <a href="developer_messages.html" class="view-all">
+                View All →
+            </a>
+
+        </div>
+
+        <div id="messagesContainer">
+
+            <div class="empty">
+                Loading messages...
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div class="section">
+
+    <div class="section-header">
+
+        <h2>Developer Profile</h2>
+
+        <a href="developer_profile.html" class="view-all">
+            Open Profile →
+        </a>
+
+    </div>
+
+    <div class="profile-box">
+
+        <div class="big-avatar">
+            &lt;/&gt;
+        </div>
+
+        <div class="profile-details">
+
+            <h3 id="profileName">Developer</h3>
+
+            <p id="profileEmail">
+                developer@example.com
+            </p>
+
+            <p id="profileSpecialization">
+                Full Stack Developer
+            </p>
+
+        </div>
+
+    </div>
+
+    <div style="padding:0 18px 18px;">
+
+        <button class="logout" onclick="logout()">
+            Log Out
+        </button>
+
+    </div>
+
+</div>
+
+</main>
+
+</div>
+
+<script>
+
+/* DEVELOPER LOGIN CHECK */
+
+if(sessionStorage.getItem("developerLoggedIn") !== "true"){
+
+    window.location.replace("Structure.html");
+
+}
+
+
+/* SAFE STORAGE READER */
+
+function readArray(key){
+
+    try{
+
+        const value =
+            JSON.parse(
+                localStorage.getItem(key) || "[]"
+            );
+
+        return Array.isArray(value) ? value : [];
+
+    }catch(error){
+
+        return [];
+
+    }
+
+}
+
+
+/* DEVELOPER DATA */
+
+function loadDeveloperData(){
+
+    try{
+
+        const savedDeveloper =
+            JSON.parse(
+                localStorage.getItem("developerData") || "{}"
+            );
+
+        if(savedDeveloper.name){
+
+            document.getElementById("developerName")
+                .textContent = savedDeveloper.name;
+
+            document.getElementById("profileName")
+                .textContent = savedDeveloper.name;
+
+        }
+
+        if(savedDeveloper.email){
+
+            document.getElementById("profileEmail")
+                .textContent = savedDeveloper.email;
+
+        }
+
+        if(savedDeveloper.specialization){
+
+            document.getElementById("profileSpecialization")
+                .textContent =
+                savedDeveloper.specialization;
+
+        }
+
+    }catch(error){
+
+        console.error("Developer data error:",error);
+
+    }
+
+}
+
+
+/* ESCAPE HTML */
+
+function escapeHTML(value){
+
+    return String(value ?? "")
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+
+}
+
+
+/* GET CUSTOMER REQUESTS */
+
+function getCustomerRequests(){
+
+    const requests =
+        readArray("customerRequests");
+
+    const orders =
+        readArray("webportifyOrders");
+
+    const combined = [
+        ...requests,
+        ...orders
+    ];
+
+    const unique = [];
+
+    const ids = new Set();
+
+    combined.forEach(item => {
+
+        const id =
+            String(
+                item.id ||
+                item.orderId ||
+                `${item.email || ""}-${item.date || ""}`
+            );
+
+        if(!ids.has(id)){
+
+            ids.add(id);
+            unique.push(item);
+
+        }
+
+    });
+
+    return unique;
+
+}
+
+
+/* GET ACTIVE PROJECTS */
+
+function getActiveProjects(){
+
+    return readArray("activeProjects");
+
+}
+
+
+/* GET COMPLETED PROJECTS */
+
+function getCompletedProjects(){
+
+    return readArray("completedProjects");
+
+}
+
+
+/* GET MESSAGES */
+
+function getMessages(){
+
+    return readArray("webportifyMessages");
+
+}
+
+
+/* UPDATE COUNTS */
+
+function updateCounts(){
+
+    const requests =
+        getCustomerRequests();
+
+    const activeProjects =
+        getActiveProjects();
+
+    const completedProjects =
+        getCompletedProjects();
+
+    const messages =
+        getMessages();
+
+
+    const pendingRequests =
+        requests.filter(
+            request =>
+                String(request.status || "Pending")
+                    .toLowerCase() === "pending"
+        );
+
+
+    const unreadMessages =
+        messages.filter(
+            message =>
+                message.sender === "customer" &&
+                message.read !== true
+        );
+
+
+    document.getElementById("requestCount")
+        .textContent = pendingRequests.length;
+
+    document.getElementById("activeCount")
+        .textContent = activeProjects.length;
+
+    document.getElementById("completedCount")
+        .textContent = completedProjects.length;
+
+    document.getElementById("messageCount")
+        .textContent = unreadMessages.length;
+
+
+    updateBadge("requestBadge",pendingRequests.length);
+
+    updateBadge("activeBadge",activeProjects.length);
+
+    updateBadge("messageBadge",unreadMessages.length);
+
+}
+
+
+/* UPDATE BADGE */
+
+function updateBadge(id,count){
+
+    const badge =
+        document.getElementById(id);
+
+    if(count > 0){
+
+        badge.textContent = count;
+        badge.style.display = "flex";
+
+    }else{
+
+        badge.style.display = "none";
+
+    }
+
+}
+
+
+/* GET WEBSITE TITLE */
+
+function getWebsiteTitle(item){
+
+    if(
+        Array.isArray(item.items) &&
+        item.items.length > 0
+    ){
+
+        return item.items
+            .map(product => product.name || "Website")
+            .join(", ");
+
+    }
+
+    return item.websiteType ||
+           item.name ||
+           "Website Project";
+
+}
+
+
+/* STATUS CLASS */
+
+function getStatusClass(status){
+
+    const value =
+        String(status || "Pending")
+            .toLowerCase();
+
+    if(value === "active" || value === "in progress"){
+        return "progress";
+    }
+
+    if(value === "completed"){
+        return "completed";
+    }
+
+    if(value === "rejected"){
+        return "rejected";
+    }
+
+    return "pending";
+
+}
+
+
+/* RENDER REQUESTS */
+
+function renderRequests(){
+
+    const container =
+        document.getElementById("requestsContainer");
+
+    const requests =
+        getCustomerRequests();
+
+    if(requests.length === 0){
+
+        container.innerHTML = `
+            <div class="empty">
+                No customer requests yet.
+            </div>
+        `;
+
+        return;
+
+    }
+
+    const recent =
+        [...requests]
+            .reverse()
+            .slice(0,5);
+
+
+    container.innerHTML =
+        recent.map(request => {
+
+            const customer =
+                request.customer ||
+                request.name ||
+                "Customer";
+
+            const email =
+                request.email ||
+                "No email";
+
+            const firstLetter =
+                customer.trim().charAt(0).toUpperCase();
+
+            return `
+
+                <div class="request">
+
+                    <div class="customer">
+
+                        <div class="customer-avatar">
+                            ${escapeHTML(firstLetter)}
+                        </div>
+
+                        <div>
+
+                            <div class="customer-name">
+                                ${escapeHTML(customer)}
+                            </div>
+
+                            <div class="customer-email">
+                                ${escapeHTML(email)}
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="website">
+                        ${escapeHTML(getWebsiteTitle(request))}
+                    </div>
+
+                    <div class="date">
+                        ${escapeHTML(request.date || "Recently")}
+                    </div>
+
+                    <span class="status ${getStatusClass(request.status)}">
+                        ${escapeHTML(request.status || "Pending")}
+                    </span>
+
+                </div>
+
+            `;
+
+        })
+        .join("");
+
+}
+
+
+/* RENDER ACTIVE PROJECTS */
+
+function renderProjects(){
+
+    const container =
+        document.getElementById("projectsContainer");
+
+    const projects =
+        getActiveProjects();
+
+    if(projects.length === 0){
+
+        container.innerHTML = `
+            <div class="empty">
+                No active projects yet.
+            </div>
+        `;
+
+        return;
+
+    }
+
+    const recent =
+        [...projects]
+            .reverse()
+            .slice(0,5);
+
+
+    container.innerHTML =
+        recent.map(project => {
+
+            let progress =
+                Number(project.progress || 0);
+
+            if(!Number.isFinite(progress)){
+                progress = 0;
+            }
+
+            progress =
+                Math.min(Math.max(progress,0),100);
+
+
+            let stage = "Active";
+
+            if(progress >= 100){
+                stage = "Completed";
+            }else if(progress >= 75){
+                stage = "Testing";
+            }else if(progress >= 50){
+                stage = "Development";
+            }else if(progress >= 25){
+                stage = "Designing";
+            }
+
+
+            const title =
+                getWebsiteTitle(project);
+
+            return `
+
+                <div class="order">
+
+                    <div class="order-top">
+
+                        <span class="order-title">
+                            ${escapeHTML(title)}
+                        </span>
+
+                        <span class="order-id">
+                            #${escapeHTML(project.id || "PROJECT")}
+                        </span>
+
+                    </div>
+
+                    <div class="progress-bar">
+
+                        <div
+                            class="progress-fill"
+                            style="width:${progress}%">
+                        </div>
+
+                    </div>
+
+                    <div class="order-bottom">
+
+                        <span>
+                            ${escapeHTML(stage)}
+                        </span>
+
+                        <span>
+                            ${progress}%
+                        </span>
+
+                    </div>
+
+                </div>
+
+            `;
+
+        })
+        .join("");
+
+}
+
+
+/* FIND CUSTOMER NAME */
+
+function getCustomerName(message){
+
+    const messages =
+        getMessages();
+
+    const customerId =
+        message.customerId ||
+        message.orderId ||
+        "";
+
+    const requests =
+        getCustomerRequests();
+
+    const matchingRequest =
+        requests.find(item => {
+
+            return String(item.id || "") ===
+                   String(customerId) ||
+
+                   String(item.customerId || "") ===
+                   String(customerId) ||
+
+                   String(item.email || "").toLowerCase() ===
+                   String(message.email || "").toLowerCase();
+
+        });
+
+    if(matchingRequest){
+
+        return matchingRequest.customer ||
+               matchingRequest.name ||
+               "Customer";
+
+    }
+
+    return message.customerName ||
+           "Customer";
+
+}
+
+
+/* RENDER MESSAGES */
+
+function renderMessages(){
+
+    const container =
+        document.getElementById("messagesContainer");
+
+    const messages =
+        getMessages();
+
+    const customerMessages =
+        messages.filter(
+            message =>
+                message.sender === "customer"
+        );
+
+
+    if(customerMessages.length === 0){
+
+        container.innerHTML = `
+            <div class="empty">
+                No customer messages yet.
+            </div>
+        `;
+
+        return;
+
+    }
+
+
+    const recent =
+        [...customerMessages]
+            .reverse()
+            .slice(0,4);
+
+
+    container.innerHTML =
+        recent.map(message => {
+
+            const name =
+                getCustomerName(message);
+
+            return `
+
+                <div class="message">
+
+                    <div class="message-icon">
+                        💬
+                    </div>
+
+                    <div class="message-content">
+
+                        <strong>
+                            ${escapeHTML(name)}
+                        </strong>
+
+                        <p>
+                            ${escapeHTML(message.text || "")}
+                        </p>
+
+                    </div>
+
+                </div>
+
+            `;
+
+        })
+        .join("");
+
+}
+
+
+/* REFRESH DASHBOARD */
+
+function refreshDashboard(){
+
+    loadDeveloperData();
+
+    updateCounts();
+
+    renderRequests();
+
+    renderProjects();
+
+    renderMessages();
+
+}
+
+
+/* LOGOUT */
+
+function logout(){
+
+    sessionStorage.removeItem("developerLoggedIn");
+    sessionStorage.removeItem("developerEmail");
+
+    window.location.replace("developer_signin.html");
+
+}
+
+
+/* START */
+
+refreshDashboard();
+
+setInterval(
+    refreshDashboard,
+    2000
+);
+
+</script>
+
+</body>
+</html>

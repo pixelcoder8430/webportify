@@ -1,0 +1,1450 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Webportify | Customer Requests</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
+
+body{
+    min-height:100vh;
+    background:#03070d;
+    color:white;
+}
+
+/* =========================
+   SIDEBAR
+========================= */
+
+.sidebar{
+    position:fixed;
+    left:0;
+    top:0;
+    width:240px;
+    height:100vh;
+    background:#070b11;
+    border-right:1px solid #252a32;
+    padding:25px 15px;
+    overflow-y:auto;
+}
+
+.logo{
+    text-align:center;
+    color:#ff1744;
+    font-size:25px;
+    font-weight:bold;
+    margin-bottom:35px;
+    text-shadow:0 0 12px #ff1744;
+}
+
+.sidebar a{
+    display:block;
+    padding:14px 15px;
+    margin:8px 0;
+    color:#aeb4bd;
+    text-decoration:none;
+    border-radius:8px;
+    transition:.3s;
+}
+
+.sidebar a:hover,
+.sidebar a.active{
+    background:#151017;
+    color:#ff1744;
+    box-shadow:inset 3px 0 #ff1744;
+}
+
+.icon{
+    margin-right:10px;
+}
+
+/* =========================
+   MAIN
+========================= */
+
+.main{
+    margin-left:240px;
+    padding:35px;
+}
+
+.top{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:30px;
+}
+
+.top h1{
+    color:#ff1744;
+    font-size:32px;
+    text-shadow:0 0 12px #ff1744;
+}
+
+.dashboard-btn{
+    text-decoration:none;
+    color:white;
+    border:1px solid #343942;
+    padding:10px 18px;
+    border-radius:7px;
+    transition:.2s;
+}
+
+.dashboard-btn:hover{
+    border-color:#ff1744;
+    color:#ff1744;
+}
+
+/* =========================
+   STATS
+========================= */
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:15px;
+    margin-bottom:25px;
+}
+
+.stat{
+    background:#090d14;
+    border:1px solid #292e37;
+    border-radius:10px;
+    padding:18px;
+}
+
+.stat-title{
+    color:#777f89;
+    font-size:11px;
+    margin-bottom:8px;
+}
+
+.stat-number{
+    color:#ff1744;
+    font-size:25px;
+    font-weight:bold;
+}
+
+/* =========================
+   REQUEST
+========================= */
+
+.request{
+    background:#090d14;
+    border:1px solid #292e37;
+    border-radius:12px;
+    padding:25px;
+    margin-bottom:20px;
+    transition:.2s;
+}
+
+.request:hover{
+    border-color:#ff1744;
+    box-shadow:0 0 20px rgba(255,23,68,.12);
+}
+
+.request-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:20px;
+    gap:15px;
+}
+
+.request-header h2{
+    font-size:21px;
+}
+
+.badge{
+    background:#241016;
+    color:#ff1744;
+    border:1px solid #ff1744;
+    padding:6px 12px;
+    border-radius:20px;
+    font-size:11px;
+    font-weight:bold;
+}
+
+.info{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:15px;
+}
+
+.info-box{
+    background:#0c1118;
+    border:1px solid #252b34;
+    padding:15px;
+    border-radius:8px;
+}
+
+.label{
+    color:#777f89;
+    font-size:11px;
+    margin-bottom:6px;
+}
+
+.value{
+    font-size:14px;
+    color:#eee;
+    word-break:break-word;
+}
+
+.requirements{
+    margin-top:20px;
+    padding:16px;
+    background:#0c1118;
+    border-left:3px solid #ff1744;
+    border-radius:5px;
+}
+
+.requirements h3{
+    font-size:15px;
+    margin-bottom:8px;
+}
+
+.requirements p{
+    color:#aeb4bd;
+    font-size:13px;
+    line-height:1.6;
+    white-space:pre-wrap;
+    word-break:break-word;
+}
+
+/* =========================
+   BUTTONS
+========================= */
+
+.buttons{
+    display:flex;
+    gap:12px;
+    margin-top:22px;
+    flex-wrap:wrap;
+}
+
+button{
+    border:none;
+    padding:11px 20px;
+    border-radius:7px;
+    font-weight:bold;
+    cursor:pointer;
+    transition:.3s;
+}
+
+button:disabled{
+    opacity:.5;
+    cursor:not-allowed;
+}
+
+.accept{
+    background:#ff1744;
+    color:white;
+}
+
+.accept:hover{
+    box-shadow:0 0 18px #ff1744;
+}
+
+.reject{
+    background:#161a20;
+    color:#aaa;
+    border:1px solid #343942;
+}
+
+.reject:hover{
+    color:#ff1744;
+    border-color:#ff1744;
+}
+
+.message{
+    background:#161a20;
+    color:#aaa;
+    border:1px solid #343942;
+}
+
+.message:hover:not(:disabled){
+    color:#ff1744;
+    border-color:#ff1744;
+}
+
+/* =========================
+   EMPTY
+========================= */
+
+.empty{
+    text-align:center;
+    padding:80px 20px;
+    color:#737b85;
+}
+
+.empty-icon{
+    font-size:50px;
+    margin-bottom:15px;
+}
+
+.empty h2{
+    color:#aaa;
+    margin-bottom:8px;
+}
+
+.empty p{
+    font-size:14px;
+}
+
+/* =========================
+   ERROR
+========================= */
+
+.error-box{
+    background:#190b10;
+    border:1px solid #ff1744;
+    color:#ff8da2;
+    padding:20px;
+    border-radius:10px;
+    text-align:center;
+    margin-bottom:20px;
+}
+
+.loading{
+    text-align:center;
+    padding:70px 20px;
+    color:#777f89;
+    font-size:15px;
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:800px){
+
+    .sidebar{
+        width:190px;
+    }
+
+    .main{
+        margin-left:190px;
+        padding:20px;
+    }
+
+    .info{
+        grid-template-columns:1fr;
+    }
+
+    .stats{
+        grid-template-columns:1fr;
+    }
+}
+
+@media(max-width:600px){
+
+    .sidebar{
+        position:relative;
+        width:100%;
+        height:auto;
+        border-right:none;
+        border-bottom:1px solid #252a32;
+    }
+
+    .main{
+        margin-left:0;
+        padding:20px;
+    }
+
+    .top{
+        flex-direction:column;
+        align-items:flex-start;
+        gap:15px;
+    }
+
+    .buttons{
+        flex-direction:column;
+    }
+
+    button{
+        width:100%;
+    }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- =========================
+     SIDEBAR
+========================= -->
+
+<div class="sidebar">
+
+    <div class="logo">
+        WEBPORTIFY
+    </div>
+
+    <a href="developer_dashboard.html">
+        <span class="icon">🏠</span>
+        Dashboard
+    </a>
+
+    <a href="developer_requests.html" class="active">
+        <span class="icon">📋</span>
+        Customer Requests
+    </a>
+
+    <a href="active_projects.html">
+        <span class="icon">⚡</span>
+        Active Projects
+    </a>
+
+    <a href="completed_projects.html">
+        <span class="icon">✅</span>
+        Completed
+    </a>
+
+    <a href="developer_messages.html">
+        <span class="icon">💬</span>
+        Messages
+    </a>
+
+    <a href="developer_profile.html">
+        <span class="icon">👤</span>
+        My Profile
+    </a>
+
+</div>
+
+
+<!-- =========================
+     MAIN
+========================= -->
+
+<div class="main">
+
+    <div class="top">
+
+        <h1>
+            Customer Requests
+        </h1>
+
+        <a
+            href="developer_dashboard.html"
+            class="dashboard-btn">
+
+            ← Dashboard
+
+        </a>
+
+    </div>
+
+
+    <!-- =========================
+         STATS
+    ========================= -->
+
+    <div class="stats">
+
+        <div class="stat">
+
+            <div class="stat-title">
+                PENDING REQUESTS
+            </div>
+
+            <div
+                class="stat-number"
+                id="pendingCount">
+
+                0
+
+            </div>
+
+        </div>
+
+
+        <div class="stat">
+
+            <div class="stat-title">
+                ACTIVE REQUESTS
+            </div>
+
+            <div
+                class="stat-number"
+                id="activeCount">
+
+                0
+
+            </div>
+
+        </div>
+
+
+        <div class="stat">
+
+            <div class="stat-title">
+                TOTAL REQUESTS
+            </div>
+
+            <div
+                class="stat-number"
+                id="totalCount">
+
+                0
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         REQUESTS
+    ========================= -->
+
+    <div id="requests">
+
+        <div class="loading">
+            Loading customer requests...
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+/* ==========================================
+   BACKEND
+========================================== */
+
+const API_URL = "http://localhost:5000";
+
+
+/* ==========================================
+   LOGIN PROTECTION
+========================================== */
+
+const token =
+    localStorage.getItem("token");
+
+if(
+    !token ||
+    sessionStorage.getItem("developerLoggedIn") !== "true"
+){
+
+    window.location.replace(
+        "developer_signin.html"
+    );
+
+}
+
+
+/* ==========================================
+   ELEMENTS
+========================================== */
+
+const requestsContainer =
+    document.getElementById("requests");
+
+const pendingCount =
+    document.getElementById("pendingCount");
+
+const activeCount =
+    document.getElementById("activeCount");
+
+const totalCount =
+    document.getElementById("totalCount");
+
+
+/* ==========================================
+   DATA
+========================================== */
+
+let customerRequests = [];
+
+
+/* ==========================================
+   LOGOUT
+========================================== */
+
+function logoutDeveloper(){
+
+    localStorage.removeItem("token");
+    localStorage.removeItem("developerUser");
+    localStorage.removeItem("developerEmail");
+
+    sessionStorage.removeItem("developerLoggedIn");
+    sessionStorage.removeItem("developerEmail");
+
+    window.location.replace(
+        "developer_signin.html"
+    );
+
+}
+
+
+/* ==========================================
+   LOAD REQUESTS
+========================================== */
+
+async function loadRequests(){
+
+    try{
+
+        requestsContainer.innerHTML = `
+            <div class="loading">
+                Loading customer requests...
+            </div>
+        `;
+
+
+        const response = await fetch(
+            `${API_URL}/api/requests`,
+            {
+                method:"GET",
+
+                headers:{
+                    "Authorization":
+                        `Bearer ${token}`
+                }
+            }
+        );
+
+
+        const data =
+            await response.json();
+
+
+        if(!response.ok){
+
+            if(
+                response.status === 401 ||
+                response.status === 403
+            ){
+
+                logoutDeveloper();
+
+                return;
+            }
+
+
+            throw new Error(
+                data.message ||
+                "Could not load requests."
+            );
+
+        }
+
+
+        customerRequests =
+            Array.isArray(data.requests)
+                ? data.requests
+                : [];
+
+
+        displayRequests();
+
+    }
+    catch(error){
+
+        console.error(
+            "Request loading error:",
+            error
+        );
+
+
+        requestsContainer.innerHTML = `
+
+            <div class="error-box">
+
+                <h2>
+                    Could Not Load Requests
+                </h2>
+
+                <p style="margin-top:10px;">
+                    ${escapeHTML(
+                        error.message ||
+                        "Unable to connect to the backend."
+                    )}
+                </p>
+
+                <button
+                    class="accept"
+                    style="margin-top:18px;"
+                    onclick="loadRequests()">
+
+                    Try Again
+
+                </button>
+
+            </div>
+
+        `;
+
+    }
+
+}
+
+
+/* ==========================================
+   UPDATE STATISTICS
+========================================== */
+
+function updateStats(){
+
+    const pending =
+        customerRequests.filter(
+            request =>
+                !request.status ||
+                request.status === "pending"
+        ).length;
+
+
+    const active =
+        customerRequests.filter(
+            request =>
+                request.status === "accepted"
+        ).length;
+
+
+    pendingCount.textContent =
+        pending;
+
+    activeCount.textContent =
+        active;
+
+    totalCount.textContent =
+        customerRequests.length;
+
+}
+
+
+/* ==========================================
+   DISPLAY REQUESTS
+========================================== */
+
+function displayRequests(){
+
+    requestsContainer.innerHTML = "";
+
+    updateStats();
+
+
+    /*
+     * Only pending requests are displayed
+     * on this page.
+     *
+     * Accepted requests are handled through
+     * Active Projects.
+     */
+
+    const pendingRequests =
+        customerRequests.filter(
+            request =>
+                !request.status ||
+                request.status === "pending"
+        );
+
+
+    if(pendingRequests.length === 0){
+
+        requestsContainer.innerHTML = `
+
+            <div class="empty">
+
+                <div class="empty-icon">
+                    📭
+                </div>
+
+                <h2>
+                    No Customer Requests
+                </h2>
+
+                <p>
+                    New website requests from customers
+                    will appear here.
+                </p>
+
+            </div>
+
+        `;
+
+        return;
+    }
+
+
+    pendingRequests.forEach(request => {
+
+        const requestId =
+            String(request.id || "");
+
+
+        const websiteType =
+            request.website_type ||
+            "Website";
+
+
+        const purpose =
+            request.purpose ||
+            "Not provided";
+
+
+        const features =
+            request.features ||
+            "Not provided";
+
+
+        const reference =
+            request.reference ||
+            "No reference provided";
+
+
+        const requirements =
+            request.requirements ||
+            "No additional requirements provided.";
+
+
+        const date =
+            request.created_at ||
+            "Not provided";
+
+
+        const customerName =
+            request.customer_name ||
+            "Unknown Customer";
+
+
+        const email =
+            request.customer_email ||
+            "Not provided";
+
+
+        const customerId =
+            Number(request.customer_id);
+
+
+        /*
+         * Pending requests are not yet assigned.
+         * Therefore messaging is disabled.
+         */
+
+        const canMessage =
+            Boolean(
+                request.developer_id &&
+                customerId
+            );
+
+
+        requestsContainer.innerHTML += `
+
+            <div class="request">
+
+                <div class="request-header">
+
+                    <h2>
+                        🌐
+                        ${escapeHTML(websiteType)}
+                    </h2>
+
+                    <span class="badge">
+                        PENDING
+                    </span>
+
+                </div>
+
+
+                <div class="info">
+
+                    <div class="info-box">
+
+                        <div class="label">
+                            CUSTOMER
+                        </div>
+
+                        <div class="value">
+                            ${escapeHTML(customerName)}
+                        </div>
+
+                    </div>
+
+
+                    <div class="info-box">
+
+                        <div class="label">
+                            EMAIL
+                        </div>
+
+                        <div class="value">
+                            ${escapeHTML(email)}
+                        </div>
+
+                    </div>
+
+
+                    <div class="info-box">
+
+                        <div class="label">
+                            WEBSITE TYPE
+                        </div>
+
+                        <div class="value">
+                            ${escapeHTML(websiteType)}
+                        </div>
+
+                    </div>
+
+
+                    <div class="info-box">
+
+                        <div class="label">
+                            PURPOSE
+                        </div>
+
+                        <div class="value">
+                            ${escapeHTML(purpose)}
+                        </div>
+
+                    </div>
+
+
+                    <div class="info-box">
+
+                        <div class="label">
+                            REFERENCE WEBSITE
+                        </div>
+
+                        <div class="value">
+                            ${escapeHTML(reference)}
+                        </div>
+
+                    </div>
+
+
+                    <div class="info-box">
+
+                        <div class="label">
+                            REQUEST DATE
+                        </div>
+
+                        <div class="value">
+                            ${escapeHTML(
+                                formatDate(date)
+                            )}
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="requirements">
+
+                    <h3>
+                        🧩 Required Features
+                    </h3>
+
+                    <p>
+                        ${escapeHTML(features)}
+                    </p>
+
+                </div>
+
+
+                <div class="requirements">
+
+                    <h3>
+                        📝 Additional Requirements
+                    </h3>
+
+                    <p>
+                        ${escapeHTML(requirements)}
+                    </p>
+
+                </div>
+
+
+                <div class="buttons">
+
+                    <button
+                        class="accept"
+                        data-id="${escapeHTML(requestId)}"
+                        onclick="acceptRequest(this.dataset.id)">
+
+                        ✅ Accept Request
+
+                    </button>
+
+
+                    <button
+                        class="reject"
+                        data-id="${escapeHTML(requestId)}"
+                        onclick="rejectRequest(this.dataset.id)">
+
+                        ✕ Reject
+
+                    </button>
+
+
+                    <button
+                        class="message"
+                        data-id="${escapeHTML(requestId)}"
+                        onclick="messageCustomer(this.dataset.id)"
+                        ${canMessage ? "" : "disabled"}
+                        title="${
+                            canMessage
+                            ? "Message Customer"
+                            : "Accept the request before messaging"
+                        }">
+
+                        💬 Message Customer
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        `;
+
+    });
+
+}
+
+
+/* ==========================================
+   ACCEPT REQUEST
+========================================== */
+
+async function acceptRequest(requestId){
+
+    const request =
+        customerRequests.find(
+            item =>
+                String(item.id) ===
+                String(requestId)
+        );
+
+
+    if(!request){
+
+        alert(
+            "Request could not be found."
+        );
+
+        return;
+    }
+
+
+    const confirmed =
+        confirm(
+            "Accept this customer request?"
+        );
+
+
+    if(!confirmed){
+
+        return;
+    }
+
+
+    try{
+
+        const response =
+            await fetch(
+                `${API_URL}/api/requests/${requestId}`,
+                {
+                    method:"PATCH",
+
+                    headers:{
+                        "Content-Type":
+                            "application/json",
+
+                        "Authorization":
+                            `Bearer ${token}`
+                    },
+
+                    body:JSON.stringify({
+                        status:"accepted"
+                    })
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if(
+            response.status === 401 ||
+            response.status === 403
+        ){
+
+            logoutDeveloper();
+
+            return;
+        }
+
+
+        if(!response.ok){
+
+            throw new Error(
+                data.message ||
+                "Could not accept request."
+            );
+
+        }
+
+
+        alert(
+            "Request accepted successfully!"
+        );
+
+
+        /*
+         * Backend handles the assignment
+         * and project creation.
+         */
+
+        await loadRequests();
+
+    }
+    catch(error){
+
+        console.error(
+            "Accept error:",
+            error
+        );
+
+
+        alert(
+            error.message ||
+            "Could not accept request."
+        );
+
+    }
+
+}
+
+
+/* ==========================================
+   REJECT REQUEST
+========================================== */
+
+async function rejectRequest(requestId){
+
+    const request =
+        customerRequests.find(
+            item =>
+                String(item.id) ===
+                String(requestId)
+        );
+
+
+    if(!request){
+
+        alert(
+            "Request could not be found."
+        );
+
+        return;
+    }
+
+
+    const confirmed =
+        confirm(
+            "Reject this customer request?"
+        );
+
+
+    if(!confirmed){
+
+        return;
+    }
+
+
+    try{
+
+        const response =
+            await fetch(
+                `${API_URL}/api/requests/${requestId}`,
+                {
+                    method:"PATCH",
+
+                    headers:{
+                        "Content-Type":
+                            "application/json",
+
+                        "Authorization":
+                            `Bearer ${token}`
+                    },
+
+                    body:JSON.stringify({
+                        status:"rejected"
+                    })
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if(
+            response.status === 401 ||
+            response.status === 403
+        ){
+
+            logoutDeveloper();
+
+            return;
+        }
+
+
+        if(!response.ok){
+
+            throw new Error(
+                data.message ||
+                "Could not reject request."
+            );
+
+        }
+
+
+        alert(
+            "Customer request rejected."
+        );
+
+
+        await loadRequests();
+
+    }
+    catch(error){
+
+        console.error(
+            "Reject error:",
+            error
+        );
+
+
+        alert(
+            error.message ||
+            "Could not reject request."
+        );
+
+    }
+
+}
+
+
+/* ==========================================
+   MESSAGE CUSTOMER
+========================================== */
+
+function messageCustomer(requestId){
+
+    const request =
+        customerRequests.find(
+            item =>
+                String(item.id) ===
+                String(requestId)
+        );
+
+
+    if(!request){
+
+        alert(
+            "Customer could not be found."
+        );
+
+        return;
+    }
+
+
+    const customerId =
+        Number(request.customer_id);
+
+
+    const developerId =
+        Number(request.developer_id);
+
+
+    /*
+     * Messaging requires:
+     * - customer
+     * - developer
+     * - request
+     */
+
+    if(!customerId){
+
+        alert(
+            "Customer information is missing."
+        );
+
+        return;
+    }
+
+
+    if(!developerId){
+
+        alert(
+            "Accept this request before messaging the customer."
+        );
+
+        return;
+    }
+
+
+    /*
+     * Save selected request.
+     */
+
+    localStorage.setItem(
+        "selectedRequestId",
+        String(request.id)
+    );
+
+
+    /*
+     * Save selected customer.
+     */
+
+    localStorage.setItem(
+        "selectedCustomer",
+        JSON.stringify({
+
+            id:customerId,
+
+            name:
+                request.customer_name ||
+                "Customer",
+
+            email:
+                request.customer_email ||
+                "",
+
+            requestId:
+                request.id
+
+        })
+    );
+
+
+    /*
+     * Save developer information.
+     */
+
+    localStorage.setItem(
+        "selectedDeveloper",
+        JSON.stringify({
+
+            id:developerId
+
+        })
+    );
+
+
+    /*
+     * Compatibility value.
+     */
+
+    localStorage.setItem(
+        "selectedCustomerId",
+        String(customerId)
+    );
+
+
+    window.location.href =
+        "developer_messages.html";
+
+}
+
+
+/* ==========================================
+   FORMAT DATE
+========================================== */
+
+function formatDate(value){
+
+    if(!value){
+
+        return "Not provided";
+    }
+
+
+    try{
+
+        const date =
+            new Date(value);
+
+
+        if(isNaN(date.getTime())){
+
+            return String(value);
+        }
+
+
+        return date.toLocaleString(
+            "en-IN",
+            {
+                dateStyle:"medium",
+                timeStyle:"short"
+            }
+        );
+
+    }
+    catch(error){
+
+        return String(value);
+
+    }
+
+}
+
+
+/* ==========================================
+   ESCAPE HTML
+========================================== */
+
+function escapeHTML(value){
+
+    return String(value)
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+
+}
+
+
+/* ==========================================
+   AUTO REFRESH
+========================================== */
+
+setInterval(
+    loadRequests,
+    10000
+);
+
+
+/* ==========================================
+   START
+========================================== */
+
+loadRequests();
+
+</script>
+
+</body>
+</html>

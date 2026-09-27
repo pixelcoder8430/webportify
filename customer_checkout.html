@@ -1,0 +1,1585 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
+
+<title>Webportify - Checkout</title>
+
+<style>
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    min-height: 100vh;
+
+    background:
+        linear-gradient(
+            rgba(2, 7, 13, 0.96),
+            rgba(2, 7, 13, 0.98)
+        ),
+        url("wallpaper.jpg");
+
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+
+    color: white;
+}
+
+/* SIDEBAR */
+
+.sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+
+    width: 250px;
+    height: 100vh;
+
+    padding: 30px 18px;
+
+    background: rgba(5, 8, 13, 0.98);
+
+    border-right: 1px solid #ff1744;
+
+    box-shadow:
+        5px 0 25px rgba(255, 23, 68, 0.15);
+}
+
+.logo {
+    text-align: center;
+
+    color: #ff1744;
+
+    font-size: 27px;
+    font-weight: bold;
+
+    margin-bottom: 45px;
+
+    text-shadow:
+        0 0 15px #ff1744;
+}
+
+.sidebar ul {
+    list-style: none;
+}
+
+.sidebar li {
+    margin-bottom: 9px;
+}
+
+.sidebar a {
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    padding: 14px 15px;
+
+    color: #bfc3ca;
+
+    text-decoration: none;
+
+    border-radius: 10px;
+
+    transition: 0.3s;
+}
+
+.sidebar a:hover {
+    color: white;
+
+    background:
+        rgba(255, 23, 68, 0.12);
+}
+
+.icon {
+    width: 25px;
+
+    text-align: center;
+
+    font-size: 18px;
+}
+
+/* MAIN */
+
+.main {
+    margin-left: 250px;
+
+    padding: 40px 50px;
+
+    min-height: 100vh;
+}
+
+.top {
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    margin-bottom: 30px;
+}
+
+.top h1 {
+    font-size: 34px;
+}
+
+.top h1 span {
+    color: #ff1744;
+
+    text-shadow:
+        0 0 12px #ff1744;
+}
+
+.back-btn {
+    padding: 12px 20px;
+
+    color: white;
+
+    text-decoration: none;
+
+    background: #11161e;
+
+    border: 1px solid #333943;
+
+    border-radius: 9px;
+
+    transition: 0.3s;
+}
+
+.back-btn:hover {
+    border-color: #ff1744;
+
+    box-shadow:
+        0 0 12px rgba(255, 23, 68, 0.2);
+}
+
+/* CHECKOUT */
+
+.checkout {
+    display: grid;
+
+    grid-template-columns:
+        1.4fr 0.8fr;
+
+    gap: 25px;
+
+    align-items: start;
+}
+
+.card {
+    background:
+        rgba(9, 13, 20, 0.96);
+
+    border:
+        1px solid rgba(255, 23, 68, 0.35);
+
+    border-radius: 18px;
+
+    padding: 28px;
+
+    box-shadow:
+        0 0 30px rgba(255, 23, 68, 0.05);
+}
+
+.card h2 {
+    font-size: 21px;
+
+    margin-bottom: 22px;
+}
+
+.card h2 span {
+    color: #ff1744;
+}
+
+/* FORM */
+
+.form-group {
+    margin-bottom: 18px;
+}
+
+.form-group label {
+    display: block;
+
+    color: #ff1744;
+
+    font-size: 11px;
+
+    font-weight: bold;
+
+    letter-spacing: 1px;
+
+    margin-bottom: 8px;
+}
+
+input,
+textarea,
+select {
+    width: 100%;
+
+    padding: 13px 14px;
+
+    background: #05080d;
+
+    color: white;
+
+    border: 1px solid #303640;
+
+    border-radius: 9px;
+
+    outline: none;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+    border-color: #ff1744;
+
+    box-shadow:
+        0 0 10px rgba(255, 23, 68, 0.15);
+}
+
+textarea {
+    min-height: 120px;
+
+    resize: vertical;
+}
+
+.required {
+    color: #ff1744;
+}
+
+/* ORDER ITEMS */
+
+.item {
+    display: flex;
+
+    justify-content: space-between;
+
+    gap: 15px;
+
+    padding: 16px 0;
+
+    border-bottom:
+        1px solid #252a32;
+}
+
+.item:last-child {
+    border-bottom: none;
+}
+
+.item-name {
+    color: white;
+
+    font-weight: bold;
+
+    margin-bottom: 5px;
+}
+
+.item-type {
+    color: #777;
+
+    font-size: 12px;
+}
+
+.item-price {
+    color: #ff1744;
+
+    font-weight: bold;
+
+    white-space: nowrap;
+}
+
+/* SUMMARY */
+
+.summary {
+    margin-top: 20px;
+
+    border-top:
+        1px solid #303640;
+
+    padding-top: 18px;
+}
+
+.summary-row {
+    display: flex;
+
+    justify-content: space-between;
+
+    color: #aaa;
+
+    margin-bottom: 12px;
+}
+
+.summary-row.total {
+    color: white;
+
+    font-size: 20px;
+
+    font-weight: bold;
+
+    margin-top: 18px;
+
+    padding-top: 18px;
+
+    border-top:
+        1px solid #303640;
+}
+
+.summary-row.total span:last-child {
+    color: #ff1744;
+
+    text-shadow:
+        0 0 10px rgba(255, 23, 68, 0.5);
+}
+
+/* BUTTON */
+
+.place-order {
+    width: 100%;
+
+    margin-top: 20px;
+
+    padding: 15px;
+
+    border: none;
+
+    border-radius: 10px;
+
+    background: #ff1744;
+
+    color: white;
+
+    font-size: 16px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition: 0.3s;
+}
+
+.place-order:hover {
+    box-shadow:
+        0 0 25px rgba(255, 23, 68, 0.55);
+}
+
+.place-order:disabled {
+    opacity: 0.6;
+
+    cursor: not-allowed;
+}
+
+/* EMPTY CART */
+
+.empty {
+    text-align: center;
+
+    padding: 70px 20px;
+}
+
+.empty-icon {
+    font-size: 55px;
+
+    margin-bottom: 15px;
+}
+
+.empty h2 {
+    margin-bottom: 10px;
+}
+
+.empty p {
+    color: #777;
+
+    margin-bottom: 25px;
+}
+
+.empty a {
+    display: inline-block;
+
+    padding: 12px 20px;
+
+    color: white;
+
+    background: #ff1744;
+
+    text-decoration: none;
+
+    border-radius: 9px;
+
+    font-weight: bold;
+}
+
+/* SUCCESS */
+
+#success {
+    display: none;
+
+    text-align: center;
+
+    max-width: 650px;
+
+    margin: 60px auto;
+}
+
+.success-icon {
+    font-size: 65px;
+
+    margin-bottom: 20px;
+}
+
+#success h2 {
+    font-size: 28px;
+
+    margin-bottom: 12px;
+}
+
+#success h2 span {
+    color: #ff1744;
+}
+
+#success p {
+    color: #aaa;
+
+    line-height: 1.7;
+}
+
+.order-id {
+    display: inline-block;
+
+    margin: 25px 0;
+
+    padding: 15px 25px;
+
+    background: #080c12;
+
+    border:
+        1px solid #ff1744;
+
+    border-radius: 10px;
+
+    color: #ff1744;
+
+    font-size: 20px;
+
+    font-weight: bold;
+
+    letter-spacing: 1px;
+
+    box-shadow:
+        0 0 20px rgba(255, 23, 68, 0.15);
+}
+
+.success-buttons {
+    display: flex;
+
+    justify-content: center;
+
+    gap: 12px;
+
+    flex-wrap: wrap;
+}
+
+.success-buttons a {
+    padding: 12px 20px;
+
+    border-radius: 9px;
+
+    text-decoration: none;
+
+    font-weight: bold;
+}
+
+.red-link {
+    background: #ff1744;
+
+    color: white;
+}
+
+.dark-link {
+    background: #11161e;
+
+    color: white;
+
+    border:
+        1px solid #333943;
+}
+
+/* MOBILE */
+
+@media (max-width: 850px) {
+
+    .checkout {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+@media (max-width: 700px) {
+
+    .sidebar {
+        position: relative;
+
+        width: 100%;
+
+        height: auto;
+
+        border-right: none;
+
+        border-bottom:
+            1px solid #ff1744;
+    }
+
+    .main {
+        margin-left: 0;
+
+        padding: 25px 18px;
+    }
+
+    .top {
+        flex-direction: column;
+
+        align-items: flex-start;
+
+        gap: 15px;
+    }
+
+    .card {
+        padding: 20px;
+    }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<!-- SIDEBAR -->
+
+<aside class="sidebar">
+
+    <div class="logo">
+        WEBPORTIFY
+    </div>
+
+    <ul>
+
+        <li>
+            <a href="customer_dashboard.html">
+                <span class="icon">🏠</span>
+                Dashboard
+            </a>
+        </li>
+
+        <li>
+            <a href="customer_cart.html">
+                <span class="icon">🛒</span>
+                My Cart
+            </a>
+        </li>
+
+        <li>
+            <a href="customer_orders.html">
+                <span class="icon">📦</span>
+                My Orders
+            </a>
+        </li>
+
+        <li>
+            <a href="customer_messages.html">
+                <span class="icon">💬</span>
+                Messages
+            </a>
+        </li>
+
+        <li>
+            <a href="customer_account.html">
+                <span class="icon">👤</span>
+                My Account
+            </a>
+        </li>
+
+    </ul>
+
+</aside>
+
+<!-- MAIN -->
+
+<main class="main">
+
+    <div class="top">
+
+        <h1>
+            <span>Checkout</span>
+        </h1>
+
+        <a
+            href="customer_cart.html"
+            class="back-btn"
+        >
+            ← Back to Cart
+        </a>
+
+    </div>
+
+    <!-- CHECKOUT -->
+
+    <div
+        id="checkoutArea"
+        class="checkout"
+    >
+
+        <!-- CUSTOMER DETAILS -->
+
+        <div class="card">
+
+            <h2>
+                Customer <span>Details</span>
+            </h2>
+
+            <form id="checkoutForm">
+
+                <div class="form-group">
+
+                    <label>
+                        FULL NAME
+                        <span class="required">*</span>
+                    </label>
+
+                    <input
+                        type="text"
+                        id="name"
+                        placeholder="Enter your full name"
+                        required
+                    >
+
+                </div>
+
+                <div class="form-group">
+
+                    <label>
+                        EMAIL
+                        <span class="required">*</span>
+                    </label>
+
+                    <input
+                        type="email"
+                        id="email"
+                        placeholder="Enter your email"
+                        readonly
+                        required
+                    >
+
+                </div>
+
+                <div class="form-group">
+
+                    <label>
+                        PHONE
+                    </label>
+
+                    <input
+                        type="tel"
+                        id="phone"
+                        placeholder="Enter your phone number"
+                    >
+
+                </div>
+
+                <div class="form-group">
+
+                    <label>
+                        WEBSITE REQUIREMENTS
+                    </label>
+
+                    <textarea
+                        id="requirements"
+                        placeholder="Tell the developer what you want in your website..."
+                    ></textarea>
+
+                </div>
+
+                <div class="form-group">
+
+                    <label>
+                        PREFERRED CONTACT
+                    </label>
+
+                    <select id="contactMethod">
+
+                        <option value="Email">
+                            Email
+                        </option>
+
+                        <option value="Webportify Messages">
+                            Webportify Messages
+                        </option>
+
+                    </select>
+
+                </div>
+
+                <button
+                    type="submit"
+                    class="place-order"
+                    id="placeOrderButton"
+                >
+                    🛒 Place Order
+                </button>
+
+            </form>
+
+        </div>
+
+        <!-- ORDER SUMMARY -->
+
+        <div class="card">
+
+            <h2>
+                Order <span>Summary</span>
+            </h2>
+
+            <div id="items"></div>
+
+            <div class="summary">
+
+                <div class="summary-row">
+
+                    <span>
+                        Items
+                    </span>
+
+                    <span id="itemCount">
+                        0
+                    </span>
+
+                </div>
+
+                <div class="summary-row">
+
+                    <span>
+                        Subtotal
+                    </span>
+
+                    <span id="subtotal">
+                        ₹0
+                    </span>
+
+                </div>
+
+                <div class="summary-row">
+
+                    <span>
+                        Service Fee
+                    </span>
+
+                    <span>
+                        ₹0
+                    </span>
+
+                </div>
+
+                <div class="summary-row total">
+
+                    <span>
+                        Total
+                    </span>
+
+                    <span id="total">
+                        ₹0
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- EMPTY CART -->
+
+    <div
+        id="emptyCart"
+        class="card empty"
+        style="display:none;"
+    >
+
+        <div class="empty-icon">
+            🛒
+        </div>
+
+        <h2>
+            Your Cart is Empty
+        </h2>
+
+        <p>
+            Add a website to your cart before checking out.
+        </p>
+
+        <a href="customer_dashboard.html">
+            Browse Websites
+        </a>
+
+    </div>
+
+    <!-- SUCCESS -->
+
+    <div
+        id="success"
+        class="card"
+    >
+
+        <div class="success-icon">
+            ✅
+        </div>
+
+        <h2>
+            Order <span>Placed!</span>
+        </h2>
+
+        <p>
+            Your website order has been successfully submitted.
+            A developer can now review your request and accept the project.
+        </p>
+
+        <div
+            class="order-id"
+            id="orderId"
+        >
+            WP000000
+        </div>
+
+        <p>
+            You can track your order from
+            <strong>My Orders</strong>
+            and communicate with the developer through
+            <strong>Messages</strong>.
+        </p>
+
+        <div class="success-buttons">
+
+            <a
+                href="customer_orders.html"
+                class="red-link"
+            >
+                📦 View My Orders
+            </a>
+
+            <a
+                href="customer_messages.html"
+                class="dark-link"
+            >
+                💬 Messages
+            </a>
+
+            <a
+                href="customer_dashboard.html"
+                class="dark-link"
+            >
+                🏠 Dashboard
+            </a>
+
+        </div>
+
+    </div>
+
+</main>
+
+<script>
+
+const API_URL = "http://localhost:5000";
+
+
+/* =========================
+   GET TOKEN
+========================= */
+
+const token =
+    localStorage.getItem("token");
+
+
+/* =========================
+   LOGIN PROTECTION
+========================= */
+
+if (!token) {
+
+    window.location.replace(
+        "customer_signin.html"
+    );
+
+}
+
+
+/* =========================
+   GET CART
+========================= */
+
+function getCart() {
+
+    try {
+
+        const saved =
+            localStorage.getItem(
+                "webportifyCart"
+            );
+
+        const cart =
+            saved
+                ? JSON.parse(saved)
+                : [];
+
+        return Array.isArray(cart)
+            ? cart
+            : [];
+
+    } catch (error) {
+
+        console.error(
+            "Cart error:",
+            error
+        );
+
+        return [];
+
+    }
+
+}
+
+
+/* =========================
+   ESCAPE HTML
+========================= */
+
+function escapeHTML(value) {
+
+    return String(value ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+
+}
+
+
+/* =========================
+   LOAD CUSTOMER FROM BACKEND
+========================= */
+
+async function loadCustomer() {
+
+    try {
+
+        const response =
+            await fetch(
+                API_URL + "/api/me",
+                {
+                    method: "GET",
+
+                    headers: {
+                        "Authorization":
+                            "Bearer " + token
+                    }
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (
+            response.status === 401 ||
+            !data.success
+        ) {
+
+            localStorage.removeItem(
+                "token"
+            );
+
+            localStorage.removeItem(
+                "customerLoggedIn"
+            );
+
+            window.location.replace(
+                "customer_signin.html"
+            );
+
+            return;
+
+        }
+
+
+        if (
+            data.role &&
+            data.role !== "customer"
+        ) {
+
+            alert(
+                "Please sign in with a customer account."
+            );
+
+            window.location.replace(
+                "customer_signin.html"
+            );
+
+            return;
+
+        }
+
+
+        const customer =
+            data.user;
+
+
+        if (!customer) {
+
+            throw new Error(
+                "Customer information was not returned."
+            );
+
+        }
+
+
+        localStorage.setItem(
+            "customerUser",
+            JSON.stringify(customer)
+        );
+
+
+        document.getElementById(
+            "name"
+        ).value =
+            customer.name || "";
+
+
+        document.getElementById(
+            "email"
+        ).value =
+            customer.email || "";
+
+
+    } catch (error) {
+
+        console.error(
+            "Customer loading error:",
+            error
+        );
+
+        alert(
+            "Could not connect to the backend. Make sure the Webportify server is running."
+        );
+
+    }
+
+}
+
+
+/* =========================
+   LOAD CART
+========================= */
+
+function loadCart() {
+
+    const cart =
+        getCart();
+
+
+    if (cart.length === 0) {
+
+        document.getElementById(
+            "checkoutArea"
+        ).style.display =
+            "none";
+
+        document.getElementById(
+            "emptyCart"
+        ).style.display =
+            "block";
+
+        return;
+
+    }
+
+
+    let subtotal = 0;
+
+
+    const items =
+        document.getElementById(
+            "items"
+        );
+
+
+    items.innerHTML = "";
+
+
+    cart.forEach(function(item) {
+
+        const price =
+            Number(item.price) || 0;
+
+
+        subtotal += price;
+
+
+        const div =
+            document.createElement(
+                "div"
+            );
+
+
+        div.className =
+            "item";
+
+
+        div.innerHTML = `
+
+            <div>
+
+                <div class="item-name">
+                    ${escapeHTML(
+                        item.name ||
+                        "Website"
+                    )}
+                </div>
+
+                <div class="item-type">
+                    ${escapeHTML(
+                        item.type ||
+                        "Website"
+                    )}
+                </div>
+
+            </div>
+
+            <div class="item-price">
+                ₹${price.toLocaleString("en-IN")}
+            </div>
+
+        `;
+
+
+        items.appendChild(
+            div
+        );
+
+    });
+
+
+    document.getElementById(
+        "itemCount"
+    ).textContent =
+        cart.length;
+
+
+    document.getElementById(
+        "subtotal"
+    ).textContent =
+        "₹" +
+        subtotal.toLocaleString(
+            "en-IN"
+        );
+
+
+    document.getElementById(
+        "total"
+    ).textContent =
+        "₹" +
+        subtotal.toLocaleString(
+            "en-IN"
+        );
+
+}
+
+
+/* =========================
+   PLACE ORDER
+========================= */
+
+document.getElementById(
+    "checkoutForm"
+).addEventListener(
+    "submit",
+    async function(event) {
+
+        event.preventDefault();
+
+
+        const cart =
+            getCart();
+
+
+        if (cart.length === 0) {
+
+            alert(
+                "Your cart is empty!"
+            );
+
+            return;
+
+        }
+
+
+        const name =
+            document.getElementById(
+                "name"
+            ).value.trim();
+
+
+        const email =
+            document.getElementById(
+                "email"
+            ).value.trim();
+
+
+        const requirements =
+            document.getElementById(
+                "requirements"
+            ).value.trim();
+
+
+        if (!name || !email) {
+
+            alert(
+                "Please enter your name and email."
+            );
+
+            return;
+
+        }
+
+
+        /* =========================
+           CALCULATE TOTAL
+        ========================= */
+
+        const total =
+            cart.reduce(
+                function(sum, item) {
+
+                    return sum +
+                        (
+                            Number(
+                                item.price
+                            ) || 0
+                        );
+
+                },
+                0
+            );
+
+
+        /* =========================
+           PREPARE BACKEND DATA
+        ========================= */
+
+        const orderData = {
+
+            websiteType:
+                cart.length === 1
+                    ? (
+                        cart[0].type ||
+                        "Website"
+                    )
+                    : "Multiple Websites",
+
+            purpose:
+                "Website Purchase",
+
+            features:
+                cart.map(function(item) {
+
+                    return item.name ||
+                        "Website Template";
+
+                }).join(", "),
+
+            reference:
+                "",
+
+            requirements:
+                requirements,
+
+            items:
+                cart.map(function(item) {
+
+                    return {
+
+                        name:
+                            item.name ||
+                            "Website",
+
+                        type:
+                            item.type ||
+                            "Website",
+
+                        description:
+                            item.description ||
+                            "Premium website template",
+
+                        price:
+                            Number(
+                                item.price
+                            ) || 0
+
+                    };
+
+                }),
+
+            total:
+                total
+
+        };
+
+
+        const button =
+            document.getElementById(
+                "placeOrderButton"
+            );
+
+
+        button.disabled = true;
+
+        button.textContent =
+            "Placing Order...";
+
+
+        try {
+
+            /* =========================
+               SEND ORDER TO BACKEND
+            ========================= */
+
+            const response =
+                await fetch(
+                    API_URL + "/api/orders",
+                    {
+                        method: "POST",
+
+                        headers: {
+
+                            "Content-Type":
+                                "application/json",
+
+                            "Authorization":
+                                "Bearer " + token
+
+                        },
+
+                        body:
+                            JSON.stringify(
+                                orderData
+                            )
+
+                    }
+                );
+
+
+            const data =
+                await response.json();
+
+
+            /* =========================
+               LOGIN EXPIRED
+            ========================= */
+
+            if (
+                response.status === 401
+            ) {
+
+                localStorage.removeItem(
+                    "token"
+                );
+
+                localStorage.removeItem(
+                    "customerLoggedIn"
+                );
+
+                alert(
+                    "Your session has expired. Please sign in again."
+                );
+
+                window.location.replace(
+                    "customer_signin.html"
+                );
+
+                return;
+
+            }
+
+
+            /* =========================
+               ORDER FAILED
+            ========================= */
+
+            if (
+                !response.ok ||
+                !data.success ||
+                !data.order
+            ) {
+
+                throw new Error(
+                    data.message ||
+                    "Could not create the order."
+                );
+
+            }
+
+
+            /* =========================
+               BACKEND ORDER ID
+            ========================= */
+
+            const backendOrderId =
+                data.order.id;
+
+
+            /*
+               IMPORTANT:
+               The backend gives us a number
+               such as 1, 2, 3...
+
+               We display it as:
+               WP1
+               WP2
+               WP3
+            */
+
+            const displayOrderId =
+                "WP" +
+                backendOrderId;
+
+
+            /* =========================
+               SAVE SELECTED ORDER
+            ========================= */
+
+            localStorage.setItem(
+                "selectedOrderId",
+                backendOrderId
+            );
+
+
+            /* =========================
+               SAVE CUSTOMER FOR OLD PAGES
+               TEMPORARY COMPATIBILITY
+            ========================= */
+
+            const customerUser =
+                JSON.parse(
+                    localStorage.getItem(
+                        "customerUser"
+                    ) || "{}"
+                );
+
+
+            localStorage.setItem(
+                "selectedCustomer",
+                JSON.stringify({
+
+                    id:
+                        customerUser.id || "",
+
+                    name:
+                        name,
+
+                    email:
+                        email
+
+                })
+            );
+
+
+            /* =========================
+               CLEAR CART
+            ========================= */
+
+            localStorage.removeItem(
+                "webportifyCart"
+            );
+
+
+            /* =========================
+               SHOW SUCCESS
+            ========================= */
+
+            document.getElementById(
+                "checkoutArea"
+            ).style.display =
+                "none";
+
+
+            document.getElementById(
+                "emptyCart"
+            ).style.display =
+                "none";
+
+
+            document.getElementById(
+                "success"
+            ).style.display =
+                "block";
+
+
+            document.getElementById(
+                "orderId"
+            ).textContent =
+                displayOrderId;
+
+
+        } catch (error) {
+
+            console.error(
+                "Order creation error:",
+                error
+            );
+
+
+            alert(
+                error.message ||
+                "Something went wrong while placing your order."
+            );
+
+
+            button.disabled = false;
+
+            button.textContent =
+                "🛒 Place Order";
+
+        }
+
+    }
+);
+
+
+/* =========================
+   START
+========================= */
+
+loadCustomer();
+
+loadCart();
+
+</script>
+
+</body>
+
+</html>

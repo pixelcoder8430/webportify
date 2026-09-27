@@ -1,0 +1,1096 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Webportify - Developer Messages</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
+
+body{
+    min-height:100vh;
+    background:
+        linear-gradient(rgba(2,7,13,.94),rgba(2,7,13,.97)),
+        url("wallpaper.jpg");
+    background-size:cover;
+    background-position:center;
+    color:white;
+    display:flex;
+}
+
+.sidebar{
+    width:235px;
+    min-height:100vh;
+    background:rgba(0,0,0,.88);
+    border-right:1px solid #ff1744;
+    padding:25px 15px;
+    box-shadow:0 0 25px rgba(255,23,68,.15);
+}
+
+.logo{
+    text-align:center;
+    color:#ff1744;
+    font-size:25px;
+    font-weight:bold;
+    margin-bottom:35px;
+    text-shadow:0 0 12px #ff1744;
+}
+
+.sidebar a{
+    display:block;
+    text-decoration:none;
+    color:#ccc;
+    padding:13px 15px;
+    margin:7px 0;
+    border-radius:8px;
+    transition:.3s;
+}
+
+.sidebar a:hover,
+.sidebar a.active{
+    color:white;
+    background:#ff1744;
+    box-shadow:0 0 15px rgba(255,23,68,.5);
+}
+
+.logout{
+    margin-top:30px !important;
+    border:1px solid #ff1744;
+}
+
+.main{
+    flex:1;
+    padding:35px;
+}
+
+.title{
+    color:#ff1744;
+    font-size:34px;
+    margin-bottom:25px;
+    text-shadow:0 0 12px #ff1744;
+}
+
+.message-container{
+    display:grid;
+    grid-template-columns:300px 1fr;
+    gap:20px;
+    height:calc(100vh - 130px);
+}
+
+.customer-list{
+    background:rgba(10,15,22,.95);
+    border:1px solid rgba(255,23,68,.5);
+    border-radius:15px;
+    padding:20px;
+    overflow-y:auto;
+}
+
+.customer-list h2{
+    color:#ff1744;
+    margin-bottom:18px;
+}
+
+.customer-card{
+    border:1px solid #333;
+    border-radius:10px;
+    padding:15px;
+    margin-bottom:12px;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.customer-card:hover{
+    border-color:#ff1744;
+    box-shadow:0 0 12px rgba(255,23,68,.25);
+}
+
+.customer-card.active{
+    background:rgba(255,23,68,.12);
+    border-color:#ff1744;
+}
+
+.customer-card h3{
+    color:white;
+    margin-bottom:6px;
+}
+
+.customer-card p{
+    color:#aaa;
+    font-size:13px;
+    margin:4px 0;
+}
+
+.chat{
+    background:rgba(10,15,22,.95);
+    border:1px solid rgba(255,23,68,.5);
+    border-radius:15px;
+    display:flex;
+    flex-direction:column;
+    overflow:hidden;
+}
+
+.chat-header{
+    padding:20px;
+    border-bottom:1px solid #333;
+    background:rgba(0,0,0,.35);
+}
+
+.chat-header h2{
+    color:#ff1744;
+    margin-bottom:6px;
+}
+
+.chat-header p{
+    color:#aaa;
+    font-size:14px;
+}
+
+.messages{
+    flex:1;
+    padding:20px;
+    overflow-y:auto;
+}
+
+.message{
+    max-width:70%;
+    padding:12px 15px;
+    margin-bottom:14px;
+    border-radius:12px;
+    line-height:1.4;
+    word-wrap:break-word;
+}
+
+.message.developer{
+    margin-left:auto;
+    background:#ff1744;
+    color:white;
+    border-bottom-right-radius:3px;
+}
+
+.message.customer{
+    margin-right:auto;
+    background:#222831;
+    color:white;
+    border-bottom-left-radius:3px;
+}
+
+.message-time{
+    display:block;
+    font-size:10px;
+    opacity:.65;
+    margin-top:5px;
+}
+
+.message-input{
+    display:flex;
+    gap:10px;
+    padding:15px;
+    border-top:1px solid #333;
+    background:rgba(0,0,0,.4);
+}
+
+.message-input input{
+    flex:1;
+    padding:13px;
+    border-radius:8px;
+    border:1px solid #444;
+    background:#111820;
+    color:white;
+    outline:none;
+}
+
+.message-input input:focus{
+    border-color:#ff1744;
+}
+
+.send-btn{
+    padding:0 22px;
+    border:none;
+    border-radius:8px;
+    background:#ff1744;
+    color:white;
+    font-weight:bold;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.send-btn:hover{
+    box-shadow:0 0 18px #ff1744;
+}
+
+.send-btn:disabled{
+    opacity:.5;
+    cursor:not-allowed;
+}
+
+.empty{
+    text-align:center;
+    padding:40px 20px;
+    color:#aaa;
+}
+
+.empty h2{
+    color:white;
+    margin-bottom:10px;
+}
+
+.empty p{
+    line-height:1.5;
+}
+
+@media(max-width:850px){
+
+    body{
+        display:block;
+    }
+
+    .sidebar{
+        width:100%;
+        min-height:auto;
+        border-right:none;
+        border-bottom:1px solid #ff1744;
+    }
+
+    .main{
+        padding:20px;
+    }
+
+    .message-container{
+        grid-template-columns:1fr;
+        height:auto;
+    }
+
+    .customer-list{
+        max-height:300px;
+    }
+
+    .chat{
+        height:600px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="sidebar">
+
+    <div class="logo">
+        WEBPORTIFY
+    </div>
+
+    <a href="developer_dashboard.html">
+        🏠 Dashboard
+    </a>
+
+    <a href="developer_requests.html">
+        📋 Customer Requests
+    </a>
+
+    <a href="active_projects.html">
+        🚀 Active Projects
+    </a>
+
+    <a href="completed_projects.html">
+        ✅ Completed Projects
+    </a>
+
+    <a href="developer_messages.html" class="active">
+        💬 Messages
+    </a>
+
+    <a href="developer_profile.html">
+        👤 My Profile
+    </a>
+
+    <a href="structure.html" class="logout" onclick="logout()">
+        🚪 Logout
+    </a>
+
+</div>
+
+<div class="main">
+
+    <h1 class="title">
+        💬 Customer Messages
+    </h1>
+
+    <div class="message-container">
+
+        <div class="customer-list">
+
+            <h2>Select Customer</h2>
+
+            <div id="customerList">
+
+                <div class="empty">
+                    Loading customers...
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="chat">
+
+            <div class="chat-header">
+
+                <h2 id="chatTitle">
+                    Select a Customer
+                </h2>
+
+                <p id="chatSubtitle">
+                    Select an assigned customer to start messaging.
+                </p>
+
+            </div>
+
+            <div class="messages" id="messages">
+
+                <div class="empty">
+
+                    <h2>No Conversation Selected</h2>
+
+                    <p>
+                        Select a customer from the left side.
+                    </p>
+
+                </div>
+
+            </div>
+
+            <div class="message-input">
+
+                <input
+                    type="text"
+                    id="messageInput"
+                    placeholder="Type your message..."
+                    autocomplete="off"
+                    disabled
+                >
+
+                <button
+                    class="send-btn"
+                    id="sendButton"
+                    onclick="sendMessage()"
+                    disabled>
+                    Send
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+const API_URL = "http://localhost:5000";
+
+let currentUser = null;
+let requests = [];
+
+let selectedRequestId = null;
+let selectedCustomerId = null;
+
+
+/* =========================
+   API
+========================= */
+
+async function apiRequest(url, options = {}){
+
+    const token =
+        localStorage.getItem("token");
+
+    if(!token){
+
+        logout();
+
+        throw new Error("Not logged in.");
+    }
+
+    const headers = {
+        "Content-Type":"application/json",
+        ...(options.headers || {})
+    };
+
+    headers.Authorization =
+        "Bearer " + token;
+
+    const response =
+        await fetch(
+            API_URL + url,
+            {
+                ...options,
+                headers
+            }
+        );
+
+    let data = {};
+
+    try{
+        data = await response.json();
+    }catch{}
+
+    if(response.status === 401){
+
+        logout();
+
+        throw new Error(
+            "Session expired."
+        );
+    }
+
+    if(!response.ok){
+
+        throw new Error(
+            data.message ||
+            "Request failed."
+        );
+    }
+
+    return data;
+}
+
+
+/* =========================
+   LOGOUT
+========================= */
+
+function logout(){
+
+    localStorage.removeItem("token");
+    localStorage.removeItem("developerUser");
+    localStorage.removeItem("developerEmail");
+
+    sessionStorage.removeItem(
+        "developerLoggedIn"
+    );
+
+    sessionStorage.removeItem(
+        "developerEmail"
+    );
+
+    window.location.href =
+        "developer_signin.html";
+}
+
+
+/* =========================
+   LOAD DEVELOPER
+========================= */
+
+async function loadDeveloper(){
+
+    if(
+        !localStorage.getItem("token") ||
+        sessionStorage.getItem(
+            "developerLoggedIn"
+        ) !== "true"
+    ){
+
+        window.location.href =
+            "developer_signin.html";
+
+        return false;
+    }
+
+    try{
+
+        const response =
+            await apiRequest(
+                "/api/me"
+            );
+
+        currentUser =
+            response.user ||
+            response.data;
+
+        return !!currentUser;
+
+    }catch(error){
+
+        console.error(error);
+
+        return false;
+    }
+}
+
+
+/* =========================
+   LOAD REQUESTS
+========================= */
+
+async function loadRequests(){
+
+    const list =
+        document.getElementById(
+            "customerList"
+        );
+
+    try{
+
+        /*
+           Developers use /api/requests
+        */
+
+        const response =
+            await apiRequest(
+                "/api/requests"
+            );
+
+        /*
+           IMPORTANT:
+           Backend returns:
+           { success:true, requests:[...] }
+        */
+
+        requests =
+            response.requests || [];
+
+        /*
+           Only show requests that are
+           assigned to THIS developer.
+        */
+
+        const assignedRequests =
+            requests.filter(request =>
+
+                Number(request.developer_id) ===
+                Number(currentUser.id)
+
+            );
+
+        if(assignedRequests.length === 0){
+
+            list.innerHTML = `
+                <div class="empty">
+
+                    <h2>No Customers Yet</h2>
+
+                    <p>
+                        Customers will appear here
+                        after their requests are assigned to you.
+                    </p>
+
+                </div>
+            `;
+
+            disableChat();
+
+            return;
+        }
+
+        list.innerHTML = "";
+
+        assignedRequests.forEach(
+            request => {
+
+                const card =
+                    document.createElement(
+                        "div"
+                    );
+
+                card.className =
+                    "customer-card";
+
+                card.dataset.id =
+                    request.id;
+
+                card.innerHTML = `
+                    <h3>
+                        ${escapeHTML(
+                            request.customer_name ||
+                            "Customer"
+                        )}
+                    </h3>
+
+                    <p>
+                        ${escapeHTML(
+                            request.website_type ||
+                            "Website"
+                        )}
+                    </p>
+
+                    <p>
+                        Status:
+                        ${escapeHTML(
+                            request.status ||
+                            "Assigned"
+                        )}
+                    </p>
+                `;
+
+                card.onclick = () => {
+
+                    selectCustomer(
+                        request
+                    );
+
+                };
+
+                list.appendChild(card);
+
+            }
+        );
+
+        const savedRequestId =
+            localStorage.getItem(
+                "selectedRequestId"
+            );
+
+        const savedRequest =
+            assignedRequests.find(
+                request =>
+                    String(request.id) ===
+                    String(savedRequestId)
+            );
+
+        selectCustomer(
+            savedRequest ||
+            assignedRequests[0],
+            false
+        );
+
+    }catch(error){
+
+        console.error(error);
+
+        list.innerHTML = `
+            <div class="empty">
+
+                <h2>Unable to Load</h2>
+
+                <p>
+                    ${escapeHTML(
+                        error.message
+                    )}
+                </p>
+
+            </div>
+        `;
+
+        disableChat();
+    }
+}
+
+
+/* =========================
+   SELECT CUSTOMER
+========================= */
+
+function selectCustomer(
+    request,
+    save = true
+){
+
+    selectedRequestId =
+        request.id;
+
+    selectedCustomerId =
+        Number(request.customer_id);
+
+    if(save){
+
+        localStorage.setItem(
+            "selectedRequestId",
+            request.id
+        );
+    }
+
+    document
+        .querySelectorAll(
+            ".customer-card"
+        )
+        .forEach(card => {
+
+            card.classList.toggle(
+                "active",
+                String(card.dataset.id) ===
+                String(request.id)
+            );
+
+        });
+
+    document.getElementById(
+        "chatTitle"
+    ).textContent =
+        request.customer_name ||
+        "Customer";
+
+    document.getElementById(
+        "chatSubtitle"
+    ).textContent =
+        `${request.website_type || "Website"} • Request #${request.id}`;
+
+    document.getElementById(
+        "messageInput"
+    ).disabled = false;
+
+    document.getElementById(
+        "sendButton"
+    ).disabled = false;
+
+    loadMessages();
+}
+
+
+/* =========================
+   DISABLE
+========================= */
+
+function disableChat(){
+
+    selectedRequestId = null;
+    selectedCustomerId = null;
+
+    document.getElementById(
+        "messageInput"
+    ).disabled = true;
+
+    document.getElementById(
+        "sendButton"
+    ).disabled = true;
+}
+
+
+/* =========================
+   LOAD MESSAGES
+========================= */
+
+async function loadMessages(){
+
+    if(!selectedCustomerId){
+        return;
+    }
+
+    try{
+
+        /*
+           IMPORTANT:
+           Developer API requires customerId.
+        */
+
+        const response =
+            await apiRequest(
+                `/api/messages?customerId=${encodeURIComponent(selectedCustomerId)}&requestId=${encodeURIComponent(selectedRequestId)}`
+            );
+
+        /*
+           Backend returns:
+           { success:true, messages:[...] }
+        */
+
+        const messages =
+            response.messages || [];
+
+        renderMessages(messages);
+
+        for(const message of messages){
+
+            if(
+                message.sender_role === "customer" &&
+                Number(message.is_read) === 0
+            ){
+
+                markMessageRead(
+                    message.id
+                );
+            }
+        }
+
+    }catch(error){
+
+        console.error(
+            "Message loading error:",
+            error
+        );
+    }
+}
+
+
+/* =========================
+   RENDER
+========================= */
+
+function renderMessages(messages){
+
+    const container =
+        document.getElementById(
+            "messages"
+        );
+
+    if(messages.length === 0){
+
+        container.innerHTML = `
+            <div class="empty">
+
+                <h2>No Messages Yet</h2>
+
+                <p>
+                    Start the conversation with your customer.
+                </p>
+
+            </div>
+        `;
+
+        return;
+    }
+
+    container.innerHTML = "";
+
+    messages.forEach(message => {
+
+        const div =
+            document.createElement(
+                "div"
+            );
+
+        div.className =
+            message.sender_role === "developer"
+                ? "message developer"
+                : "message customer";
+
+        const text =
+            document.createElement(
+                "div"
+            );
+
+        text.textContent =
+            message.message || "";
+
+        const time =
+            document.createElement(
+                "span"
+            );
+
+        time.className =
+            "message-time";
+
+        time.textContent =
+            formatDate(
+                message.created_at
+            );
+
+        div.appendChild(text);
+        div.appendChild(time);
+
+        container.appendChild(div);
+
+    });
+
+    container.scrollTop =
+        container.scrollHeight;
+}
+
+
+/* =========================
+   SEND
+========================= */
+
+async function sendMessage(){
+
+    const input =
+        document.getElementById(
+            "messageInput"
+        );
+
+    const text =
+        input.value.trim();
+
+    if(!text){
+        return;
+    }
+
+    if(!selectedCustomerId){
+
+        alert(
+            "Please select a customer first."
+        );
+
+        return;
+    }
+
+    const button =
+        document.getElementById(
+            "sendButton"
+        );
+
+    button.disabled = true;
+
+    try{
+
+        await apiRequest(
+            "/api/messages",
+            {
+
+                method:"POST",
+
+                body:JSON.stringify({
+
+                    customerId:
+                        selectedCustomerId,
+
+                    requestId:
+                        selectedRequestId,
+
+                    message:text
+                })
+            }
+        );
+
+        input.value = "";
+
+        await loadMessages();
+
+    }catch(error){
+
+        alert(
+            error.message ||
+            "Unable to send message."
+        );
+
+    }finally{
+
+        button.disabled = false;
+
+        input.focus();
+    }
+}
+
+
+/* =========================
+   MARK READ
+========================= */
+
+async function markMessageRead(id){
+
+    try{
+
+        await apiRequest(
+            `/api/messages/${id}/read`,
+            {
+                method:"PATCH"
+            }
+        );
+
+    }catch(error){
+
+        console.error(error);
+    }
+}
+
+
+/* =========================
+   DATE
+========================= */
+
+function formatDate(value){
+
+    if(!value){
+        return "";
+    }
+
+    const date =
+        new Date(value);
+
+    if(isNaN(date.getTime())){
+        return "";
+    }
+
+    return date.toLocaleString(
+        "en-IN",
+        {
+            day:"2-digit",
+            month:"short",
+            hour:"2-digit",
+            minute:"2-digit"
+        }
+    );
+}
+
+
+/* =========================
+   ESCAPE
+========================= */
+
+function escapeHTML(value){
+
+    return String(value ?? "")
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+}
+
+
+/* =========================
+   ENTER TO SEND
+========================= */
+
+document
+    .getElementById(
+        "messageInput"
+    )
+    .addEventListener(
+        "keydown",
+        event => {
+
+            if(
+                event.key === "Enter" &&
+                !event.shiftKey
+            ){
+
+                event.preventDefault();
+
+                sendMessage();
+            }
+
+        }
+    );
+
+
+/* =========================
+   START
+========================= */
+
+async function start(){
+
+    const authenticated =
+        await loadDeveloper();
+
+    if(!authenticated){
+        return;
+    }
+
+    await loadRequests();
+
+    setInterval(
+        () => {
+
+            if(selectedCustomerId){
+
+                loadMessages();
+            }
+
+        },
+        3000
+    );
+}
+
+start();
+
+</script>
+
+</body>
+</html>

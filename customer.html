@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Webportify - Customer</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
+
+body{
+    min-height:100vh;
+    background:#02070d;
+    color:white;
+    display:flex;
+    justify-content:center;
+    align-items:flex-start;
+    padding:36px 20px;
+    overflow-x:hidden;
+}
+
+body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    z-index:-1;
+    opacity:.55;
+
+    background:
+        linear-gradient(
+            125deg,
+            transparent 49%,
+            #ff1744 50%,
+            transparent 51%
+        ) 720px 0/170px 140px,
+
+        linear-gradient(
+            55deg,
+            transparent 49%,
+            #ff1744 50%,
+            transparent 51%
+        ) 800px 30px/190px 160px,
+
+        linear-gradient(
+            145deg,
+            transparent 49%,
+            #ff1744 50%,
+            transparent 51%
+        ) 930px 100px/170px 150px;
+
+    filter:drop-shadow(0 0 5px #ff1744);
+}
+
+.container{
+    width:770px;
+    background:rgba(12,15,21,.94);
+    border:1px solid #343941;
+    border-radius:24px;
+    padding:40px 38px 45px;
+    box-shadow:0 0 25px rgba(255,23,68,.08);
+}
+
+.header{
+    text-align:center;
+    margin-bottom:32px;
+}
+
+.header h1{
+    color:#ff1744;
+    font-size:42px;
+    font-weight:700;
+
+    text-shadow:
+        0 0 8px #ff1744,
+        0 0 20px rgba(255,23,68,.7);
+}
+
+.header h1::before{
+    content:"◉";
+    font-size:31px;
+    margin-right:13px;
+}
+
+.header p{
+    color:#9ca3ad;
+    margin-top:12px;
+    font-size:16px;
+}
+
+.form-row{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:21px;
+}
+
+.field{
+    margin-bottom:21px;
+}
+
+label{
+    display:block;
+    font-size:14px;
+    font-weight:bold;
+    margin-bottom:9px;
+}
+
+input,
+select,
+textarea{
+    width:100%;
+    background:#0c1016;
+    border:1px solid #363b43;
+    border-radius:12px;
+    color:white;
+    outline:none;
+    font-size:15px;
+    transition:.2s;
+}
+
+input,
+select{
+    height:53px;
+    padding:0 18px;
+}
+
+textarea{
+    min-height:120px;
+    padding:16px 18px;
+    resize:vertical;
+}
+
+input::placeholder,
+textarea::placeholder{
+    color:#69717d;
+}
+
+input:focus,
+select:focus,
+textarea:focus{
+    border-color:#ff1744;
+    box-shadow:0 0 12px rgba(255,23,68,.15);
+}
+
+select{
+    cursor:pointer;
+}
+
+select option{
+    background:#0c1016;
+    color:white;
+}
+
+.buttons{
+    display:flex;
+    gap:14px;
+    margin-top:10px;
+}
+
+button{
+    flex:1;
+    height:52px;
+    border-radius:9px;
+    font-size:15px;
+    font-weight:bold;
+    cursor:pointer;
+    transition:.25s;
+}
+
+.submit{
+    border:1px solid #ff1744;
+    background:#ff1744;
+    color:white;
+    box-shadow:0 0 15px rgba(255,23,68,.3);
+}
+
+.submit:hover{
+    background:#ff3158;
+    box-shadow:0 0 25px rgba(255,23,68,.65);
+    transform:translateY(-2px);
+}
+
+.submit:disabled{
+    opacity:.6;
+    cursor:not-allowed;
+    transform:none;
+}
+
+.back{
+    border:1px solid #3a3f47;
+    background:#0c1016;
+    color:#b8bec7;
+}
+
+.back:hover{
+    border-color:#ff1744;
+    color:#ff1744;
+}
+
+#message{
+    text-align:center;
+    margin-top:16px;
+    color:#ff496b;
+    font-size:13px;
+    min-height:18px;
+}
+
+@media(max-width:650px){
+
+    .container{
+        width:100%;
+        padding:30px 22px;
+    }
+
+    .form-row{
+        grid-template-columns:1fr;
+        gap:0;
+    }
+
+    .header h1{
+        font-size:34px;
+    }
+
+    .buttons{
+        flex-direction:column;
+    }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="header">
+
+<h1>Customer</h1>
+
+<p>Find the perfect website for you.</p>
+
+</div>
+
+<form id="customerForm">
+
+<div class="form-row">
+
+<div class="field">
+
+<label for="name">
+Your Name
+</label>
+
+<input
+    type="text"
+    id="name"
+    placeholder="Enter your name"
+    required
+>
+
+</div>
+
+<div class="field">
+
+<label for="email">
+Email
+</label>
+
+<input
+    type="email"
+    id="email"
+    placeholder="Enter your email"
+    required
+>
+
+</div>
+
+</div>
+
+
+<div class="form-row">
+
+<div class="field">
+
+<label for="password">
+Password
+</label>
+
+<input
+    type="password"
+    id="password"
+    placeholder="Create a password"
+    minlength="6"
+    required
+>
+
+</div>
+
+<div class="field">
+
+<label for="confirmPassword">
+Confirm Password
+</label>
+
+<input
+    type="password"
+    id="confirmPassword"
+    placeholder="Confirm your password"
+    minlength="6"
+    required
+>
+
+</div>
+
+</div>
+
+
+<div class="field">
+
+<label for="websiteType">
+Website Type
+</label>
+
+<select id="websiteType" required>
+
+<option value="">
+Select website type
+</option>
+
+<option>Business</option>
+<option>E-Commerce</option>
+<option>Portfolio</option>
+<option>Blog</option>
+<option>Education</option>
+<option>Entertainment</option>
+<option>Health</option>
+<option>Food & Restaurant</option>
+<option>Travel</option>
+<option>Other</option>
+
+</select>
+
+</div>
+
+
+<div class="field">
+
+<label for="purpose">
+Website Purpose
+</label>
+
+<input
+    type="text"
+    id="purpose"
+    placeholder="What will your website be used for?"
+    required
+>
+
+</div>
+
+
+<div class="field">
+
+<label for="features">
+Features You Need
+</label>
+
+<input
+    type="text"
+    id="features"
+    placeholder="Login, contact form, animations..."
+>
+
+</div>
+
+
+<div class="field">
+
+<label for="reference">
+Reference Website
+</label>
+
+<input
+    type="url"
+    id="reference"
+    placeholder="https://example.com"
+>
+
+</div>
+
+
+<div class="field">
+
+<label for="requirements">
+Additional Requirements
+</label>
+
+<textarea
+    id="requirements"
+    placeholder="Tell us anything else you want in your website..."
+></textarea>
+
+</div>
+
+
+<div class="buttons">
+
+<button
+    type="button"
+    class="back"
+    onclick="goBack()"
+>
+← Back
+</button>
+
+<button
+    type="submit"
+    class="submit"
+    id="submitButton"
+>
+Create Account →
+</button>
+
+</div>
+
+<p id="message"></p>
+
+</form>
+
+</div>
+
+
+<script>
+
+const form =
+    document.getElementById("customerForm");
+
+const message =
+    document.getElementById("message");
+
+const submitButton =
+    document.getElementById("submitButton");
+
+
+form.addEventListener("submit", async function(event){
+
+    event.preventDefault();
+
+
+    const name =
+        document.getElementById("name")
+        .value
+        .trim();
+
+
+    const email =
+        document.getElementById("email")
+        .value
+        .trim()
+        .toLowerCase();
+
+
+    const password =
+        document.getElementById("password")
+        .value;
+
+
+    const confirmPassword =
+        document.getElementById("confirmPassword")
+        .value;
+
+
+    const websiteType =
+        document.getElementById("websiteType")
+        .value;
+
+
+    const purpose =
+        document.getElementById("purpose")
+        .value
+        .trim();
+
+
+    const features =
+        document.getElementById("features")
+        .value
+        .trim();
+
+
+    const reference =
+        document.getElementById("reference")
+        .value
+        .trim();
+
+
+    const requirements =
+        document.getElementById("requirements")
+        .value
+        .trim();
+
+
+    if(password !== confirmPassword){
+
+        message.style.color = "#ff496b";
+
+        message.textContent =
+            "Passwords do not match.";
+
+        return;
+
+    }
+
+
+    if(password.length < 6){
+
+        message.style.color = "#ff496b";
+
+        message.textContent =
+            "Password must be at least 6 characters.";
+
+        return;
+
+    }
+
+
+    submitButton.disabled = true;
+
+    submitButton.textContent =
+        "Creating Account...";
+
+
+    message.style.color = "#9ca3ad";
+
+    message.textContent =
+        "Connecting to Webportify...";
+
+
+    try{
+
+        const response = await fetch(
+            "http://localhost:5000/api/auth/customer/register",
+            {
+                method:"POST",
+
+                headers:{
+                    "Content-Type":"application/json"
+                },
+
+                body:JSON.stringify({
+
+                    name:name,
+
+                    email:email,
+
+                    password:password,
+
+                    websiteType:websiteType,
+
+                    purpose:purpose,
+
+                    features:features,
+
+                    reference:reference,
+
+                    requirements:requirements
+
+                })
+            }
+        );
+
+
+        const data =
+            await response.json();
+
+
+        if(!response.ok){
+
+            throw new Error(
+                data.message ||
+                "Registration failed."
+            );
+
+        }
+
+
+        /*
+        Save the JWT token returned
+        by the backend.
+        */
+
+        if(data.token){
+
+            localStorage.setItem(
+                "token",
+                data.token
+            );
+
+        }
+
+
+        /*
+        Save basic customer information.
+        The password is NOT saved.
+        */
+
+        if(data.user){
+
+            localStorage.setItem(
+                "customerUser",
+                JSON.stringify(data.user)
+            );
+
+        }
+
+
+        message.style.color =
+            "#4dff88";
+
+        message.textContent =
+            "Account created successfully!";
+
+
+        /*
+        Clear the form.
+        We will connect the real
+        customer sign-in page next.
+        */
+
+        form.reset();
+
+
+    }
+    catch(error){
+
+        console.error(
+            "Registration error:",
+            error
+        );
+
+
+        message.style.color =
+            "#ff496b";
+
+
+        if(
+            error.message.includes(
+                "Failed to fetch"
+            )
+        ){
+
+            message.textContent =
+                "Cannot connect to the backend. Make sure the Node server is running.";
+
+        }
+        else{
+
+            message.textContent =
+                error.message ||
+                "Something went wrong.";
+
+        }
+
+    }
+    finally{
+
+        submitButton.disabled = false;
+
+        submitButton.textContent =
+            "Create Account →";
+
+    }
+
+});
+
+
+function goBack(){
+
+    window.location.href =
+        "structure.html";
+
+}
+
+</script>
+
+</body>
+
+</html>

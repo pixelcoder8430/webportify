@@ -1,0 +1,1842 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Webportify | Active Projects</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
+
+body{
+    min-height:100vh;
+    background:#03070d;
+    color:white;
+}
+
+/* =========================
+   SIDEBAR
+========================= */
+
+.sidebar{
+    position:fixed;
+    left:0;
+    top:0;
+    width:240px;
+    height:100vh;
+    background:#070b11;
+    border-right:1px solid #252a32;
+    padding:25px 15px;
+    overflow-y:auto;
+}
+
+.logo{
+    text-align:center;
+    color:#ff1744;
+    font-size:25px;
+    font-weight:bold;
+    margin-bottom:35px;
+    text-shadow:0 0 12px #ff1744;
+}
+
+.sidebar a{
+    display:block;
+    padding:14px 15px;
+    margin:8px 0;
+    color:#aeb4bd;
+    text-decoration:none;
+    border-radius:8px;
+    transition:.3s;
+}
+
+.sidebar a:hover,
+.sidebar a.active{
+    background:#151017;
+    color:#ff1744;
+    box-shadow:inset 3px 0 #ff1744;
+}
+
+.icon{
+    margin-right:10px;
+}
+
+/* =========================
+   MAIN
+========================= */
+
+.main{
+    margin-left:240px;
+    padding:35px;
+}
+
+.top{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:35px;
+}
+
+.top h1{
+    color:#ff1744;
+    font-size:32px;
+    text-shadow:0 0 12px #ff1744;
+}
+
+.dashboard-btn{
+    text-decoration:none;
+    color:white;
+    border:1px solid #343942;
+    padding:10px 18px;
+    border-radius:7px;
+    transition:.2s;
+}
+
+.dashboard-btn:hover{
+    border-color:#ff1744;
+    color:#ff1744;
+}
+
+/* =========================
+   PROJECT
+========================= */
+
+.project{
+    background:#090d14;
+    border:1px solid #292e37;
+    border-radius:12px;
+    padding:25px;
+    margin-bottom:22px;
+    transition:.3s;
+}
+
+.project:hover{
+    border-color:#ff1744;
+    box-shadow:0 0 22px rgba(255,23,68,.12);
+}
+
+.project-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:20px;
+    gap:15px;
+}
+
+.project-title{
+    font-size:21px;
+    font-weight:bold;
+}
+
+.status{
+    color:#ff1744;
+    background:#241016;
+    border:1px solid #ff1744;
+    padding:6px 12px;
+    border-radius:20px;
+    font-size:11px;
+    font-weight:bold;
+}
+
+/* =========================
+   CUSTOMER
+========================= */
+
+.customer{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:12px;
+    margin-bottom:20px;
+}
+
+.info{
+    background:#0c1118;
+    border:1px solid #252b34;
+    padding:14px;
+    border-radius:8px;
+}
+
+.label{
+    color:#737b85;
+    font-size:10px;
+    margin-bottom:6px;
+}
+
+.value{
+    font-size:13px;
+    word-break:break-word;
+}
+
+/* =========================
+   WEBSITE
+========================= */
+
+.website-section{
+    margin-top:18px;
+}
+
+.website-section h3{
+    font-size:16px;
+    margin-bottom:12px;
+}
+
+.website{
+    background:#0c1118;
+    border:1px solid #252b34;
+    padding:14px;
+    border-radius:8px;
+    margin-bottom:8px;
+}
+
+.website-name{
+    font-weight:bold;
+}
+
+.website-details{
+    color:#777f89;
+    font-size:11px;
+    margin-top:6px;
+}
+
+/* =========================
+   REQUIREMENTS
+========================= */
+
+.requirements{
+    margin-top:20px;
+    background:#0c1118;
+    border-left:3px solid #ff1744;
+    border-radius:5px;
+    padding:16px;
+}
+
+.requirements h3{
+    font-size:15px;
+    margin-bottom:8px;
+}
+
+.requirements p{
+    color:#aeb4bd;
+    font-size:13px;
+    line-height:1.6;
+    white-space:pre-wrap;
+    word-break:break-word;
+}
+
+/* =========================
+   PROGRESS
+========================= */
+
+.progress-section{
+    margin-top:25px;
+}
+
+.progress-header{
+    display:flex;
+    justify-content:space-between;
+    margin-bottom:9px;
+}
+
+.progress-header span:first-child{
+    font-size:13px;
+    color:#bbb;
+}
+
+.progress-number{
+    color:#ff1744;
+    font-weight:bold;
+}
+
+.progress-bar{
+    width:100%;
+    height:9px;
+    background:#181d25;
+    border-radius:10px;
+    overflow:hidden;
+}
+
+.progress-fill{
+    height:100%;
+    background:#ff1744;
+    border-radius:10px;
+    box-shadow:0 0 12px #ff1744;
+    transition:.5s;
+}
+
+/* =========================
+   STAGES
+========================= */
+
+.stages{
+    display:flex;
+    justify-content:space-between;
+    margin-top:22px;
+    position:relative;
+}
+
+.stages::before{
+    content:"";
+    position:absolute;
+    top:14px;
+    left:5%;
+    right:5%;
+    height:2px;
+    background:#292e37;
+    z-index:0;
+}
+
+.stage{
+    text-align:center;
+    position:relative;
+    z-index:1;
+    width:20%;
+}
+
+.stage-circle{
+    width:30px;
+    height:30px;
+    margin:auto;
+    border-radius:50%;
+    background:#151a21;
+    border:2px solid #343a44;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:13px;
+}
+
+.stage.active .stage-circle{
+    background:#ff1744;
+    border-color:#ff1744;
+    box-shadow:0 0 14px #ff1744;
+}
+
+.stage-name{
+    margin-top:8px;
+    color:#777f89;
+    font-size:10px;
+}
+
+.stage.active .stage-name{
+    color:#ff1744;
+}
+
+/* =========================
+   BUTTONS
+========================= */
+
+.buttons{
+    display:flex;
+    gap:12px;
+    margin-top:25px;
+    flex-wrap:wrap;
+}
+
+button{
+    border:none;
+    padding:11px 18px;
+    border-radius:7px;
+    font-weight:bold;
+    cursor:pointer;
+    transition:.3s;
+}
+
+button:disabled{
+    opacity:.5;
+    cursor:not-allowed;
+}
+
+.update{
+    background:#ff1744;
+    color:white;
+}
+
+.update:hover{
+    box-shadow:0 0 18px #ff1744;
+}
+
+.message{
+    background:#151a21;
+    color:#bbb;
+    border:1px solid #343942;
+}
+
+.message:hover:not(:disabled){
+    color:#ff1744;
+    border-color:#ff1744;
+}
+
+/* =========================
+   EMPTY
+========================= */
+
+.empty{
+    text-align:center;
+    padding:90px 20px;
+    color:#737b85;
+}
+
+.empty-icon{
+    font-size:55px;
+    margin-bottom:15px;
+}
+
+.empty h2{
+    margin-bottom:8px;
+    color:#aaa;
+}
+
+/* =========================
+   LOADING
+========================= */
+
+.loading{
+    text-align:center;
+    padding:80px 20px;
+    color:#737b85;
+}
+
+.loading-icon{
+    font-size:45px;
+    margin-bottom:15px;
+}
+
+/* =========================
+   ERROR
+========================= */
+
+.error-box{
+    text-align:center;
+    padding:60px 20px;
+    background:#0c1118;
+    border:1px solid #ff1744;
+    border-radius:12px;
+}
+
+.error-box h2{
+    color:#ff1744;
+    margin-bottom:10px;
+}
+
+.error-box p{
+    color:#aaa;
+    margin-bottom:20px;
+}
+
+.retry-btn{
+    background:#ff1744;
+    color:white;
+}
+
+.retry-btn:hover{
+    box-shadow:0 0 18px #ff1744;
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:850px){
+
+    .sidebar{
+        width:190px;
+    }
+
+    .main{
+        margin-left:190px;
+        padding:20px;
+    }
+
+    .customer{
+        grid-template-columns:1fr;
+    }
+
+    .stages{
+        display:none;
+    }
+
+}
+
+@media(max-width:600px){
+
+    .sidebar{
+        position:relative;
+        width:100%;
+        height:auto;
+        border-right:none;
+        border-bottom:1px solid #252a32;
+    }
+
+    .main{
+        margin-left:0;
+    }
+
+    .top{
+        flex-direction:column;
+        align-items:flex-start;
+        gap:15px;
+    }
+
+    .buttons{
+        flex-direction:column;
+    }
+
+    button{
+        width:100%;
+    }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<!-- =========================
+     SIDEBAR
+========================= -->
+
+<div class="sidebar">
+
+    <div class="logo">
+        WEBPORTIFY
+    </div>
+
+    <a href="developer_dashboard.html">
+        <span class="icon">🏠</span>
+        Dashboard
+    </a>
+
+    <a href="developer_requests.html">
+        <span class="icon">📋</span>
+        Customer Requests
+    </a>
+
+    <a href="active_projects.html" class="active">
+        <span class="icon">⚡</span>
+        Active Projects
+    </a>
+
+    <a href="completed_projects.html">
+        <span class="icon">✅</span>
+        Completed
+    </a>
+
+    <a href="developer_messages.html">
+        <span class="icon">💬</span>
+        Messages
+    </a>
+
+    <a href="developer_profile.html">
+        <span class="icon">👤</span>
+        My Profile
+    </a>
+
+</div>
+
+
+<!-- =========================
+     MAIN
+========================= -->
+
+<div class="main">
+
+    <div class="top">
+
+        <h1>
+            Active Projects
+        </h1>
+
+        <a
+            href="developer_dashboard.html"
+            class="dashboard-btn">
+
+            ← Dashboard
+
+        </a>
+
+    </div>
+
+
+    <div id="projects">
+
+        <div class="loading">
+
+            <div class="loading-icon">
+                ⚡
+            </div>
+
+            <h2>
+                Loading Projects...
+            </h2>
+
+            <p>
+                Getting your active projects.
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+/* ==========================================
+   BACKEND
+========================================== */
+
+const API_URL =
+    "http://localhost:5000";
+
+
+/* ==========================================
+   AUTHENTICATION
+========================================== */
+
+const token =
+    localStorage.getItem("token");
+
+
+if(
+    !token ||
+    sessionStorage.getItem(
+        "developerLoggedIn"
+    ) !== "true"
+){
+
+    window.location.replace(
+        "developer_signin.html"
+    );
+
+}
+
+
+/* ==========================================
+   ELEMENT
+========================================== */
+
+const projectContainer =
+    document.getElementById("projects");
+
+
+/* ==========================================
+   DATA
+========================================== */
+
+let projects = [];
+
+let requests = [];
+
+
+/* ==========================================
+   LOGOUT
+========================================== */
+
+function logoutDeveloper(){
+
+    localStorage.removeItem("token");
+
+    localStorage.removeItem(
+        "developerUser"
+    );
+
+    localStorage.removeItem(
+        "developerEmail"
+    );
+
+    localStorage.removeItem(
+        "selectedDeveloper"
+    );
+
+    sessionStorage.removeItem(
+        "developerLoggedIn"
+    );
+
+    sessionStorage.removeItem(
+        "developerEmail"
+    );
+
+    window.location.replace(
+        "developer_signin.html"
+    );
+
+}
+
+
+/* ==========================================
+   API REQUEST
+========================================== */
+
+async function apiRequest(
+    endpoint,
+    options = {}
+){
+
+    const headers = {
+
+        "Authorization":
+            "Bearer " + token
+
+    };
+
+
+    if(options.body){
+
+        headers["Content-Type"] =
+            "application/json";
+
+    }
+
+
+    const response =
+        await fetch(
+            API_URL + endpoint,
+            {
+                ...options,
+                headers:headers
+            }
+        );
+
+
+    let data = {};
+
+
+    try{
+
+        data =
+            await response.json();
+
+    }
+    catch(error){
+
+        data = {};
+
+    }
+
+
+    if(!response.ok){
+
+        if(
+            response.status === 401 ||
+            response.status === 403
+        ){
+
+            logoutDeveloper();
+
+            throw new Error(
+                "Your session has expired."
+            );
+
+        }
+
+
+        throw new Error(
+            data.message ||
+            "Something went wrong."
+        );
+
+    }
+
+
+    return data;
+
+}
+
+
+/* ==========================================
+   LOAD PROJECTS
+========================================== */
+
+async function loadProjects(){
+
+    projectContainer.innerHTML = `
+
+        <div class="loading">
+
+            <div class="loading-icon">
+                ⚡
+            </div>
+
+            <h2>
+                Loading Projects...
+            </h2>
+
+            <p>
+                Getting your active projects.
+            </p>
+
+        </div>
+
+    `;
+
+
+    try{
+
+        /*
+         * Load active projects.
+         */
+
+        const projectData =
+            await apiRequest(
+                "/api/projects?status=active"
+            );
+
+
+        projects =
+            Array.isArray(
+                projectData.projects
+            )
+            ?
+            projectData.projects
+            :
+            [];
+
+
+        /*
+         * Load requests so that the
+         * correct request can be connected
+         * to each project for messaging.
+         */
+
+        try{
+
+            const requestData =
+                await apiRequest(
+                    "/api/requests"
+                );
+
+
+            requests =
+                Array.isArray(
+                    requestData.requests
+                )
+                ?
+                requestData.requests
+                :
+                [];
+
+        }
+        catch(error){
+
+            console.error(
+                "Could not load requests:",
+                error
+            );
+
+            requests = [];
+
+        }
+
+
+        displayProjects();
+
+    }
+    catch(error){
+
+        console.error(
+            "Project loading error:",
+            error
+        );
+
+
+        projectContainer.innerHTML = `
+
+            <div class="error-box">
+
+                <h2>
+                    Unable to Load Projects
+                </h2>
+
+                <p>
+                    ${escapeHTML(
+                        error.message ||
+                        "Could not load active projects."
+                    )}
+                </p>
+
+                <button
+                    class="retry-btn"
+                    onclick="loadProjects()">
+
+                    Try Again
+
+                </button>
+
+            </div>
+
+        `;
+
+    }
+
+}
+
+
+/* ==========================================
+   FIND REQUEST FOR PROJECT
+========================================== */
+
+function getRequestForProject(project){
+
+    if(!project){
+
+        return null;
+
+    }
+
+
+    /*
+     * Primary connection:
+     * project.order_id -> request.order_id
+     */
+
+    let request =
+        requests.find(
+            item =>
+
+                String(
+                    item.order_id || ""
+                ) ===
+                String(
+                    project.order_id || ""
+                )
+        );
+
+
+    /*
+     * Fallback:
+     * If the backend/project data contains
+     * request_id, use that.
+     */
+
+    if(
+        !request &&
+        project.request_id
+    ){
+
+        request =
+            requests.find(
+                item =>
+                    String(item.id) ===
+                    String(
+                        project.request_id
+                    )
+            );
+
+    }
+
+
+    return request || null;
+
+}
+
+
+/* ==========================================
+   STAGE
+========================================== */
+
+function getStage(progress){
+
+    if(progress >= 100){
+
+        return 5;
+
+    }
+
+    if(progress >= 75){
+
+        return 4;
+
+    }
+
+    if(progress >= 50){
+
+        return 3;
+
+    }
+
+    if(progress >= 25){
+
+        return 2;
+
+    }
+
+    return 1;
+
+}
+
+
+function getStageName(progress){
+
+    if(progress >= 100){
+
+        return "Completed";
+
+    }
+
+    if(progress >= 75){
+
+        return "Testing";
+
+    }
+
+    if(progress >= 50){
+
+        return "Development";
+
+    }
+
+    if(progress >= 25){
+
+        return "Designing";
+
+    }
+
+    return "Active";
+
+}
+
+
+/* ==========================================
+   DISPLAY PROJECTS
+========================================== */
+
+function displayProjects(){
+
+    projectContainer.innerHTML = "";
+
+
+    if(projects.length === 0){
+
+        projectContainer.innerHTML = `
+
+            <div class="empty">
+
+                <div class="empty-icon">
+                    ⚡
+                </div>
+
+                <h2>
+                    No Active Projects
+                </h2>
+
+                <p>
+                    Accepted customer projects
+                    will appear here.
+                </p>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    projects.forEach(
+        (project,index) => {
+
+            const progress =
+                Math.max(
+                    0,
+                    Math.min(
+                        100,
+                        Number(
+                            project.progress
+                        ) || 0
+                    )
+                );
+
+
+            const stage =
+                getStage(progress);
+
+
+            const customerName =
+                project.customer_name ||
+                "Customer";
+
+
+            const customerEmail =
+                project.customer_email ||
+                "Not provided";
+
+
+            const websiteType =
+                project.website_type ||
+                "Website";
+
+
+            const request =
+                getRequestForProject(
+                    project
+                );
+
+
+            const purpose =
+                request?.purpose ||
+                project.purpose ||
+                "Not provided";
+
+
+            const features =
+                request?.features ||
+                project.features ||
+                "No features specified.";
+
+
+            const requirements =
+                request?.requirements ||
+                project.requirements ||
+                "No additional requirements.";
+
+
+            const reference =
+                request?.reference ||
+                project.reference ||
+                "";
+
+
+            const projectStatus =
+                getStageName(
+                    progress
+                );
+
+
+            const hasMessageTarget =
+                Boolean(
+                    request &&
+                    request.customer_id &&
+                    (
+                        request.developer_id ||
+                        project.developer_id
+                    )
+                );
+
+
+            projectContainer.innerHTML += `
+
+                <div class="project">
+
+                    <div class="project-top">
+
+                        <div class="project-title">
+
+                            🌐
+                            ${escapeHTML(
+                                websiteType
+                            )}
+
+                        </div>
+
+                        <div class="status">
+
+                            ${escapeHTML(
+                                projectStatus.toUpperCase()
+                            )}
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- CUSTOMER -->
+
+                    <div class="customer">
+
+                        <div class="info">
+
+                            <div class="label">
+                                CUSTOMER
+                            </div>
+
+                            <div class="value">
+                                ${escapeHTML(
+                                    customerName
+                                )}
+                            </div>
+
+                        </div>
+
+
+                        <div class="info">
+
+                            <div class="label">
+                                EMAIL
+                            </div>
+
+                            <div class="value">
+                                ${escapeHTML(
+                                    customerEmail
+                                )}
+                            </div>
+
+                        </div>
+
+
+                        <div class="info">
+
+                            <div class="label">
+                                PROJECT ID
+                            </div>
+
+                            <div class="value">
+
+                                #${escapeHTML(
+                                    project.id ||
+                                    "N/A"
+                                )}
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- WEBSITE -->
+
+                    <div class="website-section">
+
+                        <h3>
+                            🌐 Website
+                        </h3>
+
+                        <div class="website">
+
+                            <span class="website-name">
+
+                                ${escapeHTML(
+                                    websiteType
+                                )}
+
+                            </span>
+
+                            <div class="website-details">
+
+                                Purpose:
+                                ${escapeHTML(
+                                    purpose
+                                )}
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- FEATURES -->
+
+                    <div class="requirements">
+
+                        <h3>
+                            🧩 Required Features
+                        </h3>
+
+                        <p>
+                            ${escapeHTML(
+                                features
+                            )}
+                        </p>
+
+                    </div>
+
+
+                    <!-- REQUIREMENTS -->
+
+                    <div class="requirements">
+
+                        <h3>
+                            📝 Customer Requirements
+                        </h3>
+
+                        <p>
+                            ${escapeHTML(
+                                requirements
+                            )}
+                        </p>
+
+                    </div>
+
+
+                    ${
+                        reference
+                        ?
+                        `
+
+                        <div class="requirements">
+
+                            <h3>
+                                🔗 Reference Website
+                            </h3>
+
+                            <p>
+                                ${escapeHTML(
+                                    reference
+                                )}
+                            </p>
+
+                        </div>
+
+                        `
+                        :
+                        ""
+                    }
+
+
+                    <!-- PROGRESS -->
+
+                    <div class="progress-section">
+
+                        <div class="progress-header">
+
+                            <span>
+                                Project Progress
+                            </span>
+
+                            <span class="progress-number">
+
+                                ${progress}%
+
+                            </span>
+
+                        </div>
+
+
+                        <div class="progress-bar">
+
+                            <div
+                                class="progress-fill"
+                                style="width:${progress}%">
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- STAGES -->
+
+                        <div class="stages">
+
+                            <div
+                                class="stage
+                                ${
+                                    stage >= 1
+                                    ? "active"
+                                    : ""
+                                }">
+
+                                <div class="stage-circle">
+                                    ⚡
+                                </div>
+
+                                <div class="stage-name">
+                                    Active
+                                </div>
+
+                            </div>
+
+
+                            <div
+                                class="stage
+                                ${
+                                    stage >= 2
+                                    ? "active"
+                                    : ""
+                                }">
+
+                                <div class="stage-circle">
+                                    🎨
+                                </div>
+
+                                <div class="stage-name">
+                                    Designing
+                                </div>
+
+                            </div>
+
+
+                            <div
+                                class="stage
+                                ${
+                                    stage >= 3
+                                    ? "active"
+                                    : ""
+                                }">
+
+                                <div class="stage-circle">
+                                    💻
+                                </div>
+
+                                <div class="stage-name">
+                                    Development
+                                </div>
+
+                            </div>
+
+
+                            <div
+                                class="stage
+                                ${
+                                    stage >= 4
+                                    ? "active"
+                                    : ""
+                                }">
+
+                                <div class="stage-circle">
+                                    🧪
+                                </div>
+
+                                <div class="stage-name">
+                                    Testing
+                                </div>
+
+                            </div>
+
+
+                            <div
+                                class="stage
+                                ${
+                                    stage >= 5
+                                    ? "active"
+                                    : ""
+                                }">
+
+                                <div class="stage-circle">
+                                    ✅
+                                </div>
+
+                                <div class="stage-name">
+                                    Completed
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- BUTTONS -->
+
+                    <div class="buttons">
+
+                        <button
+                            class="update"
+                            data-index="${index}"
+                            onclick="
+                                updateProgress(
+                                    this.dataset.index
+                                )
+                            ">
+
+                            ⚙ Update Progress
+
+                        </button>
+
+
+                        <button
+                            class="message"
+                            data-index="${index}"
+                            onclick="
+                                messageCustomer(
+                                    this.dataset.index
+                                )
+                            "
+                            ${
+                                hasMessageTarget
+                                ? ""
+                                : "disabled"
+                            }
+                            title="${
+                                hasMessageTarget
+                                ?
+                                "Message Customer"
+                                :
+                                "Customer request information is unavailable"
+                            }">
+
+                            💬 Message Customer
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+            `;
+
+        }
+    );
+
+}
+
+
+/* ==========================================
+   UPDATE PROJECT
+========================================== */
+
+async function updateProgress(index){
+
+    index =
+        Number(index);
+
+
+    if(
+        !Number.isInteger(index) ||
+        !projects[index]
+    ){
+
+        return;
+
+    }
+
+
+    const project =
+        projects[index];
+
+
+    const choice =
+        prompt(
+
+            "Update project stage:\n\n" +
+
+            "1 = Active\n" +
+            "2 = Designing\n" +
+            "3 = Development\n" +
+            "4 = Testing\n" +
+            "5 = Completed\n\n" +
+
+            "Enter 1-5:"
+
+        );
+
+
+    if(choice === null){
+
+        return;
+
+    }
+
+
+    const selected =
+        Number(choice);
+
+
+    if(
+        !Number.isInteger(selected) ||
+        selected < 1 ||
+        selected > 5
+    ){
+
+        alert(
+            "Please enter a number from 1 to 5."
+        );
+
+        return;
+
+    }
+
+
+    const progressValues = {
+
+        1:0,
+        2:25,
+        3:50,
+        4:75,
+        5:100
+
+    };
+
+
+    const progress =
+        progressValues[selected];
+
+
+    const status =
+        progress >= 100
+        ?
+        "completed"
+        :
+        "active";
+
+
+    try{
+
+        await apiRequest(
+
+            "/api/projects/" +
+            encodeURIComponent(
+                project.id
+            ),
+
+            {
+
+                method:"PATCH",
+
+                body:JSON.stringify({
+
+                    progress:progress,
+
+                    status:status
+
+                })
+
+            }
+
+        );
+
+
+        if(progress >= 100){
+
+            alert(
+                "🎉 Project completed!\n\n" +
+                "The project has been moved to Completed."
+            );
+
+        }
+        else{
+
+            alert(
+                "Project updated to " +
+                getStageName(progress) +
+                " (" +
+                progress +
+                "%)."
+            );
+
+        }
+
+
+        await loadProjects();
+
+    }
+    catch(error){
+
+        console.error(
+            "Update project error:",
+            error
+        );
+
+
+        alert(
+            "Could not update the project.\n\n" +
+            error.message
+        );
+
+    }
+
+}
+
+
+/* ==========================================
+   MESSAGE CUSTOMER
+========================================== */
+
+function messageCustomer(index){
+
+    index =
+        Number(index);
+
+
+    if(
+        !Number.isInteger(index) ||
+        !projects[index]
+    ){
+
+        return;
+
+    }
+
+
+    const project =
+        projects[index];
+
+
+    const request =
+        getRequestForProject(
+            project
+        );
+
+
+    if(!request){
+
+        alert(
+            "The customer request connected to this project could not be found."
+        );
+
+        return;
+
+    }
+
+
+    const customerId =
+        Number(
+            request.customer_id
+        );
+
+
+    if(!customerId){
+
+        alert(
+            "Customer information is missing."
+        );
+
+        return;
+
+    }
+
+
+    const developerId =
+        Number(
+            request.developer_id ||
+            project.developer_id
+        );
+
+
+    if(!developerId){
+
+        alert(
+            "Developer information is missing for this project."
+        );
+
+        return;
+
+    }
+
+
+    /*
+     * Save exact request.
+     */
+
+    localStorage.setItem(
+        "selectedRequestId",
+        String(request.id)
+    );
+
+
+    /*
+     * Save customer.
+     */
+
+    localStorage.setItem(
+        "selectedCustomer",
+        JSON.stringify({
+
+            id:customerId,
+
+            name:
+                request.customer_name ||
+                project.customer_name ||
+                "Customer",
+
+            email:
+                request.customer_email ||
+                project.customer_email ||
+                "",
+
+            requestId:
+                request.id
+
+        })
+    );
+
+
+    /*
+     * Save developer.
+     */
+
+    localStorage.setItem(
+        "selectedDeveloper",
+        JSON.stringify({
+
+            id:developerId
+
+        })
+    );
+
+
+    /*
+     * Compatibility value.
+     */
+
+    localStorage.setItem(
+        "selectedCustomerId",
+        String(customerId)
+    );
+
+
+    window.location.href =
+        "developer_messages.html";
+
+}
+
+
+/* ==========================================
+   ESCAPE HTML
+========================================== */
+
+function escapeHTML(value){
+
+    return String(value)
+
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+
+        .replace(
+            /</g,
+            "&lt;"
+        )
+
+        .replace(
+            />/g,
+            "&gt;"
+        )
+
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+
+        .replace(
+            /'/g,
+            "&#039;"
+        );
+
+}
+
+
+/* ==========================================
+   START
+========================================== */
+
+loadProjects();
+
+
+/* ==========================================
+   AUTO REFRESH
+========================================== */
+
+setInterval(
+    loadProjects,
+    10000
+);
+
+</script>
+
+</body>
+</html>

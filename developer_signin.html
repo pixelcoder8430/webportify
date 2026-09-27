@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Webportify - Developer Sign In</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
+
+body{
+    min-height:100vh;
+    background:#02070d;
+    color:white;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    overflow:hidden;
+    position:relative;
+}
+
+body::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:
+        linear-gradient(120deg,transparent 48%,rgba(255,23,68,.18) 49%,transparent 50%),
+        linear-gradient(30deg,transparent 48%,rgba(255,23,68,.12) 49%,transparent 50%),
+        linear-gradient(150deg,transparent 48%,rgba(255,23,68,.10) 49%,transparent 50%);
+    background-size:220px 220px;
+    pointer-events:none;
+}
+
+.login-box{
+    width:420px;
+    padding:40px;
+    background:rgba(12,15,21,.96);
+    border:1px solid #ff1744;
+    border-radius:18px;
+    box-shadow:
+        0 0 15px rgba(255,23,68,.35),
+        0 0 40px rgba(255,23,68,.12);
+    position:relative;
+    z-index:2;
+}
+
+.logo{
+    text-align:center;
+    color:#ff1744;
+    font-size:28px;
+    font-weight:bold;
+    letter-spacing:2px;
+    margin-bottom:10px;
+    text-shadow:0 0 12px rgba(255,23,68,.7);
+}
+
+.subtitle{
+    text-align:center;
+    color:#aaa;
+    margin-bottom:30px;
+    font-size:14px;
+}
+
+h1{
+    text-align:center;
+    font-size:28px;
+    margin-bottom:25px;
+}
+
+label{
+    display:block;
+    margin-bottom:8px;
+    font-size:14px;
+    color:#ddd;
+}
+
+.input-group{
+    margin-bottom:20px;
+}
+
+input{
+    width:100%;
+    padding:14px;
+    background:#080c12;
+    color:white;
+    border:1px solid #333;
+    border-radius:9px;
+    outline:none;
+    font-size:15px;
+}
+
+input:focus{
+    border-color:#ff1744;
+    box-shadow:0 0 10px rgba(255,23,68,.25);
+}
+
+.password-box{
+    position:relative;
+}
+
+.password-box input{
+    padding-right:70px;
+}
+
+.show-password{
+    position:absolute;
+    right:10px;
+    top:50%;
+    transform:translateY(-50%);
+    background:none;
+    border:none;
+    color:#ff1744;
+    cursor:pointer;
+    font-size:13px;
+    font-weight:bold;
+}
+
+.signin-btn{
+    width:100%;
+    padding:14px;
+    margin-top:5px;
+    background:#ff1744;
+    color:white;
+    border:none;
+    border-radius:9px;
+    font-size:16px;
+    font-weight:bold;
+    cursor:pointer;
+    transition:.2s;
+    box-shadow:0 0 12px rgba(255,23,68,.35);
+}
+
+.signin-btn:hover{
+    transform:translateY(-2px);
+    box-shadow:0 0 22px rgba(255,23,68,.65);
+}
+
+.signin-btn:active{
+    transform:scale(.98);
+}
+
+.signin-btn:disabled{
+    opacity:.65;
+    cursor:not-allowed;
+    transform:none;
+}
+
+.message{
+    min-height:22px;
+    text-align:center;
+    margin-top:15px;
+    font-size:14px;
+}
+
+.error{
+    color:#ff4d6d;
+}
+
+.success{
+    color:#00ff9d;
+}
+
+.bottom-buttons{
+    display:flex;
+    gap:12px;
+    margin-top:22px;
+}
+
+.back-btn,
+.register-btn{
+    flex:1;
+    padding:12px;
+    border-radius:9px;
+    cursor:pointer;
+    font-weight:bold;
+    transition:.2s;
+}
+
+.back-btn{
+    background:transparent;
+    color:white;
+    border:1px solid #444;
+}
+
+.back-btn:hover{
+    border-color:#ff1744;
+    color:#ff1744;
+}
+
+.register-btn{
+    background:transparent;
+    color:#ff1744;
+    border:1px solid #ff1744;
+}
+
+.register-btn:hover{
+    background:#ff1744;
+    color:white;
+}
+
+@media(max-width:500px){
+
+    .login-box{
+        width:92%;
+        padding:30px 25px;
+    }
+
+    .bottom-buttons{
+        flex-direction:column;
+    }
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="login-box">
+
+    <div class="logo">
+        WEBPORTIFY
+    </div>
+
+    <div class="subtitle">
+        Developer Portal
+    </div>
+
+    <h1>
+        Developer Sign In
+    </h1>
+
+    <form id="developerLoginForm">
+
+        <div class="input-group">
+
+            <label for="email">
+                Email Address
+            </label>
+
+            <input
+                type="email"
+                id="email"
+                placeholder="Enter your developer email"
+                required
+            >
+
+        </div>
+
+        <div class="input-group">
+
+            <label for="password">
+                Password
+            </label>
+
+            <div class="password-box">
+
+                <input
+                    type="password"
+                    id="password"
+                    placeholder="Enter your password"
+                    required
+                >
+
+                <button
+                    type="button"
+                    class="show-password"
+                    id="showPassword"
+                >
+                    Show
+                </button>
+
+            </div>
+
+        </div>
+
+        <button
+            type="submit"
+            class="signin-btn"
+            id="signinBtn"
+        >
+            Sign In
+        </button>
+
+        <div
+            id="message"
+            class="message"
+        ></div>
+
+    </form>
+
+    <div class="bottom-buttons">
+
+        <button
+            type="button"
+            class="back-btn"
+            onclick="window.location.href='structure.html'"
+        >
+            ← Back
+        </button>
+
+        <button
+            type="button"
+            class="register-btn"
+            onclick="window.location.href='developer.html'"
+        >
+            Register
+        </button>
+
+    </div>
+
+</div>
+
+<script>
+
+const API_URL = "http://localhost:5000";
+
+const form =
+    document.getElementById("developerLoginForm");
+
+const emailInput =
+    document.getElementById("email");
+
+const passwordInput =
+    document.getElementById("password");
+
+const message =
+    document.getElementById("message");
+
+const signinBtn =
+    document.getElementById("signinBtn");
+
+
+/* =========================
+   SHOW / HIDE PASSWORD
+========================= */
+
+document
+.getElementById("showPassword")
+.addEventListener("click", function(){
+
+    if(passwordInput.type === "password"){
+
+        passwordInput.type = "text";
+        this.textContent = "Hide";
+
+    }else{
+
+        passwordInput.type = "password";
+        this.textContent = "Show";
+
+    }
+
+});
+
+
+/* =========================
+   DEVELOPER LOGIN
+========================= */
+
+form.addEventListener("submit", async function(event){
+
+    event.preventDefault();
+
+    message.textContent = "";
+    message.className = "message";
+
+    const email =
+        emailInput.value.trim().toLowerCase();
+
+    const password =
+        passwordInput.value;
+
+
+    /* DISABLE BUTTON */
+
+    signinBtn.disabled = true;
+    signinBtn.textContent = "Signing In...";
+
+
+    try{
+
+        /* SEND LOGIN TO BACKEND */
+
+        const response = await fetch(
+            `${API_URL}/api/auth/developer/login`,
+            {
+                method:"POST",
+
+                headers:{
+                    "Content-Type":"application/json"
+                },
+
+                body:JSON.stringify({
+                    email:email,
+                    password:password
+                })
+            }
+        );
+
+
+        const data =
+            await response.json();
+
+
+        /* LOGIN FAILED */
+
+        if(!response.ok){
+
+            message.textContent =
+                data.message ||
+                "Incorrect email or password.";
+
+            message.classList.add("error");
+
+            signinBtn.disabled = false;
+            signinBtn.textContent = "Sign In";
+
+            return;
+        }
+
+
+        /* =========================
+           SAVE BACKEND TOKEN
+        ========================= */
+
+        if(data.token){
+
+            localStorage.setItem(
+                "token",
+                data.token
+            );
+
+        }
+
+
+        /* =========================
+           SAVE DEVELOPER USER
+        ========================= */
+
+        if(data.user){
+
+            localStorage.setItem(
+                "developerUser",
+                JSON.stringify(data.user)
+            );
+
+            localStorage.setItem(
+                "developerEmail",
+                data.user.email
+            );
+
+            sessionStorage.setItem(
+                "developerEmail",
+                data.user.email
+            );
+
+        }
+
+
+        /* =========================
+           DEVELOPER LOGIN STATUS
+        ========================= */
+
+        sessionStorage.setItem(
+            "developerLoggedIn",
+            "true"
+        );
+
+
+        /* SUCCESS */
+
+        message.textContent =
+            "Sign in successful. Opening dashboard...";
+
+        message.classList.add("success");
+
+        signinBtn.textContent =
+            "Signed In ✓";
+
+
+        /* =========================
+           OPEN DASHBOARD
+        ========================= */
+
+        setTimeout(function(){
+
+            window.location.href =
+                "developer_dashboard.html";
+
+        },700);
+
+
+    }catch(error){
+
+        console.error(
+            "Developer login error:",
+            error
+        );
+
+        message.textContent =
+            "Cannot connect to the Webportify backend. Make sure the server is running.";
+
+        message.classList.add("error");
+
+        signinBtn.disabled = false;
+        signinBtn.textContent = "Sign In";
+
+    }
+
+});
+
+</script>
+
+</body>
+</html>
