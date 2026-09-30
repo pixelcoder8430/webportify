@@ -21,14 +21,11 @@ body{
     min-height:100vh;
     background:#02070d;
     color:white;
-
     display:flex;
     justify-content:center;
     align-items:center;
-
     padding:20px;
     overflow:hidden;
-
     position:relative;
 }
 
@@ -67,14 +64,10 @@ body::before{
 .container{
     width:430px;
     max-width:100%;
-
     padding:42px 38px;
-
     background:rgba(12,15,21,.96);
-
     border:1px solid #343941;
     border-radius:22px;
-
     box-shadow:0 0 30px rgba(255,23,68,.12);
 }
 
@@ -112,19 +105,13 @@ label{
 input{
     width:100%;
     height:52px;
-
     padding:0 16px;
-
     background:#0c1016;
-
     border:1px solid #363b43;
     border-radius:11px;
-
     color:white;
     outline:none;
-
     font-size:15px;
-
     transition:.2s;
 }
 
@@ -148,12 +135,9 @@ input:focus{
 button{
     flex:1;
     height:50px;
-
     border-radius:9px;
-
     font-size:15px;
     font-weight:bold;
-
     cursor:pointer;
     transition:.25s;
 }
@@ -195,11 +179,8 @@ button{
 
 #message{
     min-height:20px;
-
     text-align:center;
-
     margin-top:18px;
-
     font-size:13px;
 }
 
@@ -234,13 +215,9 @@ button{
 
 ```
 <div class="logo">
-
     <h1>Webportify</h1>
-
     <p>Customer Sign In</p>
-
 </div>
-
 
 <form id="loginForm">
 
@@ -260,7 +237,6 @@ button{
 
     </div>
 
-
     <div class="field">
 
         <label for="password">
@@ -277,7 +253,6 @@ button{
 
     </div>
 
-
     <div class="buttons">
 
         <button
@@ -287,7 +262,6 @@ button{
         >
             ← Back
         </button>
-
 
         <button
             type="submit"
@@ -299,7 +273,6 @@ button{
 
     </div>
 
-
     <p id="message"></p>
 
 </form>
@@ -308,6 +281,9 @@ button{
 </div>
 
 <script>
+
+const API_URL =
+    "https://webportify.onrender.com";
 
 const form =
     document.getElementById("loginForm");
@@ -328,234 +304,251 @@ const backButton =
 
 backButton.addEventListener("click", function(){
 
-    window.location.href = "structure.html";
+    window.location.href =
+        "Structure.html";
 
 });
 
 
 /* =========================
-   CUSTOMER SIGN IN
+   CUSTOMER LOGIN
 ========================= */
 
-form.addEventListener("submit", async function(event){
+form.addEventListener(
+    "submit",
+    async function(event){
 
-    event.preventDefault();
+        event.preventDefault();
 
+        message.textContent = "";
+        message.className = "";
 
-    message.textContent = "";
-    message.className = "";
+        const email =
+            document.getElementById("email")
+            .value
+            .trim()
+            .toLowerCase();
 
+        const password =
+            document.getElementById("password")
+            .value;
 
-    const email =
-        document.getElementById("email")
-        .value
-        .trim()
-        .toLowerCase();
+        if(!email || !password){
 
+            message.textContent =
+                "Please enter your email and password.";
 
-    const password =
-        document.getElementById("password")
-        .value;
+            message.className =
+                "error";
 
-
-    signinButton.disabled = true;
-
-    signinButton.textContent =
-        "Signing In...";
-
-
-    message.textContent =
-        "Checking your account...";
-
-    message.className = "";
-
-
-    try{
-
-        const response = await fetch(
-            "https://webportify.onrender.com/api/auth/customer/login",
-            {
-                method:"POST",
-
-                headers:{
-                    "Content-Type":"application/json"
-                },
-
-                body:JSON.stringify({
-
-                    email:email,
-
-                    password:password
-
-                })
-            }
-        );
-
-
-        const data =
-            await response.json();
-
-
-        /*
-        =========================
-        LOGIN FAILED
-        =========================
-        */
-
-        if(!response.ok){
-
-            throw new Error(
-                data.message ||
-                "Invalid email or password."
-            );
-
+            return;
         }
 
+        signinButton.disabled = true;
 
-        /*
-        =========================
-        SAVE JWT TOKEN
-        =========================
-        */
+        signinButton.textContent =
+            "Signing In...";
 
-        if(data.token){
+        message.textContent =
+            "Checking your account...";
+
+
+        try{
+
+            const response =
+                await fetch(
+                    API_URL +
+                    "/api/auth/customer/login",
+                    {
+                        method:"POST",
+
+                        headers:{
+                            "Content-Type":
+                                "application/json"
+                        },
+
+                        body:JSON.stringify({
+                            email:email,
+                            password:password
+                        })
+                    }
+                );
+
+
+            let data;
+
+            try{
+
+                data =
+                    await response.json();
+
+            }
+            catch(error){
+
+                throw new Error(
+                    "The backend returned an invalid response."
+                );
+
+            }
+
+
+            if(!response.ok){
+
+                throw new Error(
+                    data.message ||
+                    "Invalid email or password."
+                );
+
+            }
+
+
+            /* =========================
+               CHECK LOGIN RESPONSE
+            ========================= */
+
+            if(!data.success){
+
+                throw new Error(
+                    data.message ||
+                    "Login failed."
+                );
+
+            }
+
+
+            if(!data.token){
+
+                throw new Error(
+                    "Login succeeded, but no authentication token was received."
+                );
+
+            }
+
+
+            /* =========================
+               SAVE TOKEN
+            ========================= */
 
             localStorage.setItem(
                 "token",
                 data.token
             );
 
-        }
 
+            /* =========================
+               SAVE CUSTOMER
+            ========================= */
 
-        /*
-        =========================
-        SAVE CUSTOMER INFORMATION
-        =========================
-        */
+            if(data.user){
 
-        if(data.user){
+                localStorage.setItem(
+                    "customerUser",
+                    JSON.stringify(data.user)
+                );
 
-            localStorage.setItem(
-                "customerUser",
-                JSON.stringify(data.user)
-            );
+                if(data.user.email){
 
-            if(data.user.email){
+                    localStorage.setItem(
+                        "customerEmail",
+                        data.user.email
+                    );
+
+                }
+
+            }
+            else{
 
                 localStorage.setItem(
                     "customerEmail",
-                    data.user.email
+                    email
                 );
 
             }
 
-        }
-        else{
+
+            /* =========================
+               LOGIN STATUS
+            ========================= */
 
             localStorage.setItem(
-                "customerEmail",
-                email
+                "customerLoggedIn",
+                "true"
             );
 
-        }
 
+            /* Remove developer session */
 
-        /*
-        =========================
-        CUSTOMER LOGIN STATUS
-        =========================
-        */
-
-        localStorage.setItem(
-            "customerLoggedIn",
-            "true"
-        );
-
-
-        /*
-        Remove developer session
-        */
-
-        sessionStorage.removeItem(
-            "developerLoggedIn"
-        );
-
-        sessionStorage.removeItem(
-            "developerEmail"
-        );
-
-
-        /*
-        =========================
-        SUCCESS
-        =========================
-        */
-
-        message.textContent =
-            "Login successful! Opening dashboard...";
-
-        message.className =
-            "success";
-
-
-        /*
-        =========================
-        OPEN CUSTOMER DASHBOARD
-        =========================
-        */
-
-        setTimeout(function(){
-
-            window.location.replace(
-                "customer_dashboard.html"
+            sessionStorage.removeItem(
+                "developerLoggedIn"
             );
 
-        },700);
+            sessionStorage.removeItem(
+                "developerEmail"
+            );
 
 
-    }
-    catch(error){
-
-        console.error(
-            "Customer login error:",
-            error
-        );
-
-
-        message.className =
-            "error";
-
-
-        if(
-            error.message.includes(
-                "Failed to fetch"
-            )
-        ){
+            /* =========================
+               SUCCESS
+            ========================= */
 
             message.textContent =
-                "Cannot connect to the Webportify backend.";
+                "Login successful! Opening dashboard...";
+
+            message.className =
+                "success";
+
+
+            setTimeout(function(){
+
+                window.location.replace(
+                    "customer_dashboard.html"
+                );
+
+            },700);
 
         }
-        else{
+        catch(error){
 
-            message.textContent =
-                error.message ||
-                "Invalid email or password.";
+            console.error(
+                "Customer login error:",
+                error
+            );
+
+            message.className =
+                "error";
+
+
+            if(
+                error.name === "TypeError" ||
+                error.message.includes(
+                    "Failed to fetch"
+                )
+            ){
+
+                message.textContent =
+                    "Cannot connect to the Webportify backend. Check your Render server.";
+
+            }
+            else{
+
+                message.textContent =
+                    error.message ||
+                    "Invalid email or password.";
+
+            }
+
+        }
+        finally{
+
+            signinButton.disabled = false;
+
+            signinButton.textContent =
+                "Sign In →";
 
         }
 
     }
-    finally{
-
-        signinButton.disabled = false;
-
-        signinButton.textContent =
-            "Sign In →";
-
-    }
-
-});
+);
 
 </script>
 
