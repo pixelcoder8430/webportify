@@ -215,9 +215,13 @@ button{
 
 ```
 <div class="logo">
+
     <h1>Webportify</h1>
+
     <p>Customer Sign In</p>
+
 </div>
+
 
 <form id="loginForm">
 
@@ -237,6 +241,7 @@ button{
 
     </div>
 
+
     <div class="field">
 
         <label for="password">
@@ -253,6 +258,7 @@ button{
 
     </div>
 
+
     <div class="buttons">
 
         <button
@@ -262,6 +268,7 @@ button{
         >
             ← Back
         </button>
+
 
         <button
             type="submit"
@@ -273,6 +280,7 @@ button{
 
     </div>
 
+
     <p id="message"></p>
 
 </form>
@@ -282,8 +290,17 @@ button{
 
 <script>
 
+/* =====================================================
+   WEBPORTIFY BACKEND
+===================================================== */
+
 const API_URL =
     "https://webportify.onrender.com";
+
+
+/* =====================================================
+   ELEMENTS
+===================================================== */
 
 const form =
     document.getElementById("loginForm");
@@ -298,21 +315,24 @@ const backButton =
     document.getElementById("backButton");
 
 
-/* =========================
+/* =====================================================
    BACK BUTTON
-========================= */
+===================================================== */
 
-backButton.addEventListener("click", function(){
+backButton.addEventListener(
+    "click",
+    function(){
 
-    window.location.href =
-        "Structure.html";
+        window.location.href =
+            "Structure.html";
 
-});
+    }
+);
 
 
-/* =========================
+/* =====================================================
    CUSTOMER LOGIN
-========================= */
+===================================================== */
 
 form.addEventListener(
     "submit",
@@ -320,18 +340,28 @@ form.addEventListener(
 
         event.preventDefault();
 
+
         message.textContent = "";
         message.className = "";
 
+
         const email =
-            document.getElementById("email")
-            .value
-            .trim()
-            .toLowerCase();
+            document
+                .getElementById("email")
+                .value
+                .trim()
+                .toLowerCase();
+
 
         const password =
-            document.getElementById("password")
-            .value;
+            document
+                .getElementById("password")
+                .value;
+
+
+        /* =========================
+           VALIDATION
+        ========================= */
 
         if(!email || !password){
 
@@ -342,7 +372,13 @@ form.addEventListener(
                 "error";
 
             return;
+
         }
+
+
+        /* =========================
+           START LOGIN
+        ========================= */
 
         signinButton.disabled = true;
 
@@ -354,6 +390,10 @@ form.addEventListener(
 
 
         try{
+
+            /* =========================
+               SEND LOGIN REQUEST
+            ========================= */
 
             const response =
                 await fetch(
@@ -368,12 +408,19 @@ form.addEventListener(
                         },
 
                         body:JSON.stringify({
+
                             email:email,
+
                             password:password
+
                         })
                     }
                 );
 
+
+            /* =========================
+               READ RESPONSE
+            ========================= */
 
             let data;
 
@@ -383,7 +430,7 @@ form.addEventListener(
                     await response.json();
 
             }
-            catch(error){
+            catch(jsonError){
 
                 throw new Error(
                     "The backend returned an invalid response."
@@ -391,6 +438,10 @@ form.addEventListener(
 
             }
 
+
+            /* =========================
+               HTTP ERROR
+            ========================= */
 
             if(!response.ok){
 
@@ -403,7 +454,7 @@ form.addEventListener(
 
 
             /* =========================
-               CHECK LOGIN RESPONSE
+               LOGIN RESPONSE
             ========================= */
 
             if(!data.success){
@@ -415,6 +466,10 @@ form.addEventListener(
 
             }
 
+
+            /* =========================
+               CHECK TOKEN
+            ========================= */
 
             if(!data.token){
 
@@ -446,6 +501,7 @@ form.addEventListener(
                     JSON.stringify(data.user)
                 );
 
+
                 if(data.user.email){
 
                     localStorage.setItem(
@@ -476,7 +532,9 @@ form.addEventListener(
             );
 
 
-            /* Remove developer session */
+            /* =========================
+               REMOVE DEVELOPER SESSION
+            ========================= */
 
             sessionStorage.removeItem(
                 "developerLoggedIn"
@@ -498,13 +556,20 @@ form.addEventListener(
                 "success";
 
 
-            setTimeout(function(){
+            /* =========================
+               OPEN DASHBOARD
+            ========================= */
 
-                window.location.replace(
-                    "customer_dashboard.html"
-                );
+            setTimeout(
+                function(){
 
-            },700);
+                    window.location.replace(
+                        "customer_dashboard.html"
+                    );
+
+                },
+                700
+            );
 
         }
         catch(error){
@@ -514,15 +579,20 @@ form.addEventListener(
                 error
             );
 
+
             message.className =
                 "error";
 
 
+            /* =========================
+               CONNECTION ERROR
+            ========================= */
+
             if(
                 error.name === "TypeError" ||
-                error.message.includes(
-                    "Failed to fetch"
-                )
+                error.message
+                    .toLowerCase()
+                    .includes("failed to fetch")
             ){
 
                 message.textContent =
