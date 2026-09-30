@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="en">
 
 <head>
@@ -231,79 +232,80 @@ button{
 
 <div class="container">
 
-    <div class="logo">
+```
+<div class="logo">
 
-        <h1>Webportify</h1>
+    <h1>Webportify</h1>
 
-        <p>Customer Sign In</p>
+    <p>Customer Sign In</p>
+
+</div>
+
+
+<form id="loginForm">
+
+    <div class="field">
+
+        <label for="email">
+            Email
+        </label>
+
+        <input
+            type="email"
+            id="email"
+            placeholder="Enter your email"
+            autocomplete="email"
+            required
+        >
 
     </div>
 
 
-    <form id="loginForm">
+    <div class="field">
 
-        <div class="field">
+        <label for="password">
+            Password
+        </label>
 
-            <label for="email">
-                Email
-            </label>
+        <input
+            type="password"
+            id="password"
+            placeholder="Enter your password"
+            autocomplete="current-password"
+            required
+        >
 
-            <input
-                type="email"
-                id="email"
-                placeholder="Enter your email"
-                autocomplete="email"
-                required
-            >
-
-        </div>
+    </div>
 
 
-        <div class="field">
+    <div class="buttons">
 
-            <label for="password">
-                Password
-            </label>
-
-            <input
-                type="password"
-                id="password"
-                placeholder="Enter your password"
-                autocomplete="current-password"
-                required
-            >
-
-        </div>
+        <button
+            type="button"
+            class="back"
+            id="backButton"
+        >
+            ← Back
+        </button>
 
 
-        <div class="buttons">
+        <button
+            type="submit"
+            class="signin"
+            id="signinButton"
+        >
+            Sign In →
+        </button>
 
-            <button
-                type="button"
-                class="back"
-                id="backButton"
-            >
-                ← Back
-            </button>
-
-
-            <button
-                type="submit"
-                class="signin"
-                id="signinButton"
-            >
-                Sign In →
-            </button>
-
-        </div>
+    </div>
 
 
-        <p id="message"></p>
+    <p id="message"></p>
 
-    </form>
+</form>
+```
 
 </div>
-
 
 <script>
 
@@ -371,7 +373,7 @@ form.addEventListener("submit", async function(event){
     try{
 
         const response = await fetch(
-            "http://localhost:5000/api/auth/customer/login",
+            "https://webportify.onrender.com/api/auth/customer/login",
             {
                 method:"POST",
 
@@ -532,7 +534,7 @@ form.addEventListener("submit", async function(event){
         ){
 
             message.textContent =
-                "Cannot connect to the backend. Make sure the server is running.";
+                "Cannot connect to the Webportify backend.";
 
         }
         else{
