@@ -264,6 +264,7 @@ Your Name
 type="text"
 id="name"
 placeholder="Enter your name"
+autocomplete="name"
 required
 
 >
@@ -280,6 +281,7 @@ Email
 type="email"
 id="email"
 placeholder="Enter your email"
+autocomplete="email"
 required
 
 >
@@ -301,6 +303,7 @@ type="password"
 id="password"
 placeholder="Create a password"
 minlength="6"
+autocomplete="new-password"
 required
 
 >
@@ -318,6 +321,7 @@ type="password"
 id="confirmPassword"
 placeholder="Confirm your password"
 minlength="6"
+autocomplete="new-password"
 required
 
 >
@@ -417,7 +421,7 @@ Additional Requirements
 <button
 type="button"
 class="back"
-onclick="goBack()"
+id="backButton"
 
 >
 
@@ -442,17 +446,17 @@ Create Account → </button>
 
 <script>
 
-/* =========================
+/* =====================================================
    WEBPORTIFY BACKEND
-========================= */
+===================================================== */
 
 const API_URL =
     "https://webportify.onrender.com";
 
 
-/* =========================
+/* =====================================================
    ELEMENTS
-========================= */
+===================================================== */
 
 const form =
     document.getElementById("customerForm");
@@ -463,10 +467,29 @@ const message =
 const submitButton =
     document.getElementById("submitButton");
 
+const backButton =
+    document.getElementById("backButton");
 
-/* =========================
+
+/* =====================================================
+   BACK BUTTON
+===================================================== */
+
+backButton.addEventListener(
+    "click",
+    function(){
+
+        window.location.replace(
+            "Structure.html"
+        );
+
+    }
+);
+
+
+/* =====================================================
    CUSTOMER REGISTRATION
-========================= */
+===================================================== */
 
 form.addEventListener(
     "submit",
@@ -474,12 +497,14 @@ form.addEventListener(
 
         event.preventDefault();
 
+        message.textContent = "";
+        message.style.color = "#9ca3ad";
+
 
         const name =
             document.getElementById("name")
             .value
             .trim();
-
 
         const email =
             document.getElementById("email")
@@ -487,39 +512,32 @@ form.addEventListener(
             .trim()
             .toLowerCase();
 
-
         const password =
             document.getElementById("password")
             .value;
-
 
         const confirmPassword =
             document.getElementById("confirmPassword")
             .value;
 
-
         const websiteType =
             document.getElementById("websiteType")
             .value;
-
 
         const purpose =
             document.getElementById("purpose")
             .value
             .trim();
 
-
         const features =
             document.getElementById("features")
             .value
             .trim();
 
-
         const reference =
             document.getElementById("reference")
             .value
             .trim();
-
 
         const requirements =
             document.getElementById("requirements")
@@ -527,59 +545,46 @@ form.addEventListener(
             .trim();
 
 
-        /* =========================
+        /* =====================================================
            VALIDATION
-        ========================= */
+        ===================================================== */
 
         if(password !== confirmPassword){
 
-            message.style.color =
-                "#ff496b";
+            message.style.color = "#ff496b";
 
             message.textContent =
                 "Passwords do not match.";
 
             return;
-
         }
 
 
         if(password.length < 6){
 
-            message.style.color =
-                "#ff496b";
+            message.style.color = "#ff496b";
 
             message.textContent =
                 "Password must be at least 6 characters.";
 
             return;
-
         }
 
 
-        /* =========================
+        /* =====================================================
            START REQUEST
-        ========================= */
+        ===================================================== */
 
         submitButton.disabled = true;
 
         submitButton.textContent =
             "Creating Account...";
 
-
-        message.style.color =
-            "#9ca3ad";
-
         message.textContent =
             "Connecting to Webportify...";
 
 
         try{
-
-            /* =========================
-               IMPORTANT:
-               USE RENDER BACKEND
-            ========================= */
 
             const response =
                 await fetch(
@@ -596,19 +601,12 @@ form.addEventListener(
                         body:JSON.stringify({
 
                             name:name,
-
                             email:email,
-
                             password:password,
-
                             websiteType:websiteType,
-
                             purpose:purpose,
-
                             features:features,
-
                             reference:reference,
-
                             requirements:requirements
 
                         })
@@ -616,9 +614,9 @@ form.addEventListener(
                 );
 
 
-            /* =========================
+            /* =====================================================
                READ RESPONSE
-            ========================= */
+            ===================================================== */
 
             let data;
 
@@ -637,9 +635,9 @@ form.addEventListener(
             }
 
 
-            /* =========================
-               REGISTRATION FAILED
-            ========================= */
+            /* =====================================================
+               REGISTRATION ERROR
+            ===================================================== */
 
             if(!response.ok){
 
@@ -651,9 +649,9 @@ form.addEventListener(
             }
 
 
-            /* =========================
+            /* =====================================================
                SAVE TOKEN
-            ========================= */
+            ===================================================== */
 
             if(data.token){
 
@@ -665,9 +663,9 @@ form.addEventListener(
             }
 
 
-            /* =========================
+            /* =====================================================
                SAVE CUSTOMER
-            ========================= */
+            ===================================================== */
 
             if(data.user){
 
@@ -696,9 +694,13 @@ form.addEventListener(
             }
 
 
-            /* =========================
-               LOGIN STATUS
-            ========================= */
+            /* =====================================================
+               CUSTOMER LOGIN STATUS
+
+               IMPORTANT:
+               This is the same key used by the
+               customer dashboard.
+            ===================================================== */
 
             localStorage.setItem(
                 "customerLoggedIn",
@@ -706,21 +708,33 @@ form.addEventListener(
             );
 
 
-            /* =========================
+            /* Remove developer session */
+
+            sessionStorage.removeItem(
+                "developerLoggedIn"
+            );
+
+            sessionStorage.removeItem(
+                "developerEmail"
+            );
+
+
+            /* =====================================================
                SUCCESS
-            ========================= */
+            ===================================================== */
 
             message.style.color =
                 "#4dff88";
 
             message.textContent =
-                "Account created successfully!";
+                "Account created successfully! Opening dashboard...";
 
 
             /*
-              Open customer dashboard
-              after successful registration.
-            */
+             * Go DIRECTLY to the customer dashboard.
+             *
+             * Do NOT go to customer sign-in.
+             */
 
             setTimeout(function(){
 
@@ -728,7 +742,7 @@ form.addEventListener(
                     "customer_dashboard.html"
                 );
 
-            },1000);
+            },700);
 
 
         }
@@ -739,20 +753,15 @@ form.addEventListener(
                 error
             );
 
-
             message.style.color =
                 "#ff496b";
 
 
-            /* =========================
-               CONNECTION ERROR
-            ========================= */
-
             if(
                 error instanceof TypeError ||
-                error.message.includes(
-                    "Failed to fetch"
-                )
+                error.message
+                    .toLowerCase()
+                    .includes("failed to fetch")
             ){
 
                 message.textContent =
@@ -779,18 +788,6 @@ form.addEventListener(
 
     }
 );
-
-
-/* =========================
-   BACK BUTTON
-========================= */
-
-function goBack(){
-
-    window.location.href =
-        "Structure.html";
-
-}
 
 </script>
 

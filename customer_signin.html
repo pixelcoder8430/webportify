@@ -3,6 +3,7 @@
 <html lang="en">
 
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -21,11 +22,14 @@ body{
     min-height:100vh;
     background:#02070d;
     color:white;
+
     display:flex;
     justify-content:center;
     align-items:center;
+
     padding:20px;
     overflow:hidden;
+
     position:relative;
 }
 
@@ -64,11 +68,16 @@ body::before{
 .container{
     width:430px;
     max-width:100%;
+
     padding:42px 38px;
+
     background:rgba(12,15,21,.96);
+
     border:1px solid #343941;
     border-radius:22px;
-    box-shadow:0 0 30px rgba(255,23,68,.12);
+
+    box-shadow:
+        0 0 30px rgba(255,23,68,.12);
 }
 
 .logo{
@@ -105,13 +114,19 @@ label{
 input{
     width:100%;
     height:52px;
+
     padding:0 16px;
+
     background:#0c1016;
+
     border:1px solid #363b43;
     border-radius:11px;
+
     color:white;
     outline:none;
+
     font-size:15px;
+
     transition:.2s;
 }
 
@@ -135,9 +150,12 @@ input:focus{
 button{
     flex:1;
     height:50px;
+
     border-radius:9px;
+
     font-size:15px;
     font-weight:bold;
+
     cursor:pointer;
     transition:.25s;
 }
@@ -179,8 +197,11 @@ button{
 
 #message{
     min-height:20px;
+
     text-align:center;
+
     margin-top:18px;
+
     font-size:13px;
 }
 
@@ -213,78 +234,87 @@ button{
 
 <div class="container">
 
-```
 <div class="logo">
 
-    <h1>Webportify</h1>
+```
+<h1>Webportify</h1>
 
-    <p>Customer Sign In</p>
+<p>Customer Sign In</p>
+```
 
 </div>
 
-
 <form id="loginForm">
 
-    <div class="field">
+<div class="field">
 
-        <label for="email">
-            Email
-        </label>
+```
+<label for="email">
+    Email
+</label>
 
-        <input
-            type="email"
-            id="email"
-            placeholder="Enter your email"
-            autocomplete="email"
-            required
-        >
+<input
+    type="email"
+    id="email"
+    placeholder="Enter your email"
+    autocomplete="email"
+    required
+>
+```
 
-    </div>
+</div>
 
+<div class="field">
 
-    <div class="field">
+```
+<label for="password">
+    Password
+</label>
 
-        <label for="password">
-            Password
-        </label>
+<input
+    type="password"
+    id="password"
+    placeholder="Enter your password"
+    autocomplete="current-password"
+    required
+>
+```
 
-        <input
-            type="password"
-            id="password"
-            placeholder="Enter your password"
-            autocomplete="current-password"
-            required
-        >
+</div>
 
-    </div>
+<div class="buttons">
 
+<button
+type="button"
+class="back"
+id="backButton"
 
-    <div class="buttons">
+>
 
-        <button
-            type="button"
-            class="back"
-            id="backButton"
-        >
-            ← Back
-        </button>
+```
+← Back
+```
 
+</button>
 
-        <button
-            type="submit"
-            class="signin"
-            id="signinButton"
-        >
-            Sign In →
-        </button>
+<button
+type="submit"
+class="signin"
+id="signinButton"
 
-    </div>
+>
 
+```
+Sign In →
+```
 
-    <p id="message"></p>
+</button>
+
+</div>
+
+<p id="message"></p>
 
 </form>
-```
 
 </div>
 
@@ -323,8 +353,14 @@ backButton.addEventListener(
     "click",
     function(){
 
-        window.location.href =
-            "Structure.html";
+        /*
+         * Return to the main Webportify
+         * starting page.
+         */
+
+        window.location.replace(
+            "Structure.html"
+        );
 
     }
 );
@@ -341,9 +377,15 @@ form.addEventListener(
         event.preventDefault();
 
 
+        /* Clear previous message */
+
         message.textContent = "";
         message.className = "";
 
+
+        /* =================================================
+           GET FORM VALUES
+        ================================================= */
 
         const email =
             document
@@ -359,9 +401,9 @@ form.addEventListener(
                 .value;
 
 
-        /* =========================
+        /* =================================================
            VALIDATION
-        ========================= */
+        ================================================= */
 
         if(!email || !password){
 
@@ -376,9 +418,9 @@ form.addEventListener(
         }
 
 
-        /* =========================
+        /* =================================================
            START LOGIN
-        ========================= */
+        ================================================= */
 
         signinButton.disabled = true;
 
@@ -391,9 +433,10 @@ form.addEventListener(
 
         try{
 
-            /* =========================
+
+            /* =================================================
                SEND LOGIN REQUEST
-            ========================= */
+            ================================================= */
 
             const response =
                 await fetch(
@@ -418,9 +461,9 @@ form.addEventListener(
                 );
 
 
-            /* =========================
-               READ RESPONSE
-            ========================= */
+            /* =================================================
+               READ BACKEND RESPONSE
+            ================================================= */
 
             let data;
 
@@ -439,9 +482,9 @@ form.addEventListener(
             }
 
 
-            /* =========================
+            /* =================================================
                HTTP ERROR
-            ========================= */
+            ================================================= */
 
             if(!response.ok){
 
@@ -453,23 +496,9 @@ form.addEventListener(
             }
 
 
-            /* =========================
-               LOGIN RESPONSE
-            ========================= */
-
-            if(!data.success){
-
-                throw new Error(
-                    data.message ||
-                    "Login failed."
-                );
-
-            }
-
-
-            /* =========================
+            /* =================================================
                CHECK TOKEN
-            ========================= */
+            ================================================= */
 
             if(!data.token){
 
@@ -480,9 +509,9 @@ form.addEventListener(
             }
 
 
-            /* =========================
+            /* =================================================
                SAVE TOKEN
-            ========================= */
+            ================================================= */
 
             localStorage.setItem(
                 "token",
@@ -490,9 +519,9 @@ form.addEventListener(
             );
 
 
-            /* =========================
-               SAVE CUSTOMER
-            ========================= */
+            /* =================================================
+               SAVE CUSTOMER INFORMATION
+            ================================================= */
 
             if(data.user){
 
@@ -510,6 +539,14 @@ form.addEventListener(
                     );
 
                 }
+                else{
+
+                    localStorage.setItem(
+                        "customerEmail",
+                        email
+                    );
+
+                }
 
             }
             else{
@@ -522,9 +559,11 @@ form.addEventListener(
             }
 
 
-            /* =========================
-               LOGIN STATUS
-            ========================= */
+            /* =================================================
+               CUSTOMER LOGIN STATUS
+
+               This must match the dashboard protection.
+            ================================================= */
 
             localStorage.setItem(
                 "customerLoggedIn",
@@ -532,9 +571,9 @@ form.addEventListener(
             );
 
 
-            /* =========================
+            /* =================================================
                REMOVE DEVELOPER SESSION
-            ========================= */
+            ================================================= */
 
             sessionStorage.removeItem(
                 "developerLoggedIn"
@@ -545,9 +584,9 @@ form.addEventListener(
             );
 
 
-            /* =========================
-               SUCCESS
-            ========================= */
+            /* =================================================
+               SUCCESS MESSAGE
+            ================================================= */
 
             message.textContent =
                 "Login successful! Opening dashboard...";
@@ -556,9 +595,9 @@ form.addEventListener(
                 "success";
 
 
-            /* =========================
-               OPEN DASHBOARD
-            ========================= */
+            /* =================================================
+               OPEN CUSTOMER DASHBOARD
+            ================================================= */
 
             setTimeout(
                 function(){
@@ -568,8 +607,9 @@ form.addEventListener(
                     );
 
                 },
-                700
+                500
             );
+
 
         }
         catch(error){
@@ -584,19 +624,19 @@ form.addEventListener(
                 "error";
 
 
-            /* =========================
+            /* =================================================
                CONNECTION ERROR
-            ========================= */
+            ================================================= */
 
             if(
-                error.name === "TypeError" ||
+                error instanceof TypeError ||
                 error.message
                     .toLowerCase()
                     .includes("failed to fetch")
             ){
 
                 message.textContent =
-                    "Cannot connect to the Webportify backend. Check your Render server.";
+                    "Cannot connect to the Webportify backend. Check your Render deployment.";
 
             }
             else{
