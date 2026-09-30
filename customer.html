@@ -208,7 +208,6 @@ button{
 #message{
     text-align:center;
     margin-top:16px;
-    color:#ff496b;
     font-size:13px;
     min-height:18px;
 }
@@ -476,10 +475,6 @@ form.addEventListener(
         event.preventDefault();
 
 
-        /* =========================
-           GET FORM VALUES
-        ========================= */
-
         const name =
             document.getElementById("name")
             .value
@@ -533,7 +528,7 @@ form.addEventListener(
 
 
         /* =========================
-           PASSWORD CHECK
+           VALIDATION
         ========================= */
 
         if(password !== confirmPassword){
@@ -563,7 +558,7 @@ form.addEventListener(
 
 
         /* =========================
-           BUTTON LOADING
+           START REQUEST
         ========================= */
 
         submitButton.disabled = true;
@@ -579,11 +574,12 @@ form.addEventListener(
             "Connecting to Webportify...";
 
 
-        /* =========================
-           SEND REGISTRATION
-        ========================= */
-
         try{
+
+            /* =========================
+               IMPORTANT:
+               USE RENDER BACKEND
+            ========================= */
 
             const response =
                 await fetch(
@@ -621,7 +617,7 @@ form.addEventListener(
 
 
             /* =========================
-               READ SERVER RESPONSE
+               READ RESPONSE
             ========================= */
 
             let data;
@@ -656,7 +652,7 @@ form.addEventListener(
 
 
             /* =========================
-               SAVE JWT TOKEN
+               SAVE TOKEN
             ========================= */
 
             if(data.token){
@@ -670,7 +666,7 @@ form.addEventListener(
 
 
             /* =========================
-               SAVE CUSTOMER INFORMATION
+               SAVE CUSTOMER
             ========================= */
 
             if(data.user){
@@ -680,21 +676,28 @@ form.addEventListener(
                     JSON.stringify(data.user)
                 );
 
+                if(data.user.email){
+
+                    localStorage.setItem(
+                        "customerEmail",
+                        data.user.email
+                    );
+
+                }
+
+            }
+            else{
+
+                localStorage.setItem(
+                    "customerEmail",
+                    email
+                );
+
             }
 
 
             /* =========================
-               SAVE CUSTOMER EMAIL
-            ========================= */
-
-            localStorage.setItem(
-                "customerEmail",
-                email
-            );
-
-
-            /* =========================
-               CUSTOMER LOGIN STATUS
+               LOGIN STATUS
             ========================= */
 
             localStorage.setItem(
@@ -704,7 +707,7 @@ form.addEventListener(
 
 
             /* =========================
-               SUCCESS MESSAGE
+               SUCCESS
             ========================= */
 
             message.style.color =
@@ -714,35 +717,18 @@ form.addEventListener(
                 "Account created successfully!";
 
 
-            /* =========================
-               CLEAR PASSWORD FIELDS
-            ========================= */
-
-            document.getElementById(
-                "password"
-            ).value = "";
-
-            document.getElementById(
-                "confirmPassword"
-            ).value = "";
-
-
             /*
-            Keep the customer information
-            available for the dashboard.
+              Open customer dashboard
+              after successful registration.
             */
-
-
-            /* =========================
-               OPEN CUSTOMER SIGN IN
-            ========================= */
 
             setTimeout(function(){
 
-                window.location.href =
-                    "customer_signin.html";
+                window.location.replace(
+                    "customer_dashboard.html"
+                );
 
-            },1200);
+            },1000);
 
 
         }
@@ -763,14 +749,14 @@ form.addEventListener(
             ========================= */
 
             if(
-                error.name === "TypeError" ||
+                error instanceof TypeError ||
                 error.message.includes(
                     "Failed to fetch"
                 )
             ){
 
                 message.textContent =
-                    "Cannot connect to the Webportify backend. Please check your Render server.";
+                    "Cannot connect to the Webportify backend. Check your Render deployment.";
 
             }
             else{
