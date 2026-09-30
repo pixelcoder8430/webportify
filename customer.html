@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="en">
 
 <head>
@@ -261,10 +262,11 @@ Your Name
 </label>
 
 <input
-    type="text"
-    id="name"
-    placeholder="Enter your name"
-    required
+type="text"
+id="name"
+placeholder="Enter your name"
+required
+
 >
 
 </div>
@@ -276,16 +278,16 @@ Email
 </label>
 
 <input
-    type="email"
-    id="email"
-    placeholder="Enter your email"
-    required
+type="email"
+id="email"
+placeholder="Enter your email"
+required
+
 >
 
 </div>
 
 </div>
-
 
 <div class="form-row">
 
@@ -296,11 +298,12 @@ Password
 </label>
 
 <input
-    type="password"
-    id="password"
-    placeholder="Create a password"
-    minlength="6"
-    required
+type="password"
+id="password"
+placeholder="Create a password"
+minlength="6"
+required
+
 >
 
 </div>
@@ -312,17 +315,17 @@ Confirm Password
 </label>
 
 <input
-    type="password"
-    id="confirmPassword"
-    placeholder="Confirm your password"
-    minlength="6"
-    required
+type="password"
+id="confirmPassword"
+placeholder="Confirm your password"
+minlength="6"
+required
+
 >
 
 </div>
 
 </div>
-
 
 <div class="field">
 
@@ -351,7 +354,6 @@ Select website type
 
 </div>
 
-
 <div class="field">
 
 <label for="purpose">
@@ -359,14 +361,14 @@ Website Purpose
 </label>
 
 <input
-    type="text"
-    id="purpose"
-    placeholder="What will your website be used for?"
-    required
+type="text"
+id="purpose"
+placeholder="What will your website be used for?"
+required
+
 >
 
 </div>
-
 
 <div class="field">
 
@@ -375,13 +377,13 @@ Features You Need
 </label>
 
 <input
-    type="text"
-    id="features"
-    placeholder="Login, contact form, animations..."
+type="text"
+id="features"
+placeholder="Login, contact form, animations..."
+
 >
 
 </div>
-
 
 <div class="field">
 
@@ -390,13 +392,13 @@ Reference Website
 </label>
 
 <input
-    type="url"
-    id="reference"
-    placeholder="https://example.com"
+type="url"
+id="reference"
+placeholder="https://example.com"
+
 >
 
 </div>
-
 
 <div class="field">
 
@@ -411,24 +413,25 @@ Additional Requirements
 
 </div>
 
-
 <div class="buttons">
 
 <button
-    type="button"
-    class="back"
-    onclick="goBack()"
+type="button"
+class="back"
+onclick="goBack()"
+
 >
-← Back
-</button>
+
+← Back </button>
 
 <button
-    type="submit"
-    class="submit"
-    id="submitButton"
+type="submit"
+class="submit"
+id="submitButton"
+
 >
-Create Account →
-</button>
+
+Create Account → </button>
 
 </div>
 
@@ -438,8 +441,19 @@ Create Account →
 
 </div>
 
-
 <script>
+
+/* =========================
+   WEBPORTIFY BACKEND
+========================= */
+
+const API_URL =
+    "https://webportify.onrender.com";
+
+
+/* =========================
+   ELEMENTS
+========================= */
 
 const form =
     document.getElementById("customerForm");
@@ -451,241 +465,344 @@ const submitButton =
     document.getElementById("submitButton");
 
 
-form.addEventListener("submit", async function(event){
+/* =========================
+   CUSTOMER REGISTRATION
+========================= */
 
-    event.preventDefault();
+form.addEventListener(
+    "submit",
+    async function(event){
 
+        event.preventDefault();
 
-    const name =
-        document.getElementById("name")
-        .value
-        .trim();
 
+        /* =========================
+           GET FORM VALUES
+        ========================= */
 
-    const email =
-        document.getElementById("email")
-        .value
-        .trim()
-        .toLowerCase();
+        const name =
+            document.getElementById("name")
+            .value
+            .trim();
 
 
-    const password =
-        document.getElementById("password")
-        .value;
+        const email =
+            document.getElementById("email")
+            .value
+            .trim()
+            .toLowerCase();
 
 
-    const confirmPassword =
-        document.getElementById("confirmPassword")
-        .value;
+        const password =
+            document.getElementById("password")
+            .value;
 
 
-    const websiteType =
-        document.getElementById("websiteType")
-        .value;
+        const confirmPassword =
+            document.getElementById("confirmPassword")
+            .value;
 
 
-    const purpose =
-        document.getElementById("purpose")
-        .value
-        .trim();
+        const websiteType =
+            document.getElementById("websiteType")
+            .value;
 
 
-    const features =
-        document.getElementById("features")
-        .value
-        .trim();
+        const purpose =
+            document.getElementById("purpose")
+            .value
+            .trim();
 
 
-    const reference =
-        document.getElementById("reference")
-        .value
-        .trim();
+        const features =
+            document.getElementById("features")
+            .value
+            .trim();
 
 
-    const requirements =
-        document.getElementById("requirements")
-        .value
-        .trim();
+        const reference =
+            document.getElementById("reference")
+            .value
+            .trim();
 
 
-    if(password !== confirmPassword){
+        const requirements =
+            document.getElementById("requirements")
+            .value
+            .trim();
 
-        message.style.color = "#ff496b";
 
-        message.textContent =
-            "Passwords do not match.";
+        /* =========================
+           PASSWORD CHECK
+        ========================= */
 
-        return;
+        if(password !== confirmPassword){
 
-    }
-
-
-    if(password.length < 6){
-
-        message.style.color = "#ff496b";
-
-        message.textContent =
-            "Password must be at least 6 characters.";
-
-        return;
-
-    }
-
-
-    submitButton.disabled = true;
-
-    submitButton.textContent =
-        "Creating Account...";
-
-
-    message.style.color = "#9ca3ad";
-
-    message.textContent =
-        "Connecting to Webportify...";
-
-
-    try{
-
-        const response = await fetch(
-            "http://localhost:5000/api/auth/customer/register",
-            {
-                method:"POST",
-
-                headers:{
-                    "Content-Type":"application/json"
-                },
-
-                body:JSON.stringify({
-
-                    name:name,
-
-                    email:email,
-
-                    password:password,
-
-                    websiteType:websiteType,
-
-                    purpose:purpose,
-
-                    features:features,
-
-                    reference:reference,
-
-                    requirements:requirements
-
-                })
-            }
-        );
-
-
-        const data =
-            await response.json();
-
-
-        if(!response.ok){
-
-            throw new Error(
-                data.message ||
-                "Registration failed."
-            );
-
-        }
-
-
-        /*
-        Save the JWT token returned
-        by the backend.
-        */
-
-        if(data.token){
-
-            localStorage.setItem(
-                "token",
-                data.token
-            );
-
-        }
-
-
-        /*
-        Save basic customer information.
-        The password is NOT saved.
-        */
-
-        if(data.user){
-
-            localStorage.setItem(
-                "customerUser",
-                JSON.stringify(data.user)
-            );
-
-        }
-
-
-        message.style.color =
-            "#4dff88";
-
-        message.textContent =
-            "Account created successfully!";
-
-
-        /*
-        Clear the form.
-        We will connect the real
-        customer sign-in page next.
-        */
-
-        form.reset();
-
-
-    }
-    catch(error){
-
-        console.error(
-            "Registration error:",
-            error
-        );
-
-
-        message.style.color =
-            "#ff496b";
-
-
-        if(
-            error.message.includes(
-                "Failed to fetch"
-            )
-        ){
+            message.style.color =
+                "#ff496b";
 
             message.textContent =
-                "Cannot connect to the backend. Make sure the Node server is running.";
+                "Passwords do not match.";
+
+            return;
 
         }
-        else{
+
+
+        if(password.length < 6){
+
+            message.style.color =
+                "#ff496b";
 
             message.textContent =
-                error.message ||
-                "Something went wrong.";
+                "Password must be at least 6 characters.";
+
+            return;
 
         }
 
-    }
-    finally{
 
-        submitButton.disabled = false;
+        /* =========================
+           BUTTON LOADING
+        ========================= */
+
+        submitButton.disabled = true;
 
         submitButton.textContent =
-            "Create Account →";
+            "Creating Account...";
+
+
+        message.style.color =
+            "#9ca3ad";
+
+        message.textContent =
+            "Connecting to Webportify...";
+
+
+        /* =========================
+           SEND REGISTRATION
+        ========================= */
+
+        try{
+
+            const response =
+                await fetch(
+                    API_URL +
+                    "/api/auth/customer/register",
+                    {
+                        method:"POST",
+
+                        headers:{
+                            "Content-Type":
+                                "application/json"
+                        },
+
+                        body:JSON.stringify({
+
+                            name:name,
+
+                            email:email,
+
+                            password:password,
+
+                            websiteType:websiteType,
+
+                            purpose:purpose,
+
+                            features:features,
+
+                            reference:reference,
+
+                            requirements:requirements
+
+                        })
+                    }
+                );
+
+
+            /* =========================
+               READ SERVER RESPONSE
+            ========================= */
+
+            let data;
+
+            try{
+
+                data =
+                    await response.json();
+
+            }
+            catch(error){
+
+                throw new Error(
+                    "The backend returned an invalid response."
+                );
+
+            }
+
+
+            /* =========================
+               REGISTRATION FAILED
+            ========================= */
+
+            if(!response.ok){
+
+                throw new Error(
+                    data.message ||
+                    "Registration failed."
+                );
+
+            }
+
+
+            /* =========================
+               SAVE JWT TOKEN
+            ========================= */
+
+            if(data.token){
+
+                localStorage.setItem(
+                    "token",
+                    data.token
+                );
+
+            }
+
+
+            /* =========================
+               SAVE CUSTOMER INFORMATION
+            ========================= */
+
+            if(data.user){
+
+                localStorage.setItem(
+                    "customerUser",
+                    JSON.stringify(data.user)
+                );
+
+            }
+
+
+            /* =========================
+               SAVE CUSTOMER EMAIL
+            ========================= */
+
+            localStorage.setItem(
+                "customerEmail",
+                email
+            );
+
+
+            /* =========================
+               CUSTOMER LOGIN STATUS
+            ========================= */
+
+            localStorage.setItem(
+                "customerLoggedIn",
+                "true"
+            );
+
+
+            /* =========================
+               SUCCESS MESSAGE
+            ========================= */
+
+            message.style.color =
+                "#4dff88";
+
+            message.textContent =
+                "Account created successfully!";
+
+
+            /* =========================
+               CLEAR PASSWORD FIELDS
+            ========================= */
+
+            document.getElementById(
+                "password"
+            ).value = "";
+
+            document.getElementById(
+                "confirmPassword"
+            ).value = "";
+
+
+            /*
+            Keep the customer information
+            available for the dashboard.
+            */
+
+
+            /* =========================
+               OPEN CUSTOMER SIGN IN
+            ========================= */
+
+            setTimeout(function(){
+
+                window.location.href =
+                    "customer_signin.html";
+
+            },1200);
+
+
+        }
+        catch(error){
+
+            console.error(
+                "Registration error:",
+                error
+            );
+
+
+            message.style.color =
+                "#ff496b";
+
+
+            /* =========================
+               CONNECTION ERROR
+            ========================= */
+
+            if(
+                error.name === "TypeError" ||
+                error.message.includes(
+                    "Failed to fetch"
+                )
+            ){
+
+                message.textContent =
+                    "Cannot connect to the Webportify backend. Please check your Render server.";
+
+            }
+            else{
+
+                message.textContent =
+                    error.message ||
+                    "Something went wrong.";
+
+            }
+
+        }
+        finally{
+
+            submitButton.disabled = false;
+
+            submitButton.textContent =
+                "Create Account →";
+
+        }
 
     }
+);
 
-});
 
+/* =========================
+   BACK BUTTON
+========================= */
 
 function goBack(){
 
     window.location.href =
-        "structure.html";
+        "Structure.html";
 
 }
 
