@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="en">
 
 <head>
@@ -501,108 +502,98 @@ button:disabled{
 
 <body>
 
-<!-- =========================
-     SIDEBAR
-========================= -->
-
 <div class="sidebar">
 
-    <div class="logo">
-        WEBPORTIFY
-    </div>
-
-    <a href="developer_dashboard.html">
-        <span class="icon">🏠</span>
-        Dashboard
-    </a>
-
-    <a href="developer_requests.html">
-        <span class="icon">📋</span>
-        Customer Requests
-    </a>
-
-    <a href="active_projects.html" class="active">
-        <span class="icon">⚡</span>
-        Active Projects
-    </a>
-
-    <a href="completed_projects.html">
-        <span class="icon">✅</span>
-        Completed
-    </a>
-
-    <a href="developer_messages.html">
-        <span class="icon">💬</span>
-        Messages
-    </a>
-
-    <a href="developer_profile.html">
-        <span class="icon">👤</span>
-        My Profile
-    </a>
-
+```
+<div class="logo">
+    WEBPORTIFY
 </div>
 
+<a href="developer_dashboard.html">
+    <span class="icon">🏠</span>
+    Dashboard
+</a>
 
-<!-- =========================
-     MAIN
-========================= -->
+<a href="developer_requests.html">
+    <span class="icon">📋</span>
+    Customer Requests
+</a>
+
+<a href="active_projects.html" class="active">
+    <span class="icon">⚡</span>
+    Active Projects
+</a>
+
+<a href="completed_projects.html">
+    <span class="icon">✅</span>
+    Completed
+</a>
+
+<a href="developer_messages.html">
+    <span class="icon">💬</span>
+    Messages
+</a>
+
+<a href="developer_profile.html">
+    <span class="icon">👤</span>
+    My Profile
+</a>
+```
+
+</div>
 
 <div class="main">
 
-    <div class="top">
+```
+<div class="top">
 
-        <h1>
-            Active Projects
-        </h1>
+    <h1>
+        Active Projects
+    </h1>
 
-        <a
-            href="developer_dashboard.html"
-            class="dashboard-btn">
+    <a
+        href="developer_dashboard.html"
+        class="dashboard-btn">
 
-            ← Dashboard
+        ← Dashboard
 
-        </a>
-
-    </div>
-
-
-    <div id="projects">
-
-        <div class="loading">
-
-            <div class="loading-icon">
-                ⚡
-            </div>
-
-            <h2>
-                Loading Projects...
-            </h2>
-
-            <p>
-                Getting your active projects.
-            </p>
-
-        </div>
-
-    </div>
+    </a>
 
 </div>
 
 
-<script>
+<div id="projects">
 
-/* ==========================================
-   BACKEND
-========================================== */
+    <div class="loading">
+
+        <div class="loading-icon">
+            ⚡
+        </div>
+
+        <h2>
+            Loading Projects...
+        </h2>
+
+        <p>
+            Getting your active projects.
+        </p>
+
+    </div>
+
+</div>
+```
+
+</div>
+
+<script>
 
 const API_URL =
     "http://localhost:5000";
 
 
-/* ==========================================
+/* =========================
    AUTHENTICATION
-========================================== */
+========================= */
 
 const token =
     localStorage.getItem("token");
@@ -622,26 +613,25 @@ if(
 }
 
 
-/* ==========================================
+/* =========================
    ELEMENT
-========================================== */
+========================= */
 
 const projectContainer =
     document.getElementById("projects");
 
 
-/* ==========================================
+/* =========================
    DATA
-========================================== */
+========================= */
 
 let projects = [];
-
 let requests = [];
 
 
-/* ==========================================
+/* =========================
    LOGOUT
-========================================== */
+========================= */
 
 function logoutDeveloper(){
 
@@ -674,9 +664,9 @@ function logoutDeveloper(){
 }
 
 
-/* ==========================================
+/* =========================
    API REQUEST
-========================================== */
+========================= */
 
 async function apiRequest(
     endpoint,
@@ -684,12 +674,9 @@ async function apiRequest(
 ){
 
     const headers = {
-
         "Authorization":
             "Bearer " + token
-
     };
-
 
     if(options.body){
 
@@ -697,7 +684,6 @@ async function apiRequest(
             "application/json";
 
     }
-
 
     const response =
         await fetch(
@@ -708,9 +694,7 @@ async function apiRequest(
             }
         );
 
-
     let data = {};
-
 
     try{
 
@@ -723,7 +707,6 @@ async function apiRequest(
         data = {};
 
     }
-
 
     if(!response.ok){
 
@@ -740,7 +723,6 @@ async function apiRequest(
 
         }
 
-
         throw new Error(
             data.message ||
             "Something went wrong."
@@ -748,15 +730,14 @@ async function apiRequest(
 
     }
 
-
     return data;
 
 }
 
 
-/* ==========================================
+/* =========================
    LOAD PROJECTS
-========================================== */
+========================= */
 
 async function loadProjects(){
 
@@ -780,18 +761,12 @@ async function loadProjects(){
 
     `;
 
-
     try{
-
-        /*
-         * Load active projects.
-         */
 
         const projectData =
             await apiRequest(
                 "/api/projects?status=active"
             );
-
 
         projects =
             Array.isArray(
@@ -803,19 +778,12 @@ async function loadProjects(){
             [];
 
 
-        /*
-         * Load requests so that the
-         * correct request can be connected
-         * to each project for messaging.
-         */
-
         try{
 
             const requestData =
                 await apiRequest(
                     "/api/requests"
                 );
-
 
             requests =
                 Array.isArray(
@@ -849,7 +817,6 @@ async function loadProjects(){
             error
         );
 
-
         projectContainer.innerHTML = `
 
             <div class="error-box">
@@ -882,54 +849,58 @@ async function loadProjects(){
 }
 
 
-/* ==========================================
+/* =========================
    FIND REQUEST FOR PROJECT
-========================================== */
+========================= */
 
 function getRequestForProject(project){
 
     if(!project){
-
         return null;
-
     }
 
-
     /*
-     * Primary connection:
-     * project.order_id -> request.order_id
+     * PRIMARY CONNECTION
+     *
+     * Every project created from a
+     * customer request should keep
+     * that request's ID.
      */
 
-    let request =
-        requests.find(
-            item =>
+    let request = null;
 
-                String(
-                    item.order_id || ""
-                ) ===
-                String(
-                    project.order_id || ""
-                )
-        );
-
-
-    /*
-     * Fallback:
-     * If the backend/project data contains
-     * request_id, use that.
-     */
-
-    if(
-        !request &&
-        project.request_id
-    ){
+    if(project.request_id){
 
         request =
             requests.find(
                 item =>
                     String(item.id) ===
+                    String(project.request_id)
+            );
+
+    }
+
+
+    /*
+     * FALLBACK CONNECTION
+     *
+     * Keep order_id support in case
+     * the backend already provides it.
+     */
+
+    if(
+        !request &&
+        project.order_id
+    ){
+
+        request =
+            requests.find(
+                item =>
                     String(
-                        project.request_id
+                        item.order_id || ""
+                    ) ===
+                    String(
+                        project.order_id || ""
                     )
             );
 
@@ -941,34 +912,26 @@ function getRequestForProject(project){
 }
 
 
-/* ==========================================
+/* =========================
    STAGE
-========================================== */
+========================= */
 
 function getStage(progress){
 
     if(progress >= 100){
-
         return 5;
-
     }
 
     if(progress >= 75){
-
         return 4;
-
     }
 
     if(progress >= 50){
-
         return 3;
-
     }
 
     if(progress >= 25){
-
         return 2;
-
     }
 
     return 1;
@@ -979,27 +942,19 @@ function getStage(progress){
 function getStageName(progress){
 
     if(progress >= 100){
-
         return "Completed";
-
     }
 
     if(progress >= 75){
-
         return "Testing";
-
     }
 
     if(progress >= 50){
-
         return "Development";
-
     }
 
     if(progress >= 25){
-
         return "Designing";
-
     }
 
     return "Active";
@@ -1007,14 +962,13 @@ function getStageName(progress){
 }
 
 
-/* ==========================================
+/* =========================
    DISPLAY PROJECTS
-========================================== */
+========================= */
 
 function displayProjects(){
 
     projectContainer.innerHTML = "";
-
 
     if(projects.length === 0){
 
@@ -1151,8 +1105,6 @@ function displayProjects(){
                     </div>
 
 
-                    <!-- CUSTOMER -->
-
                     <div class="customer">
 
                         <div class="info">
@@ -1205,8 +1157,6 @@ function displayProjects(){
                     </div>
 
 
-                    <!-- WEBSITE -->
-
                     <div class="website-section">
 
                         <h3>
@@ -1237,8 +1187,6 @@ function displayProjects(){
                     </div>
 
 
-                    <!-- FEATURES -->
-
                     <div class="requirements">
 
                         <h3>
@@ -1253,8 +1201,6 @@ function displayProjects(){
 
                     </div>
 
-
-                    <!-- REQUIREMENTS -->
 
                     <div class="requirements">
 
@@ -1296,8 +1242,6 @@ function displayProjects(){
                     }
 
 
-                    <!-- PROGRESS -->
-
                     <div class="progress-section">
 
                         <div class="progress-header">
@@ -1325,8 +1269,6 @@ function displayProjects(){
 
                         </div>
 
-
-                        <!-- STAGES -->
 
                         <div class="stages">
 
@@ -1429,8 +1371,6 @@ function displayProjects(){
                     </div>
 
 
-                    <!-- BUTTONS -->
-
                     <div class="buttons">
 
                         <button
@@ -1484,25 +1424,20 @@ function displayProjects(){
 }
 
 
-/* ==========================================
+/* =========================
    UPDATE PROJECT
-========================================== */
+========================= */
 
 async function updateProgress(index){
 
-    index =
-        Number(index);
-
+    index = Number(index);
 
     if(
         !Number.isInteger(index) ||
         !projects[index]
     ){
-
         return;
-
     }
-
 
     const project =
         projects[index];
@@ -1525,9 +1460,7 @@ async function updateProgress(index){
 
 
     if(choice === null){
-
         return;
-
     }
 
 
@@ -1641,23 +1574,19 @@ async function updateProgress(index){
 }
 
 
-/* ==========================================
+/* =========================
    MESSAGE CUSTOMER
-========================================== */
+========================= */
 
 function messageCustomer(index){
 
-    index =
-        Number(index);
-
+    index = Number(index);
 
     if(
         !Number.isInteger(index) ||
         !projects[index]
     ){
-
         return;
-
     }
 
 
@@ -1717,19 +1646,11 @@ function messageCustomer(index){
     }
 
 
-    /*
-     * Save exact request.
-     */
-
     localStorage.setItem(
         "selectedRequestId",
         String(request.id)
     );
 
-
-    /*
-     * Save customer.
-     */
 
     localStorage.setItem(
         "selectedCustomer",
@@ -1754,10 +1675,6 @@ function messageCustomer(index){
     );
 
 
-    /*
-     * Save developer.
-     */
-
     localStorage.setItem(
         "selectedDeveloper",
         JSON.stringify({
@@ -1767,10 +1684,6 @@ function messageCustomer(index){
         })
     );
 
-
-    /*
-     * Compatibility value.
-     */
 
     localStorage.setItem(
         "selectedCustomerId",
@@ -1784,9 +1697,9 @@ function messageCustomer(index){
 }
 
 
-/* ==========================================
+/* =========================
    ESCAPE HTML
-========================================== */
+========================= */
 
 function escapeHTML(value){
 
@@ -1820,16 +1733,16 @@ function escapeHTML(value){
 }
 
 
-/* ==========================================
+/* =========================
    START
-========================================== */
+========================= */
 
 loadProjects();
 
 
-/* ==========================================
+/* =========================
    AUTO REFRESH
-========================================== */
+========================= */
 
 setInterval(
     loadProjects,
