@@ -1,1258 +1,1320 @@
 <!DOCTYPE html>
+
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Webportify - Customer Dashboard</title>
 
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: Arial, sans-serif;
-        }
+<title>Webportify - Customer Dashboard</title>
 
-        body {
-            min-height: 100vh;
-            background:
-                linear-gradient(
-                    rgba(2, 7, 13, 0.94),
-                    rgba(2, 7, 13, 0.97)
-                ),
-                url("wallpaper.jpg");
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-            color: white;
-        }
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: Arial, sans-serif;
+    }
 
-        /* SIDEBAR */
+    body {
+        min-height: 100vh;
+        background:
+            linear-gradient(
+                rgba(2, 7, 13, 0.94),
+                rgba(2, 7, 13, 0.97)
+            ),
+            url("wallpaper.jpg");
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+        color: white;
+    }
 
+    .sidebar {
+        position: fixed;
+        left: 0;
+        top: 0;
+        width: 250px;
+        height: 100vh;
+        padding: 30px 18px;
+        background: rgba(5, 8, 13, 0.98);
+        border-right: 1px solid #ff1744;
+        box-shadow: 5px 0 25px rgba(255, 23, 68, 0.15);
+    }
+
+    .logo {
+        text-align: center;
+        color: #ff1744;
+        font-size: 27px;
+        font-weight: bold;
+        margin-bottom: 45px;
+        text-shadow: 0 0 15px #ff1744;
+    }
+
+    .sidebar ul {
+        list-style: none;
+    }
+
+    .sidebar li {
+        margin-bottom: 9px;
+    }
+
+    .sidebar a {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 14px 15px;
+        color: #bfc3ca;
+        text-decoration: none;
+        border-radius: 10px;
+        transition: 0.3s;
+    }
+
+    .sidebar a:hover,
+    .sidebar a.active {
+        color: white;
+        background: rgba(255, 23, 68, 0.12);
+        box-shadow: 0 0 15px rgba(255, 23, 68, 0.12);
+    }
+
+    .sidebar a.active {
+        border-left: 3px solid #ff1744;
+    }
+
+    .icon {
+        width: 25px;
+        text-align: center;
+        font-size: 18px;
+    }
+
+    .message-badge {
+        margin-left: auto;
+        min-width: 20px;
+        padding: 3px 7px;
+        border-radius: 20px;
+        background: #ff1744;
+        color: white;
+        font-size: 11px;
+        text-align: center;
+        display: none;
+    }
+
+    .main {
+        margin-left: 250px;
+        padding: 35px 45px;
+    }
+
+    .top {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 35px;
+        gap: 20px;
+    }
+
+    .welcome h1 {
+        font-size: 34px;
+        margin-bottom: 8px;
+    }
+
+    .welcome h1 span {
+        color: #ff1744;
+        text-shadow: 0 0 12px #ff1744;
+    }
+
+    .welcome p {
+        color: #999;
+    }
+
+    .top-buttons {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+    }
+
+    .btn {
+        border: none;
+        padding: 12px 18px;
+        border-radius: 9px;
+        cursor: pointer;
+        font-weight: bold;
+        font-size: 14px;
+        text-decoration: none;
+        transition: 0.3s;
+        display: inline-block;
+    }
+
+    .dark-btn {
+        background: #11161e;
+        color: white;
+        border: 1px solid #303640;
+    }
+
+    .dark-btn:hover {
+        border-color: #ff1744;
+    }
+
+    .red-btn {
+        background: #ff1744;
+        color: white;
+        box-shadow: 0 0 15px rgba(255, 23, 68, 0.25);
+    }
+
+    .red-btn:hover {
+        box-shadow: 0 0 25px rgba(255, 23, 68, 0.6);
+        transform: translateY(-2px);
+    }
+
+    .search-section {
+        display: flex;
+        gap: 12px;
+        margin-bottom: 30px;
+    }
+
+    .search-box {
+        flex: 1;
+    }
+
+    .search-box input {
+        width: 100%;
+        padding: 15px 18px;
+        background: rgba(9, 13, 20, 0.95);
+        border: 1px solid #303640;
+        border-radius: 10px;
+        color: white;
+        outline: none;
+        font-size: 14px;
+    }
+
+    .search-box input:focus {
+        border-color: #ff1744;
+        box-shadow: 0 0 15px rgba(255, 23, 68, 0.15);
+    }
+
+    .sort-select {
+        padding: 0 15px;
+        background: #090d14;
+        color: white;
+        border: 1px solid #303640;
+        border-radius: 10px;
+        outline: none;
+    }
+
+    .sort-select:focus {
+        border-color: #ff1744;
+    }
+
+    .section-title {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+    .section-title h2 {
+        font-size: 23px;
+    }
+
+    .section-title span {
+        color: #777;
+        font-size: 13px;
+    }
+
+    .products {
+        display: grid;
+        grid-template-columns:
+            repeat(auto-fit, minmax(270px, 1fr));
+        gap: 22px;
+    }
+
+    .product {
+        background: rgba(9, 13, 20, 0.96);
+        border: 1px solid rgba(255, 23, 68, 0.25);
+        border-radius: 16px;
+        overflow: hidden;
+        transition: 0.3s;
+    }
+
+    .product:hover {
+        transform: translateY(-5px);
+        border-color: #ff1744;
+        box-shadow:
+            0 0 25px rgba(255, 23, 68, 0.15);
+    }
+
+    .product-image {
+        height: 150px;
+        background:
+            linear-gradient(
+                135deg,
+                #0e131b,
+                #080b10
+            );
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 55px;
+        border-bottom: 1px solid #242932;
+    }
+
+    .product-content {
+        padding: 22px;
+    }
+
+    .category {
+        color: #ff1744;
+        font-size: 11px;
+        font-weight: bold;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .product h3 {
+        margin: 9px 0;
+        font-size: 21px;
+    }
+
+    .product p {
+        color: #999;
+        font-size: 13px;
+        line-height: 1.6;
+        min-height: 42px;
+    }
+
+    .price {
+        color: white;
+        font-size: 23px;
+        font-weight: bold;
+        margin: 17px 0;
+    }
+
+    .price span {
+        color: #777;
+        font-size: 12px;
+        font-weight: normal;
+    }
+
+    .product-buttons {
+        display: flex;
+        gap: 9px;
+    }
+
+    .product-buttons .btn {
+        flex: 1;
+        text-align: center;
+    }
+
+    .quick-section {
+        margin-top: 40px;
+    }
+
+    .quick-grid {
+        display: grid;
+        grid-template-columns:
+            repeat(auto-fit, minmax(240px, 1fr));
+        gap: 18px;
+    }
+
+    .quick-card {
+        background: rgba(9, 13, 20, 0.95);
+        border: 1px solid #252b34;
+        border-radius: 14px;
+        padding: 23px;
+        transition: 0.3s;
+    }
+
+    .quick-card:hover {
+        border-color: rgba(255, 23, 68, 0.6);
+        box-shadow: 0 0 20px rgba(255, 23, 68, 0.08);
+    }
+
+    .quick-icon {
+        font-size: 30px;
+        margin-bottom: 12px;
+    }
+
+    .quick-card h3 {
+        margin-bottom: 8px;
+    }
+
+    .quick-card p {
+        color: #888;
+        font-size: 13px;
+        line-height: 1.5;
+        margin-bottom: 17px;
+    }
+
+    .custom-section {
+        margin-top: 35px;
+    }
+
+    .custom-card {
+        background:
+            linear-gradient(
+                135deg,
+                rgba(255, 23, 68, 0.12),
+                rgba(9, 13, 20, 0.96)
+            );
+        border: 1px solid rgba(255, 23, 68, 0.45);
+        border-radius: 18px;
+        padding: 30px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 25px;
+    }
+
+    .custom-card h2 {
+        margin-bottom: 9px;
+    }
+
+    .custom-card p {
+        color: #999;
+        line-height: 1.6;
+        font-size: 14px;
+    }
+
+    .custom-actions {
+        display: flex;
+        gap: 10px;
+        flex-shrink: 0;
+    }
+
+    .no-results {
+        display: none;
+        text-align: center;
+        padding: 50px;
+        color: #777;
+        background: rgba(9, 13, 20, 0.95);
+        border: 1px solid #252b34;
+        border-radius: 15px;
+    }
+
+    @media (max-width: 850px) {
         .sidebar {
-            position: fixed;
-            left: 0;
-            top: 0;
-            width: 250px;
-            height: 100vh;
-            padding: 30px 18px;
-            background: rgba(5, 8, 13, 0.98);
-            border-right: 1px solid #ff1744;
-            box-shadow: 5px 0 25px rgba(255, 23, 68, 0.15);
+            width: 210px;
         }
-
-        .logo {
-            text-align: center;
-            color: #ff1744;
-            font-size: 27px;
-            font-weight: bold;
-            margin-bottom: 45px;
-            text-shadow: 0 0 15px #ff1744;
-        }
-
-        .sidebar ul {
-            list-style: none;
-        }
-
-        .sidebar li {
-            margin-bottom: 9px;
-        }
-
-        .sidebar a {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 14px 15px;
-            color: #bfc3ca;
-            text-decoration: none;
-            border-radius: 10px;
-            transition: 0.3s;
-        }
-
-        .sidebar a:hover,
-        .sidebar a.active {
-            color: white;
-            background: rgba(255, 23, 68, 0.12);
-            box-shadow: 0 0 15px rgba(255, 23, 68, 0.12);
-        }
-
-        .sidebar a.active {
-            border-left: 3px solid #ff1744;
-        }
-
-        .icon {
-            width: 25px;
-            text-align: center;
-            font-size: 18px;
-        }
-
-        .message-badge {
-            margin-left: auto;
-            min-width: 20px;
-            padding: 3px 7px;
-            border-radius: 20px;
-            background: #ff1744;
-            color: white;
-            font-size: 11px;
-            text-align: center;
-            display: none;
-        }
-
-        /* MAIN */
 
         .main {
-            margin-left: 250px;
-            padding: 35px 45px;
+            margin-left: 210px;
+            padding: 25px;
         }
 
         .top {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 35px;
-            gap: 20px;
-        }
-
-        .welcome h1 {
-            font-size: 34px;
-            margin-bottom: 8px;
-        }
-
-        .welcome h1 span {
-            color: #ff1744;
-            text-shadow: 0 0 12px #ff1744;
-        }
-
-        .welcome p {
-            color: #999;
-        }
-
-        .top-buttons {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
-
-        .btn {
-            border: none;
-            padding: 12px 18px;
-            border-radius: 9px;
-            cursor: pointer;
-            font-weight: bold;
-            font-size: 14px;
-            text-decoration: none;
-            transition: 0.3s;
-            display: inline-block;
-        }
-
-        .dark-btn {
-            background: #11161e;
-            color: white;
-            border: 1px solid #303640;
-        }
-
-        .dark-btn:hover {
-            border-color: #ff1744;
-        }
-
-        .red-btn {
-            background: #ff1744;
-            color: white;
-            box-shadow: 0 0 15px rgba(255, 23, 68, 0.25);
-        }
-
-        .red-btn:hover {
-            box-shadow: 0 0 25px rgba(255, 23, 68, 0.6);
-            transform: translateY(-2px);
-        }
-
-        /* SEARCH */
-
-        .search-section {
-            display: flex;
-            gap: 12px;
-            margin-bottom: 30px;
-        }
-
-        .search-box {
-            flex: 1;
-            position: relative;
-        }
-
-        .search-box input {
-            width: 100%;
-            padding: 15px 18px;
-            background: rgba(9, 13, 20, 0.95);
-            border: 1px solid #303640;
-            border-radius: 10px;
-            color: white;
-            outline: none;
-            font-size: 14px;
-        }
-
-        .search-box input:focus {
-            border-color: #ff1744;
-            box-shadow: 0 0 15px rgba(255, 23, 68, 0.15);
-        }
-
-        .sort-select {
-            padding: 0 15px;
-            background: #090d14;
-            color: white;
-            border: 1px solid #303640;
-            border-radius: 10px;
-            outline: none;
-        }
-
-        .sort-select:focus {
-            border-color: #ff1744;
-        }
-
-        /* SECTION */
-
-        .section-title {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-
-        .section-title h2 {
-            font-size: 23px;
-        }
-
-        .section-title span {
-            color: #777;
-            font-size: 13px;
-        }
-
-        /* PRODUCTS */
-
-        .products {
-            display: grid;
-            grid-template-columns:
-                repeat(auto-fit, minmax(270px, 1fr));
-            gap: 22px;
-        }
-
-        .product {
-            background: rgba(9, 13, 20, 0.96);
-            border: 1px solid rgba(255, 23, 68, 0.25);
-            border-radius: 16px;
-            overflow: hidden;
-            transition: 0.3s;
-        }
-
-        .product:hover {
-            transform: translateY(-5px);
-            border-color: #ff1744;
-            box-shadow:
-                0 0 25px rgba(255, 23, 68, 0.15);
-        }
-
-        .product-image {
-            height: 150px;
-            background:
-                linear-gradient(
-                    135deg,
-                    #0e131b,
-                    #080b10
-                );
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 55px;
-            border-bottom: 1px solid #242932;
-        }
-
-        .product-content {
-            padding: 22px;
-        }
-
-        .category {
-            color: #ff1744;
-            font-size: 11px;
-            font-weight: bold;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .product h3 {
-            margin: 9px 0;
-            font-size: 21px;
-        }
-
-        .product p {
-            color: #999;
-            font-size: 13px;
-            line-height: 1.6;
-            min-height: 42px;
-        }
-
-        .price {
-            color: white;
-            font-size: 23px;
-            font-weight: bold;
-            margin: 17px 0;
-        }
-
-        .price span {
-            color: #777;
-            font-size: 12px;
-            font-weight: normal;
-        }
-
-        .product-buttons {
-            display: flex;
-            gap: 9px;
-        }
-
-        .product-buttons .btn {
-            flex: 1;
-            text-align: center;
-        }
-
-        /* QUICK ACTIONS */
-
-        .quick-section {
-            margin-top: 40px;
-        }
-
-        .quick-grid {
-            display: grid;
-            grid-template-columns:
-                repeat(auto-fit, minmax(240px, 1fr));
-            gap: 18px;
-        }
-
-        .quick-card {
-            background: rgba(9, 13, 20, 0.95);
-            border: 1px solid #252b34;
-            border-radius: 14px;
-            padding: 23px;
-            transition: 0.3s;
-        }
-
-        .quick-card:hover {
-            border-color: rgba(255, 23, 68, 0.6);
-            box-shadow: 0 0 20px rgba(255, 23, 68, 0.08);
-        }
-
-        .quick-icon {
-            font-size: 30px;
-            margin-bottom: 12px;
-        }
-
-        .quick-card h3 {
-            margin-bottom: 8px;
-        }
-
-        .quick-card p {
-            color: #888;
-            font-size: 13px;
-            line-height: 1.5;
-            margin-bottom: 17px;
-        }
-
-        /* CUSTOM WEBSITE */
-
-        .custom-section {
-            margin-top: 35px;
+            flex-direction: column;
+            align-items: flex-start;
         }
 
         .custom-card {
-            background:
-                linear-gradient(
-                    135deg,
-                    rgba(255, 23, 68, 0.12),
-                    rgba(9, 13, 20, 0.96)
-                );
-            border: 1px solid rgba(255, 23, 68, 0.45);
-            border-radius: 18px;
-            padding: 30px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 25px;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+    }
+
+    @media (max-width: 650px) {
+        .sidebar {
+            position: relative;
+            width: 100%;
+            height: auto;
+            border-right: none;
+            border-bottom: 1px solid #ff1744;
         }
 
-        .custom-card h2 {
-            margin-bottom: 9px;
+        .main {
+            margin-left: 0;
+            padding: 20px;
         }
 
-        .custom-card p {
-            color: #999;
-            line-height: 1.6;
-            font-size: 14px;
+        .search-section {
+            flex-direction: column;
+        }
+
+        .sort-select {
+            height: 48px;
         }
 
         .custom-actions {
-            display: flex;
-            gap: 10px;
-            flex-shrink: 0;
+            width: 100%;
+            flex-direction: column;
         }
 
-        /* NO RESULTS */
-
-        .no-results {
-            display: none;
+        .custom-actions .btn {
+            width: 100%;
             text-align: center;
-            padding: 50px;
-            color: #777;
-            background: rgba(9, 13, 20, 0.95);
-            border: 1px solid #252b34;
-            border-radius: 15px;
         }
+    }
+</style>
 
-        /* RESPONSIVE */
 
-        @media (max-width: 850px) {
-
-            .sidebar {
-                width: 210px;
-            }
-
-            .main {
-                margin-left: 210px;
-                padding: 25px;
-            }
-
-            .top {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-
-            .custom-card {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-        }
-
-        @media (max-width: 650px) {
-
-            .sidebar {
-                position: relative;
-                width: 100%;
-                height: auto;
-                border-right: none;
-                border-bottom: 1px solid #ff1744;
-            }
-
-            .main {
-                margin-left: 0;
-                padding: 20px;
-            }
-
-            .search-section {
-                flex-direction: column;
-            }
-
-            .sort-select {
-                height: 48px;
-            }
-
-            .custom-actions {
-                width: 100%;
-                flex-direction: column;
-            }
-
-            .custom-actions .btn {
-                width: 100%;
-                text-align: center;
-            }
-        }
-    </style>
 </head>
 
 <body>
+<aside class="sidebar">
 
-    <!-- SIDEBAR -->
+    <div class="logo">
+        WEBPORTIFY
+    </div>
 
-    <aside class="sidebar">
+    <ul>
 
-        <div class="logo">
-            WEBPORTIFY
+        <li>
+            <a href="customer_dashboard.html" class="active">
+                <span class="icon">🏠</span>
+                Dashboard
+            </a>
+        </li>
+
+        <li>
+            <a href="customer_cart.html">
+                <span class="icon">🛒</span>
+                My Cart
+            </a>
+        </li>
+
+        <li>
+            <a href="customer_orders.html">
+                <span class="icon">📦</span>
+                My Orders
+            </a>
+        </li>
+
+        <li>
+            <a href="customer_messages.html">
+                <span class="icon">💬</span>
+                Messages
+
+                <span
+                    id="customerUnreadBadge"
+                    class="message-badge"
+                >
+                    0
+                </span>
+            </a>
+        </li>
+
+        <li>
+            <a href="customer_account.html">
+                <span class="icon">👤</span>
+                My Account
+            </a>
+        </li>
+
+    </ul>
+
+</aside>
+
+
+<main class="main">
+
+    <div class="top">
+
+        <div class="welcome">
+
+            <h1>
+                Welcome,
+                <span id="customerName">
+                    Customer
+                </span>
+            </h1>
+
+            <p>
+                Choose a website and start building your online presence.
+            </p>
+
         </div>
 
-        <ul>
+        <div class="top-buttons">
 
-            <li>
-                <a
-                    href="customer_dashboard.html"
-                    class="active"
-                >
-                    <span class="icon">🏠</span>
-                    Dashboard
-                </a>
-            </li>
+            <a
+                href="customer_cart.html"
+                class="btn dark-btn"
+            >
+                🛒 My Cart
+            </a>
 
-            <li>
-                <a href="customer_cart.html">
-                    <span class="icon">🛒</span>
-                    My Cart
-                </a>
-            </li>
+            <a
+                href="customer_orders.html"
+                class="btn dark-btn"
+            >
+                📦 My Orders
+            </a>
 
-            <li>
-                <a href="customer_orders.html">
-                    <span class="icon">📦</span>
-                    My Orders
-                </a>
-            </li>
+            <a
+                href="customer_account.html"
+                class="btn red-btn"
+            >
+                👤 My Account
+            </a>
 
-            <li>
-                <a href="customer_messages.html">
-                    <span class="icon">💬</span>
-                    Messages
+        </div>
 
-                    <span
-                        id="customerUnreadBadge"
-                        class="message-badge"
-                    >
-                        0
-                    </span>
-                </a>
-            </li>
-
-            <li>
-                <a href="customer_account.html">
-                    <span class="icon">👤</span>
-                    My Account
-                </a>
-            </li>
-
-        </ul>
-
-    </aside>
+    </div>
 
 
-    <!-- MAIN -->
+    <div class="search-section">
 
-    <main class="main">
+        <div class="search-box">
 
-        <!-- TOP -->
+            <input
+                type="text"
+                id="searchInput"
+                placeholder="Search website templates..."
+                oninput="filterProducts()"
+            >
 
-        <div class="top">
+        </div>
 
-            <div class="welcome">
+        <select
+            id="sortSelect"
+            class="sort-select"
+            onchange="sortProducts()"
+        >
 
-                <h1>
-                    Welcome,
-                    <span id="customerName">
-                        Customer
-                    </span>
-                </h1>
+            <option value="default">
+                Sort By
+            </option>
+
+            <option value="low">
+                Price: Low to High
+            </option>
+
+            <option value="high">
+                Price: High to Low
+            </option>
+
+            <option value="name">
+                Name: A-Z
+            </option>
+
+        </select>
+
+    </div>
+
+
+    <div class="section-title">
+
+        <h2>
+            Website Templates
+        </h2>
+
+        <span id="templateCount">
+            3 templates
+        </span>
+
+    </div>
+
+
+    <div
+        class="products"
+        id="products"
+    >
+
+        <div
+            class="product"
+            data-name="Modern Business"
+            data-category="Business"
+            data-price="4999"
+        >
+
+            <div class="product-image">
+                💼
+            </div>
+
+            <div class="product-content">
+
+                <span class="category">
+                    Business
+                </span>
+
+                <h3>
+                    Modern Business
+                </h3>
 
                 <p>
-                    Choose a website and start building your online presence.
+                    A clean and professional website
+                    for modern businesses.
                 </p>
+
+                <div class="price">
+                    ₹4,999
+                    <span>
+                        one-time
+                    </span>
+                </div>
+
+                <div class="product-buttons">
+
+                    <button
+                        class="btn dark-btn"
+                        onclick="viewDetails(
+                            'Modern Business',
+                            'Business',
+                            4999,
+                            'A clean and professional website for modern businesses.'
+                        )"
+                    >
+                        View Details
+                    </button>
+
+                    <button
+                        class="btn red-btn"
+                        onclick="addToCart(
+                            'Modern Business',
+                            4999,
+                            'Business',
+                            'A clean and professional website for modern businesses.'
+                        )"
+                    >
+                        Buy Now
+                    </button>
+
+                </div>
 
             </div>
 
+        </div>
 
-            <div class="top-buttons">
 
-                <a
-                    href="customer_cart.html"
-                    class="btn dark-btn"
-                >
-                    🛒 My Cart
-                </a>
+        <div
+            class="product"
+            data-name="ShopZone"
+            data-category="E-Commerce"
+            data-price="5999"
+        >
+
+            <div class="product-image">
+                🛍️
+            </div>
+
+            <div class="product-content">
+
+                <span class="category">
+                    E-Commerce
+                </span>
+
+                <h3>
+                    ShopZone
+                </h3>
+
+                <p>
+                    A stylish online store for
+                    products and services.
+                </p>
+
+                <div class="price">
+                    ₹5,999
+                    <span>
+                        one-time
+                    </span>
+                </div>
+
+                <div class="product-buttons">
+
+                    <button
+                        class="btn dark-btn"
+                        onclick="viewDetails(
+                            'ShopZone',
+                            'E-Commerce',
+                            5999,
+                            'A stylish online store for products and services.'
+                        )"
+                    >
+                        View Details
+                    </button>
+
+                    <button
+                        class="btn red-btn"
+                        onclick="addToCart(
+                            'ShopZone',
+                            5999,
+                            'E-Commerce',
+                            'A stylish online store for products and services.'
+                        )"
+                    >
+                        Buy Now
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div
+            class="product"
+            data-name="Personal Portfolio"
+            data-category="Portfolio"
+            data-price="3999"
+        >
+
+            <div class="product-image">
+                🎨
+            </div>
+
+            <div class="product-content">
+
+                <span class="category">
+                    Portfolio
+                </span>
+
+                <h3>
+                    Personal Portfolio
+                </h3>
+
+                <p>
+                    Showcase your skills, projects,
+                    achievements and work.
+                </p>
+
+                <div class="price">
+                    ₹3,999
+                    <span>
+                        one-time
+                    </span>
+                </div>
+
+                <div class="product-buttons">
+
+                    <button
+                        class="btn dark-btn"
+                        onclick="viewDetails(
+                            'Personal Portfolio',
+                            'Portfolio',
+                            3999,
+                            'Showcase your skills, projects, achievements and work.'
+                        )"
+                    >
+                        View Details
+                    </button>
+
+                    <button
+                        class="btn red-btn"
+                        onclick="addToCart(
+                            'Personal Portfolio',
+                            3999,
+                            'Portfolio',
+                            'Showcase your skills, projects, achievements and work.'
+                        )"
+                    >
+                        Buy Now
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div
+        id="noResults"
+        class="no-results"
+    >
+
+        <h3>
+            No websites found
+        </h3>
+
+        <p>
+            Try another search.
+        </p>
+
+    </div>
+
+
+    <section class="quick-section">
+
+        <div class="section-title">
+
+            <h2>
+                Quick Actions
+            </h2>
+
+        </div>
+
+
+        <div class="quick-grid">
+
+            <div class="quick-card">
+
+                <div class="quick-icon">
+                    📦
+                </div>
+
+                <h3>
+                    Track Your Orders
+                </h3>
+
+                <p>
+                    Check the progress of websites
+                    you have purchased.
+                </p>
 
                 <a
                     href="customer_orders.html"
                     class="btn dark-btn"
                 >
-                    📦 My Orders
+                    View Orders
                 </a>
+
+            </div>
+
+
+            <div class="quick-card">
+
+                <div class="quick-icon">
+                    💬
+                </div>
+
+                <h3>
+                    Talk to Developer
+                </h3>
+
+                <p>
+                    Discuss your website project
+                    directly with your developer.
+                </p>
+
+                <button
+                    class="btn dark-btn"
+                    onclick="openMessages()"
+                >
+                    Open Messages
+                </button>
+
+            </div>
+
+
+            <div class="quick-card">
+
+                <div class="quick-icon">
+                    🛒
+                </div>
+
+                <h3>
+                    Your Cart
+                </h3>
+
+                <p>
+                    Review the websites you selected
+                    before checkout.
+                </p>
 
                 <a
-                    href="customer_account.html"
-                    class="btn red-btn"
+                    href="customer_cart.html"
+                    class="btn dark-btn"
                 >
-                    👤 My Account
+                    Open Cart
                 </a>
 
             </div>
 
         </div>
 
+    </section>
 
-        <!-- SEARCH -->
 
-        <div class="search-section">
+    <section class="custom-section">
 
-            <div class="search-box">
+        <div class="custom-card">
 
-                <input
-                    type="text"
-                    id="searchInput"
-                    placeholder="Search website templates..."
-                    oninput="filterProducts()"
-                >
-
-            </div>
-
-
-            <select
-                id="sortSelect"
-                class="sort-select"
-                onchange="sortProducts()"
-            >
-
-                <option value="default">
-                    Sort By
-                </option>
-
-                <option value="low">
-                    Price: Low to High
-                </option>
-
-                <option value="high">
-                    Price: High to Low
-                </option>
-
-                <option value="name">
-                    Name: A-Z
-                </option>
-
-            </select>
-
-        </div>
-
-
-        <!-- WEBSITE TEMPLATES -->
-
-        <div class="section-title">
-
-            <h2>
-                Website Templates
-            </h2>
-
-            <span id="templateCount">
-                3 templates
-            </span>
-
-        </div>
-
-
-        <div
-            class="products"
-            id="products"
-        >
-
-            <!-- BUSINESS -->
-
-            <div
-                class="product"
-                data-name="Modern Business"
-                data-category="Business"
-                data-price="4999"
-            >
-
-                <div class="product-image">
-                    💼
-                </div>
-
-                <div class="product-content">
-
-                    <span class="category">
-                        Business
-                    </span>
-
-                    <h3>
-                        Modern Business
-                    </h3>
-
-                    <p>
-                        A clean and professional website
-                        for modern businesses.
-                    </p>
-
-                    <div class="price">
-                        ₹4,999
-                        <span>
-                            one-time
-                        </span>
-                    </div>
-
-                    <div class="product-buttons">
-
-                        <button
-                            class="btn dark-btn"
-                            onclick="viewDetails(
-                                'Modern Business',
-                                'Business',
-                                4999,
-                                'A clean and professional website for modern businesses.'
-                            )"
-                        >
-                            View Details
-                        </button>
-
-                        <button
-                            class="btn red-btn"
-                            onclick="addToCart(
-                                'Modern Business',
-                                4999,
-                                'Business',
-                                'A clean and professional website for modern businesses.'
-                            )"
-                        >
-                            Buy Now
-                        </button>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-
-            <!-- ECOMMERCE -->
-
-            <div
-                class="product"
-                data-name="ShopZone"
-                data-category="E-Commerce"
-                data-price="5999"
-            >
-
-                <div class="product-image">
-                    🛍️
-                </div>
-
-                <div class="product-content">
-
-                    <span class="category">
-                        E-Commerce
-                    </span>
-
-                    <h3>
-                        ShopZone
-                    </h3>
-
-                    <p>
-                        A stylish online store for
-                        products and services.
-                    </p>
-
-                    <div class="price">
-                        ₹5,999
-                        <span>
-                            one-time
-                        </span>
-                    </div>
-
-                    <div class="product-buttons">
-
-                        <button
-                            class="btn dark-btn"
-                            onclick="viewDetails(
-                                'ShopZone',
-                                'E-Commerce',
-                                5999,
-                                'A stylish online store for products and services.'
-                            )"
-                        >
-                            View Details
-                        </button>
-
-                        <button
-                            class="btn red-btn"
-                            onclick="addToCart(
-                                'ShopZone',
-                                5999,
-                                'E-Commerce',
-                                'A stylish online store for products and services.'
-                            )"
-                        >
-                            Buy Now
-                        </button>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-
-            <!-- PORTFOLIO -->
-
-            <div
-                class="product"
-                data-name="Personal Portfolio"
-                data-category="Portfolio"
-                data-price="3999"
-            >
-
-                <div class="product-image">
-                    🎨
-                </div>
-
-                <div class="product-content">
-
-                    <span class="category">
-                        Portfolio
-                    </span>
-
-                    <h3>
-                        Personal Portfolio
-                    </h3>
-
-                    <p>
-                        Showcase your skills, projects,
-                        achievements and work.
-                    </p>
-
-                    <div class="price">
-                        ₹3,999
-                        <span>
-                            one-time
-                        </span>
-                    </div>
-
-                    <div class="product-buttons">
-
-                        <button
-                            class="btn dark-btn"
-                            onclick="viewDetails(
-                                'Personal Portfolio',
-                                'Portfolio',
-                                3999,
-                                'Showcase your skills, projects, achievements and work.'
-                            )"
-                        >
-                            View Details
-                        </button>
-
-                        <button
-                            class="btn red-btn"
-                            onclick="addToCart(
-                                'Personal Portfolio',
-                                3999,
-                                'Portfolio',
-                                'Showcase your skills, projects, achievements and work.'
-                            )"
-                        >
-                            Buy Now
-                        </button>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </div>
-
-
-        <div
-            id="noResults"
-            class="no-results"
-        >
-
-            <h3>
-                No websites found
-            </h3>
-
-            <p>
-                Try another search.
-            </p>
-
-        </div>
-
-
-        <!-- QUICK ACTIONS -->
-
-        <section class="quick-section">
-
-            <div class="section-title">
+            <div>
 
                 <h2>
-                    Quick Actions
+                    Need Something Custom?
                 </h2>
 
-            </div>
-
-
-            <div class="quick-grid">
-
-                <div class="quick-card">
-
-                    <div class="quick-icon">
-                        📦
-                    </div>
-
-                    <h3>
-                        Track Your Orders
-                    </h3>
-
-                    <p>
-                        Check the progress of websites
-                        you have purchased.
-                    </p>
-
-                    <a
-                        href="customer_orders.html"
-                        class="btn dark-btn"
-                    >
-                        View Orders
-                    </a>
-
-                </div>
-
-
-                <div class="quick-card">
-
-                    <div class="quick-icon">
-                        💬
-                    </div>
-
-                    <h3>
-                        Talk to Developer
-                    </h3>
-
-                    <p>
-                        Discuss your website project
-                        directly with your developer.
-                    </p>
-
-                    <button
-                        class="btn dark-btn"
-                        onclick="openMessages()"
-                    >
-                        Open Messages
-                    </button>
-
-                </div>
-
-
-                <div class="quick-card">
-
-                    <div class="quick-icon">
-                        🛒
-                    </div>
-
-                    <h3>
-                        Your Cart
-                    </h3>
-
-                    <p>
-                        Review the websites you selected
-                        before checkout.
-                    </p>
-
-                    <a
-                        href="customer_cart.html"
-                        class="btn dark-btn"
-                    >
-                        Open Cart
-                    </a>
-
-                </div>
+                <p>
+                    Tell us exactly what you need.
+                    Our developers can create a website
+                    according to your requirements.
+                </p>
 
             </div>
 
-        </section>
+            <div class="custom-actions">
 
+                <button
+                    class="btn dark-btn"
+                    onclick="openMessages()"
+                >
+                    💬 Ask Developer
+                </button>
 
-        <!-- CUSTOM WEBSITE -->
-
-        <section class="custom-section">
-
-            <div class="custom-card">
-
-                <div>
-
-                    <h2>
-                        Need Something Custom?
-                    </h2>
-
-                    <p>
-                        Tell us exactly what you need.
-                        Our developers can create a website
-                        according to your requirements.
-                    </p>
-
-                </div>
-
-
-                <div class="custom-actions">
-
-                    <button
-                        class="btn dark-btn"
-                        onclick="openMessages()"
-                    >
-                        💬 Ask Developer
-                    </button>
-
-                    <button
-                        class="btn red-btn"
-                        onclick="addCustomWebsite()"
-                    >
-                        + Add Custom Website
-                    </button>
-
-                </div>
+                <button
+                    class="btn red-btn"
+                    onclick="addCustomWebsite()"
+                >
+                    + Add Custom Website
+                </button>
 
             </div>
 
-        </section>
+        </div>
 
-    </main>
+    </section>
+
+</main>
 
 
-    <script>
+<script>
 
-        /* =========================
-           BACKEND LOGIN PROTECTION
-        ========================= */
+    /* =========================
+       BACKEND
+    ========================= */
 
-        const API_URL = "http://localhost:5000";
+    const API_URL =
+        "https://webportify.onrender.com";
 
-        async function loadLoggedInCustomer() {
 
-            const token = localStorage.getItem("token");
+    /* =========================
+       LOAD LOGGED-IN CUSTOMER
+    ========================= */
 
-            if (!token) {
-                window.location.replace("customer_signin.html");
-                return;
-            }
+    async function loadLoggedInCustomer() {
 
-            try {
+        const token =
+            localStorage.getItem("token");
 
-                const response = await fetch(
+        if (!token) {
+
+            window.location.replace(
+                "customer_signin.html"
+            );
+
+            return;
+
+        }
+
+        try {
+
+            const response =
+                await fetch(
                     API_URL + "/api/me",
                     {
                         method: "GET",
+
                         headers: {
-                            "Authorization": "Bearer " + token
+                            "Authorization":
+                                "Bearer " + token
                         }
                     }
                 );
 
-                const data = await response.json();
 
-                if (!response.ok || !data.success || data.role !== "customer") {
-                    throw new Error(data.message || "Customer session is invalid.");
-                }
+            let data;
 
-                const customer = data.user || {};
+            try {
 
-                document.getElementById("customerName").textContent =
-                    customer.name || "Customer";
+                data =
+                    await response.json();
 
-                localStorage.setItem(
-                    "customerUser",
-                    JSON.stringify(customer)
+            } catch (jsonError) {
+
+                throw new Error(
+                    "The backend returned an invalid response."
                 );
 
-                if (customer.email) {
-                    localStorage.setItem(
-                        "customerEmail",
-                        customer.email
-                    );
-                }
-
-                localStorage.setItem(
-                    "customerLoggedIn",
-                    "true"
-                );
-
-            } catch (error) {
-
-                console.error("Customer session error:", error);
-
-                localStorage.removeItem("token");
-                localStorage.removeItem("customerUser");
-                localStorage.removeItem("customerLoggedIn");
-                localStorage.removeItem("customerEmail");
-
-                window.location.replace("customer_signin.html");
             }
-        }
 
 
-        /* =========================
-           ESCAPE HTML
-        ========================= */
+            if (
+                !response.ok ||
+                !data.success ||
+                data.role !== "customer"
+            ) {
 
-        function escapeHTML(value) {
-
-            return String(value ?? "")
-                .replace(/&/g, "&amp;")
-                .replace(/</g, "&lt;")
-                .replace(/>/g, "&gt;")
-                .replace(/"/g, "&quot;")
-                .replace(/'/g, "&#039;");
-
-        }
-
-
-        /* =========================
-           ADD TO CART
-        ========================= */
-
-        function addToCart(
-            name,
-            price,
-            type,
-            description
-        ) {
-
-            const cart =
-                JSON.parse(
-                    localStorage.getItem("webportifyCart")
-                ) || [];
-
-
-            cart.push({
-
-                id: Date.now(),
-
-                name: name,
-
-                price: Number(price),
-
-                type: type,
-
-                description: description
-
-            });
-
-
-            localStorage.setItem(
-                "webportifyCart",
-                JSON.stringify(cart)
-            );
-
-
-            window.location.href =
-                "customer_cart.html";
-
-        }
-
-
-        /* =========================
-           CUSTOM WEBSITE
-        ========================= */
-
-        function addCustomWebsite() {
-
-            const cart =
-                JSON.parse(
-                    localStorage.getItem("webportifyCart")
-                ) || [];
-
-
-            cart.push({
-
-                id: Date.now(),
-
-                name: "Custom Website",
-
-                price: 0,
-
-                type: "Custom",
-
-                description:
-                    "Custom website created according to customer requirements."
-
-            });
-
-
-            localStorage.setItem(
-                "webportifyCart",
-                JSON.stringify(cart)
-            );
-
-
-            window.location.href =
-                "customer_cart.html";
-
-        }
-
-
-        /* =========================
-           OPEN CART
-        ========================= */
-
-        function openCart() {
-
-            window.location.href =
-                "customer_cart.html";
-
-        }
-
-
-        /* =========================
-           OPEN MESSAGES
-        ========================= */
-
-        function openMessages() {
-
-            window.location.href =
-                "customer_messages.html";
-
-        }
-
-
-        /* =========================
-           VIEW DETAILS
-        ========================= */
-
-        function viewDetails(
-            name,
-            type,
-            price,
-            description
-        ) {
-
-            alert(
-                name +
-                "\n\n" +
-                "Category: " +
-                type +
-                "\n" +
-                "Price: ₹" +
-                Number(price).toLocaleString("en-IN") +
-                "\n\n" +
-                description
-            );
-
-        }
-
-
-        /* =========================
-           SEARCH
-        ========================= */
-
-        function filterProducts() {
-
-            const search =
-                document.getElementById(
-                    "searchInput"
-                ).value
-                .toLowerCase()
-                .trim();
-
-
-            const products =
-                document.querySelectorAll(
-                    ".product"
+                throw new Error(
+                    data.message ||
+                    "Customer session is invalid."
                 );
 
+            }
 
-            let visible = 0;
+
+            const customer =
+                data.user || {};
 
 
-            products.forEach(product => {
+            document.getElementById(
+                "customerName"
+            ).textContent =
+                customer.name ||
+                "Customer";
+
+
+            localStorage.setItem(
+                "customerUser",
+                JSON.stringify(customer)
+            );
+
+
+            if (customer.email) {
+
+                localStorage.setItem(
+                    "customerEmail",
+                    customer.email
+                );
+
+            }
+
+
+            localStorage.setItem(
+                "customerLoggedIn",
+                "true"
+            );
+
+
+        } catch (error) {
+
+            console.error(
+                "Customer session error:",
+                error
+            );
+
+
+            localStorage.removeItem(
+                "token"
+            );
+
+            localStorage.removeItem(
+                "customerUser"
+            );
+
+            localStorage.removeItem(
+                "customerLoggedIn"
+            );
+
+            localStorage.removeItem(
+                "customerEmail"
+            );
+
+
+            window.location.replace(
+                "customer_signin.html"
+            );
+
+        }
+
+    }
+
+
+    /* =========================
+       ESCAPE HTML
+    ========================= */
+
+    function escapeHTML(value) {
+
+        return String(value ?? "")
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#039;");
+
+    }
+
+
+    /* =========================
+       ADD TO CART
+    ========================= */
+
+    function addToCart(
+        name,
+        price,
+        type,
+        description
+    ) {
+
+        let cart = [];
+
+        try {
+
+            cart =
+                JSON.parse(
+                    localStorage.getItem(
+                        "webportifyCart"
+                    )
+                ) || [];
+
+            if (!Array.isArray(cart)) {
+                cart = [];
+            }
+
+        } catch (error) {
+
+            cart = [];
+
+        }
+
+
+        cart.push({
+
+            id: Date.now(),
+
+            name: name,
+
+            price: Number(price),
+
+            type: type,
+
+            description: description
+
+        });
+
+
+        localStorage.setItem(
+            "webportifyCart",
+            JSON.stringify(cart)
+        );
+
+
+        window.location.href =
+            "customer_cart.html";
+
+    }
+
+
+    /* =========================
+       CUSTOM WEBSITE
+    ========================= */
+
+    function addCustomWebsite() {
+
+        let cart = [];
+
+        try {
+
+            cart =
+                JSON.parse(
+                    localStorage.getItem(
+                        "webportifyCart"
+                    )
+                ) || [];
+
+            if (!Array.isArray(cart)) {
+                cart = [];
+            }
+
+        } catch (error) {
+
+            cart = [];
+
+        }
+
+
+        cart.push({
+
+            id: Date.now(),
+
+            name: "Custom Website",
+
+            price: 0,
+
+            type: "Custom",
+
+            description:
+                "Custom website created according to customer requirements."
+
+        });
+
+
+        localStorage.setItem(
+            "webportifyCart",
+            JSON.stringify(cart)
+        );
+
+
+        window.location.href =
+            "customer_cart.html";
+
+    }
+
+
+    /* =========================
+       OPEN CART
+    ========================= */
+
+    function openCart() {
+
+        window.location.href =
+            "customer_cart.html";
+
+    }
+
+
+    /* =========================
+       OPEN MESSAGES
+    ========================= */
+
+    function openMessages() {
+
+        window.location.href =
+            "customer_messages.html";
+
+    }
+
+
+    /* =========================
+       VIEW DETAILS
+    ========================= */
+
+    function viewDetails(
+        name,
+        type,
+        price,
+        description
+    ) {
+
+        alert(
+            name +
+            "\n\n" +
+            "Category: " +
+            type +
+            "\n" +
+            "Price: ₹" +
+            Number(price).toLocaleString("en-IN") +
+            "\n\n" +
+            description
+        );
+
+    }
+
+
+    /* =========================
+       SEARCH
+    ========================= */
+
+    function filterProducts() {
+
+        const search =
+            document.getElementById(
+                "searchInput"
+            ).value
+            .toLowerCase()
+            .trim();
+
+
+        const products =
+            document.querySelectorAll(
+                ".product"
+            );
+
+
+        let visible = 0;
+
+
+        products.forEach(
+            product => {
 
                 const name =
                     product.dataset.name
                         .toLowerCase();
+
 
                 const category =
                     product.dataset.category
@@ -1276,173 +1338,189 @@
 
                 }
 
-            });
-
-
-            document.getElementById(
-                "templateCount"
-            ).textContent =
-                visible +
-                (visible === 1
-                    ? " template"
-                    : " templates");
-
-
-            document.getElementById(
-                "noResults"
-            ).style.display =
-                visible === 0
-                    ? "block"
-                    : "none";
-
-        }
-
-
-        /* =========================
-           SORT
-        ========================= */
-
-        function sortProducts() {
-
-            const value =
-                document.getElementById(
-                    "sortSelect"
-                ).value;
-
-
-            const container =
-                document.getElementById(
-                    "products"
-                );
-
-
-            const products =
-                Array.from(
-                    container.querySelectorAll(
-                        ".product"
-                    )
-                );
-
-
-            if (value === "low") {
-
-                products.sort(
-                    (a, b) =>
-                        Number(a.dataset.price) -
-                        Number(b.dataset.price)
-                );
-
             }
-
-
-            if (value === "high") {
-
-                products.sort(
-                    (a, b) =>
-                        Number(b.dataset.price) -
-                        Number(a.dataset.price)
-                );
-
-            }
-
-
-            if (value === "name") {
-
-                products.sort(
-                    (a, b) =>
-                        a.dataset.name.localeCompare(
-                            b.dataset.name
-                        )
-                );
-
-            }
-
-
-            products.forEach(product => {
-
-                container.appendChild(product);
-
-            });
-
-        }
-
-
-        /* =========================
-           UNREAD MESSAGES
-        ========================= */
-
-        function updateUnreadBadge() {
-
-            let messages = [];
-
-            try {
-
-                messages =
-                    JSON.parse(
-                        localStorage.getItem(
-                            "webportifyMessages"
-                        )
-                    ) || [];
-
-            } catch (error) {
-
-                messages = [];
-
-            }
-
-
-            const unread =
-                messages.filter(
-                    message =>
-                        message.sender === "developer" &&
-                        message.read !== true
-                ).length;
-
-
-            const badge =
-                document.getElementById(
-                    "customerUnreadBadge"
-                );
-
-
-            if (unread > 0) {
-
-                badge.textContent =
-                    unread > 99
-                        ? "99+"
-                        : unread;
-
-                badge.style.display =
-                    "inline-block";
-
-            } else {
-
-                badge.style.display =
-                    "none";
-
-            }
-
-        }
-
-
-        /* =========================
-           INITIALIZE
-        ========================= */
-
-        loadLoggedInCustomer();
-
-        updateUnreadBadge();
-
-
-        /* =========================
-           KEEP MESSAGE COUNT UPDATED
-        ========================= */
-
-        setInterval(
-            updateUnreadBadge,
-            2000
         );
-    </script>
+
+
+        document.getElementById(
+            "templateCount"
+        ).textContent =
+            visible +
+            (
+                visible === 1
+                    ? " template"
+                    : " templates"
+            );
+
+
+        document.getElementById(
+            "noResults"
+        ).style.display =
+            visible === 0
+                ? "block"
+                : "none";
+
+    }
+
+
+    /* =========================
+       SORT
+    ========================= */
+
+    function sortProducts() {
+
+        const value =
+            document.getElementById(
+                "sortSelect"
+            ).value;
+
+
+        const container =
+            document.getElementById(
+                "products"
+            );
+
+
+        const products =
+            Array.from(
+                container.querySelectorAll(
+                    ".product"
+                )
+            );
+
+
+        if (value === "low") {
+
+            products.sort(
+                (a, b) =>
+                    Number(a.dataset.price) -
+                    Number(b.dataset.price)
+            );
+
+        }
+
+
+        if (value === "high") {
+
+            products.sort(
+                (a, b) =>
+                    Number(b.dataset.price) -
+                    Number(a.dataset.price)
+            );
+
+        }
+
+
+        if (value === "name") {
+
+            products.sort(
+                (a, b) =>
+                    a.dataset.name.localeCompare(
+                        b.dataset.name
+                    )
+            );
+
+        }
+
+
+        products.forEach(
+            product => {
+
+                container.appendChild(
+                    product
+                );
+
+            }
+        );
+
+    }
+
+
+    /* =========================
+       UNREAD MESSAGES
+    ========================= */
+
+    function updateUnreadBadge() {
+
+        let messages = [];
+
+
+        try {
+
+            messages =
+                JSON.parse(
+                    localStorage.getItem(
+                        "webportifyMessages"
+                    )
+                ) || [];
+
+        } catch (error) {
+
+            messages = [];
+
+        }
+
+
+        const unread =
+            messages.filter(
+                message =>
+                    message.sender === "developer" &&
+                    message.read !== true
+            ).length;
+
+
+        const badge =
+            document.getElementById(
+                "customerUnreadBadge"
+            );
+
+
+        if (!badge) {
+            return;
+        }
+
+
+        if (unread > 0) {
+
+            badge.textContent =
+                unread > 99
+                    ? "99+"
+                    : unread;
+
+            badge.style.display =
+                "inline-block";
+
+        } else {
+
+            badge.style.display =
+                "none";
+
+        }
+
+    }
+
+
+    /* =========================
+       INITIALIZE
+    ========================= */
+
+    loadLoggedInCustomer();
+
+    updateUnreadBadge();
+
+
+    /* =========================
+       KEEP MESSAGE COUNT UPDATED
+    ========================= */
+
+    setInterval(
+        updateUnreadBadge,
+        2000
+    );
+
+</script>
+
 
 </body>
+
 </html>
