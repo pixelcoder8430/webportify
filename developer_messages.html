@@ -1,11 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Webportify - Developer Messages</title>
 
 <style>
+
 *{
     margin:0;
     padding:0;
@@ -23,6 +27,10 @@ body{
     color:white;
     display:flex;
 }
+
+/* =========================
+   SIDEBAR
+========================= */
 
 .sidebar{
     width:235px;
@@ -64,6 +72,10 @@ body{
     border:1px solid #ff1744;
 }
 
+/* =========================
+   MAIN
+========================= */
+
 .main{
     flex:1;
     padding:35px;
@@ -76,12 +88,20 @@ body{
     text-shadow:0 0 12px #ff1744;
 }
 
+/* =========================
+   MESSAGE CONTAINER
+========================= */
+
 .message-container{
     display:grid;
     grid-template-columns:300px 1fr;
     gap:20px;
     height:calc(100vh - 130px);
 }
+
+/* =========================
+   CUSTOMER LIST
+========================= */
 
 .customer-list{
     background:rgba(10,15,22,.95);
@@ -126,6 +146,10 @@ body{
     margin:4px 0;
 }
 
+/* =========================
+   CHAT
+========================= */
+
 .chat{
     background:rgba(10,15,22,.95);
     border:1px solid rgba(255,23,68,.5);
@@ -157,6 +181,10 @@ body{
     overflow-y:auto;
 }
 
+/* =========================
+   MESSAGE BUBBLES
+========================= */
+
 .message{
     max-width:70%;
     padding:12px 15px;
@@ -186,6 +214,10 @@ body{
     opacity:.65;
     margin-top:5px;
 }
+
+/* =========================
+   INPUT
+========================= */
 
 .message-input{
     display:flex;
@@ -229,6 +261,10 @@ body{
     cursor:not-allowed;
 }
 
+/* =========================
+   EMPTY
+========================= */
+
 .empty{
     text-align:center;
     padding:40px 20px;
@@ -243,6 +279,10 @@ body{
 .empty p{
     line-height:1.5;
 }
+
+/* =========================
+   MOBILE
+========================= */
 
 @media(max-width:850px){
 
@@ -273,11 +313,18 @@ body{
     .chat{
         height:600px;
     }
+
 }
+
 </style>
+
 </head>
 
 <body>
+
+<!-- =========================
+     SIDEBAR
+========================= -->
 
 <div class="sidebar">
 
@@ -309,11 +356,19 @@ body{
         👤 My Profile
     </a>
 
-    <a href="structure.html" class="logout" onclick="logout()">
+    <a
+        href="#"
+        class="logout"
+        onclick="logout(); return false;">
         🚪 Logout
     </a>
 
 </div>
+
+
+<!-- =========================
+     MAIN
+========================= -->
 
 <div class="main">
 
@@ -321,11 +376,16 @@ body{
         💬 Customer Messages
     </h1>
 
+
     <div class="message-container">
+
+        <!-- CUSTOMER LIST -->
 
         <div class="customer-list">
 
-            <h2>Select Customer</h2>
+            <h2>
+                Select Customer
+            </h2>
 
             <div id="customerList">
 
@@ -336,6 +396,9 @@ body{
             </div>
 
         </div>
+
+
+        <!-- CHAT -->
 
         <div class="chat">
 
@@ -351,11 +414,16 @@ body{
 
             </div>
 
-            <div class="messages" id="messages">
+
+            <div
+                class="messages"
+                id="messages">
 
                 <div class="empty">
 
-                    <h2>No Conversation Selected</h2>
+                    <h2>
+                        No Conversation Selected
+                    </h2>
 
                     <p>
                         Select a customer from the left side.
@@ -364,6 +432,7 @@ body{
                 </div>
 
             </div>
+
 
             <div class="message-input">
 
@@ -380,7 +449,9 @@ body{
                     id="sendButton"
                     onclick="sendMessage()"
                     disabled>
+
                     Send
+
                 </button>
 
             </div>
@@ -391,14 +462,27 @@ body{
 
 </div>
 
+
 <script>
 
-const API_URL = "http://localhost:5000";
+/* =========================
+   BACKEND
+========================= */
+
+const API_URL =
+    "http://localhost:5000";
+
+
+/* =========================
+   DATA
+========================= */
 
 let currentUser = null;
+
 let requests = [];
 
 let selectedRequestId = null;
+
 let selectedCustomerId = null;
 
 
@@ -406,49 +490,82 @@ let selectedCustomerId = null;
    API
 ========================= */
 
-async function apiRequest(url, options = {}){
+async function apiRequest(
+    url,
+    options = {}
+){
 
     const token =
         localStorage.getItem("token");
+
 
     if(!token){
 
         logout();
 
-        throw new Error("Not logged in.");
+        throw new Error(
+            "Not logged in."
+        );
+
     }
 
+
     const headers = {
-        "Content-Type":"application/json",
+
+        "Content-Type":
+            "application/json",
+
         ...(options.headers || {})
+
     };
+
 
     headers.Authorization =
         "Bearer " + token;
 
+
     const response =
         await fetch(
+
             API_URL + url,
+
             {
                 ...options,
                 headers
             }
+
         );
+
 
     let data = {};
 
-    try{
-        data = await response.json();
-    }catch{}
 
-    if(response.status === 401){
+    try{
+
+        data =
+            await response.json();
+
+    }
+    catch(error){
+
+        data = {};
+
+    }
+
+
+    if(
+        response.status === 401 ||
+        response.status === 403
+    ){
 
         logout();
 
         throw new Error(
             "Session expired."
         );
+
     }
+
 
     if(!response.ok){
 
@@ -456,9 +573,12 @@ async function apiRequest(url, options = {}){
             data.message ||
             "Request failed."
         );
+
     }
 
+
     return data;
+
 }
 
 
@@ -468,9 +588,34 @@ async function apiRequest(url, options = {}){
 
 function logout(){
 
-    localStorage.removeItem("token");
-    localStorage.removeItem("developerUser");
-    localStorage.removeItem("developerEmail");
+    localStorage.removeItem(
+        "token"
+    );
+
+    localStorage.removeItem(
+        "developerUser"
+    );
+
+    localStorage.removeItem(
+        "developerEmail"
+    );
+
+    localStorage.removeItem(
+        "selectedDeveloper"
+    );
+
+    localStorage.removeItem(
+        "selectedCustomer"
+    );
+
+    localStorage.removeItem(
+        "selectedCustomerId"
+    );
+
+    localStorage.removeItem(
+        "selectedRequestId"
+    );
+
 
     sessionStorage.removeItem(
         "developerLoggedIn"
@@ -480,8 +625,11 @@ function logout(){
         "developerEmail"
     );
 
-    window.location.href =
-        "developer_signin.html";
+
+    window.location.replace(
+        "developer_signin.html"
+    );
+
 }
 
 
@@ -498,11 +646,14 @@ async function loadDeveloper(){
         ) !== "true"
     ){
 
-        window.location.href =
-            "developer_signin.html";
+        window.location.replace(
+            "developer_signin.html"
+        );
 
         return false;
+
     }
+
 
     try{
 
@@ -511,18 +662,38 @@ async function loadDeveloper(){
                 "/api/me"
             );
 
+
         currentUser =
             response.user ||
             response.data;
 
-        return !!currentUser;
 
-    }catch(error){
+        if(
+            !currentUser ||
+            !currentUser.id
+        ){
 
-        console.error(error);
+            throw new Error(
+                "Developer information could not be loaded."
+            );
+
+        }
+
+
+        return true;
+
+    }
+    catch(error){
+
+        console.error(
+            "Developer loading error:",
+            error
+        );
 
         return false;
+
     }
+
 }
 
 
@@ -537,45 +708,54 @@ async function loadRequests(){
             "customerList"
         );
 
-    try{
 
-        /*
-           Developers use /api/requests
-        */
+    try{
 
         const response =
             await apiRequest(
                 "/api/requests"
             );
 
-        /*
-           IMPORTANT:
-           Backend returns:
-           { success:true, requests:[...] }
-        */
 
         requests =
-            response.requests || [];
+            Array.isArray(
+                response.requests
+            )
+            ?
+            response.requests
+            :
+            [];
+
 
         /*
-           Only show requests that are
-           assigned to THIS developer.
-        */
+         * Only show requests assigned
+         * to the currently logged-in developer.
+         */
 
         const assignedRequests =
-            requests.filter(request =>
+            requests.filter(
+                request =>
 
-                Number(request.developer_id) ===
-                Number(currentUser.id)
-
+                    Number(
+                        request.developer_id
+                    ) ===
+                    Number(
+                        currentUser.id
+                    )
             );
 
-        if(assignedRequests.length === 0){
+
+        if(
+            assignedRequests.length === 0
+        ){
 
             list.innerHTML = `
+
                 <div class="empty">
 
-                    <h2>No Customers Yet</h2>
+                    <h2>
+                        No Customers Yet
+                    </h2>
 
                     <p>
                         Customers will appear here
@@ -583,14 +763,19 @@ async function loadRequests(){
                     </p>
 
                 </div>
+
             `;
+
 
             disableChat();
 
             return;
+
         }
 
+
         list.innerHTML = "";
+
 
         assignedRequests.forEach(
             request => {
@@ -600,13 +785,17 @@ async function loadRequests(){
                         "div"
                     );
 
+
                 card.className =
                     "customer-card";
+
 
                 card.dataset.id =
                     request.id;
 
+
                 card.innerHTML = `
+
                     <h3>
                         ${escapeHTML(
                             request.customer_name ||
@@ -628,7 +817,9 @@ async function loadRequests(){
                             "Assigned"
                         )}
                     </p>
+
                 `;
+
 
                 card.onclick = () => {
 
@@ -638,22 +829,31 @@ async function loadRequests(){
 
                 };
 
+
                 list.appendChild(card);
 
             }
         );
+
 
         const savedRequestId =
             localStorage.getItem(
                 "selectedRequestId"
             );
 
+
         const savedRequest =
             assignedRequests.find(
                 request =>
-                    String(request.id) ===
-                    String(savedRequestId)
+
+                    String(
+                        request.id
+                    ) ===
+                    String(
+                        savedRequestId
+                    )
             );
+
 
         selectCustomer(
             savedRequest ||
@@ -661,26 +861,39 @@ async function loadRequests(){
             false
         );
 
-    }catch(error){
+    }
+    catch(error){
 
-        console.error(error);
+        console.error(
+            "Request loading error:",
+            error
+        );
+
 
         list.innerHTML = `
+
             <div class="empty">
 
-                <h2>Unable to Load</h2>
+                <h2>
+                    Unable to Load
+                </h2>
 
                 <p>
                     ${escapeHTML(
-                        error.message
+                        error.message ||
+                        "Could not load customers."
                     )}
                 </p>
 
             </div>
+
         `;
 
+
         disableChat();
+
     }
+
 }
 
 
@@ -693,73 +906,111 @@ function selectCustomer(
     save = true
 ){
 
+    if(!request){
+
+        return;
+
+    }
+
+
     selectedRequestId =
         request.id;
 
+
     selectedCustomerId =
-        Number(request.customer_id);
+        Number(
+            request.customer_id
+        );
+
 
     if(save){
 
         localStorage.setItem(
             "selectedRequestId",
-            request.id
+            String(
+                request.id
+            )
         );
+
     }
+
 
     document
         .querySelectorAll(
             ".customer-card"
         )
-        .forEach(card => {
+        .forEach(
+            card => {
 
-            card.classList.toggle(
-                "active",
-                String(card.dataset.id) ===
-                String(request.id)
-            );
+                card.classList.toggle(
 
-        });
+                    "active",
+
+                    String(
+                        card.dataset.id
+                    ) ===
+                    String(
+                        request.id
+                    )
+
+                );
+
+            }
+        );
+
 
     document.getElementById(
         "chatTitle"
     ).textContent =
+
         request.customer_name ||
         "Customer";
+
 
     document.getElementById(
         "chatSubtitle"
     ).textContent =
+
         `${request.website_type || "Website"} • Request #${request.id}`;
+
 
     document.getElementById(
         "messageInput"
     ).disabled = false;
 
+
     document.getElementById(
         "sendButton"
     ).disabled = false;
 
+
     loadMessages();
+
 }
 
 
 /* =========================
-   DISABLE
+   DISABLE CHAT
 ========================= */
 
 function disableChat(){
 
-    selectedRequestId = null;
-    selectedCustomerId = null;
+    selectedRequestId =
+        null;
+
+    selectedCustomerId =
+        null;
+
 
     document.getElementById(
         "messageInput"
     ).disabled = true;
 
+
     document.getElementById(
         "sendButton"
     ).disabled = true;
+
 }
 
 
@@ -769,132 +1020,198 @@ function disableChat(){
 
 async function loadMessages(){
 
-    if(!selectedCustomerId){
+    if(
+        !selectedCustomerId ||
+        !selectedRequestId
+    ){
+
         return;
+
     }
+
 
     try{
 
-        /*
-           IMPORTANT:
-           Developer API requires customerId.
-        */
-
         const response =
             await apiRequest(
-                `/api/messages?customerId=${encodeURIComponent(selectedCustomerId)}&requestId=${encodeURIComponent(selectedRequestId)}`
+
+                `/api/messages?customerId=${encodeURIComponent(
+                    selectedCustomerId
+                )}&requestId=${encodeURIComponent(
+                    selectedRequestId
+                )}`
+
             );
 
-        /*
-           Backend returns:
-           { success:true, messages:[...] }
-        */
 
         const messages =
-            response.messages || [];
+            Array.isArray(
+                response.messages
+            )
+            ?
+            response.messages
+            :
+            [];
 
-        renderMessages(messages);
 
-        for(const message of messages){
+        renderMessages(
+            messages
+        );
+
+
+        for(
+            const message
+            of messages
+        ){
 
             if(
-                message.sender_role === "customer" &&
-                Number(message.is_read) === 0
+                message.sender_role ===
+                    "customer" &&
+
+                Number(
+                    message.is_read
+                ) === 0
             ){
 
                 markMessageRead(
                     message.id
                 );
+
             }
+
         }
 
-    }catch(error){
+    }
+    catch(error){
 
         console.error(
             "Message loading error:",
             error
         );
+
     }
+
 }
 
 
 /* =========================
-   RENDER
+   RENDER MESSAGES
 ========================= */
 
-function renderMessages(messages){
+function renderMessages(
+    messages
+){
 
     const container =
         document.getElementById(
             "messages"
         );
 
-    if(messages.length === 0){
+
+    if(
+        messages.length === 0
+    ){
 
         container.innerHTML = `
+
             <div class="empty">
 
-                <h2>No Messages Yet</h2>
+                <h2>
+                    No Messages Yet
+                </h2>
 
                 <p>
                     Start the conversation with your customer.
                 </p>
 
             </div>
+
         `;
 
         return;
+
     }
+
 
     container.innerHTML = "";
 
-    messages.forEach(message => {
 
-        const div =
-            document.createElement(
-                "div"
+    messages.forEach(
+        message => {
+
+            const div =
+                document.createElement(
+                    "div"
+                );
+
+
+            div.className =
+
+                message.sender_role ===
+                "developer"
+
+                ?
+
+                "message developer"
+
+                :
+
+                "message customer";
+
+
+            const text =
+                document.createElement(
+                    "div"
+                );
+
+
+            text.textContent =
+                message.message ||
+                "";
+
+
+            const time =
+                document.createElement(
+                    "span"
+                );
+
+
+            time.className =
+                "message-time";
+
+
+            time.textContent =
+                formatDate(
+                    message.created_at
+                );
+
+
+            div.appendChild(
+                text
             );
 
-        div.className =
-            message.sender_role === "developer"
-                ? "message developer"
-                : "message customer";
 
-        const text =
-            document.createElement(
-                "div"
+            div.appendChild(
+                time
             );
 
-        text.textContent =
-            message.message || "";
 
-        const time =
-            document.createElement(
-                "span"
+            container.appendChild(
+                div
             );
 
-        time.className =
-            "message-time";
+        }
+    );
 
-        time.textContent =
-            formatDate(
-                message.created_at
-            );
-
-        div.appendChild(text);
-        div.appendChild(time);
-
-        container.appendChild(div);
-
-    });
 
     container.scrollTop =
         container.scrollHeight;
+
 }
 
 
 /* =========================
-   SEND
+   SEND MESSAGE
 ========================= */
 
 async function sendMessage(){
@@ -904,33 +1221,47 @@ async function sendMessage(){
             "messageInput"
         );
 
+
     const text =
         input.value.trim();
 
+
     if(!text){
+
         return;
+
     }
 
-    if(!selectedCustomerId){
+
+    if(
+        !selectedCustomerId ||
+        !selectedRequestId
+    ){
 
         alert(
             "Please select a customer first."
         );
 
         return;
+
     }
+
 
     const button =
         document.getElementById(
             "sendButton"
         );
 
+
     button.disabled = true;
+
 
     try{
 
         await apiRequest(
+
             "/api/messages",
+
             {
 
                 method:"POST",
@@ -943,28 +1274,38 @@ async function sendMessage(){
                     requestId:
                         selectedRequestId,
 
-                    message:text
+                    message:
+                        text
+
                 })
+
             }
+
         );
+
 
         input.value = "";
 
+
         await loadMessages();
 
-    }catch(error){
+    }
+    catch(error){
 
         alert(
             error.message ||
             "Unable to send message."
         );
 
-    }finally{
+    }
+    finally{
 
         button.disabled = false;
 
         input.focus();
+
     }
+
 }
 
 
@@ -972,21 +1313,32 @@ async function sendMessage(){
    MARK READ
 ========================= */
 
-async function markMessageRead(id){
+async function markMessageRead(
+    id
+){
 
     try{
 
         await apiRequest(
+
             `/api/messages/${id}/read`,
+
             {
                 method:"PATCH"
             }
+
         );
 
-    }catch(error){
-
-        console.error(error);
     }
+    catch(error){
+
+        console.error(
+            "Mark read error:",
+            error
+        );
+
+    }
+
 }
 
 
@@ -994,43 +1346,90 @@ async function markMessageRead(id){
    DATE
 ========================= */
 
-function formatDate(value){
+function formatDate(
+    value
+){
 
     if(!value){
+
         return "";
+
     }
+
 
     const date =
         new Date(value);
 
-    if(isNaN(date.getTime())){
+
+    if(
+        isNaN(
+            date.getTime()
+        )
+    ){
+
         return "";
+
     }
 
+
     return date.toLocaleString(
+
         "en-IN",
+
         {
+
             day:"2-digit",
+
             month:"short",
+
             hour:"2-digit",
+
             minute:"2-digit"
+
         }
+
     );
+
 }
 
 
 /* =========================
-   ESCAPE
+   ESCAPE HTML
 ========================= */
 
-function escapeHTML(value){
+function escapeHTML(
+    value
+){
 
-    return String(value ?? "")
-        .replace(/&/g,"&amp;")
-        .replace(/</g,"&lt;")
-        .replace(/>/g,"&gt;")
-        .replace(/"/g,"&quot;")
-        .replace(/'/g,"&#039;");
+    return String(
+        value ?? ""
+    )
+
+    .replace(
+        /&/g,
+        "&amp;"
+    )
+
+    .replace(
+        /</g,
+        "&lt;"
+    )
+
+    .replace(
+        />/g,
+        "&gt;"
+    )
+
+    .replace(
+        /"/g,
+        "&quot;"
+    )
+
+    .replace(
+        /'/g,
+        "&#039;"
+    );
+
 }
 
 
@@ -1054,6 +1453,7 @@ document
                 event.preventDefault();
 
                 sendMessage();
+
             }
 
         }
@@ -1069,24 +1469,43 @@ async function start(){
     const authenticated =
         await loadDeveloper();
 
+
     if(!authenticated){
+
         return;
+
     }
+
 
     await loadRequests();
 
+
+    /*
+     * Refresh the currently selected
+     * conversation every 3 seconds.
+     */
+
     setInterval(
+
         () => {
 
-            if(selectedCustomerId){
+            if(
+                selectedCustomerId &&
+                selectedRequestId
+            ){
 
                 loadMessages();
+
             }
 
         },
+
         3000
+
     );
+
 }
+
 
 start();
 
